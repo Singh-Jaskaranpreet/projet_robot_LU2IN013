@@ -9,7 +9,10 @@ class Vehicule:
         self.y = y
         self.vitesse = vitesse
         self.nb_roues = nb_roues
+        self.starting_point_x=x
+        self.starting_point_y=y
 
+    
     def acceleration(self, acc):
         self.vitesse += acc
 
@@ -21,6 +24,10 @@ class Vehicule:
 
     def bouger(self):
         self.x += self.vitesse
+    
+    def restart(self):
+        self.x=self.starting_point_x
+        self.vitesse=0
 
     def gerer_controles(self, keys):
         if keys[pygame.K_RIGHT]:
@@ -29,3 +36,6 @@ class Vehicule:
             self.deceleration(0.5)
         if keys[pygame.K_SPACE]:
             self.arret()
+        if keys[pygame.K_r]:
+            self.restart()
+

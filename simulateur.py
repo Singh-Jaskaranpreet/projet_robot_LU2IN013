@@ -20,7 +20,44 @@ ROUGE = (255, 0, 0)
 environnement = Environnement(LARGEUR, HAUTEUR)
 vehicule = Vehicule("Voiture", 200, HAUTEUR // 2, 0, 4)
 
-# Boucle principale
+# Fonction pour afficher les instructions
+def afficher_instructions():
+    font = pygame.font.SysFont(None, 36)
+    
+    # Créer le texte des instructions
+    instructions = [
+        "Instructions :",
+        "Flèche droite  : Accélérer",
+        "Flèche gauche  : Décélérer",
+        "Barre d'espace : Arrêter le véhicule",
+        "Touche R : Réinitialiser la position",
+        "Appuyez sur une touche pour commencer"
+    ]
+    
+    screen.fill(BLANC)  # Remplir l'écran en blanc
+    y_offset = 10 # Position de départ pour l'affichage des instructions
+    
+    for line in instructions:
+        text = font.render(line, True, NOIR)
+        screen.blit(text, (LARGEUR // 4, y_offset))  # Affiche chaque ligne de texte
+        y_offset += 100  # Espacement entre les lignes
+    
+    pygame.display.flip()  # Met à jour l'écran
+
+# Afficher l'écran d'instructions avant de commencer
+afficher_instructions()
+
+# Attendre que l'utilisateur appuie sur une touche pour commencer
+attente = True
+while attente:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:  # Une touche a été pressée
+            attente = False  # On sort de la boucle et commence la simulation
+
+# Boucle principale de la simulation
 clock = pygame.time.Clock()
 
 while True:
