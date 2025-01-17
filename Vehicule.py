@@ -1,4 +1,6 @@
-# Classe Véhicule
+import pygame
+
+# Classe VÃ©hicule
 class Vehicule:
 
     def __init__(self, nom, x, y, vitesse, nb_roues):
@@ -19,3 +21,11 @@ class Vehicule:
 
     def bouger(self):
         self.x += self.vitesse
+
+    def gerer_controles(self, keys):
+        if keys[pygame.K_RIGHT]:
+            self.acceleration(0.5)
+        if keys[pygame.K_LEFT]:
+            self.deceleration(0.5)
+        if keys[pygame.K_SPACE]:
+            self.arret()
