@@ -1,7 +1,7 @@
 #super class, cree 3 class, et class robot
 class Véhicule:
     
-    def __init__(self, nom, x, y, vitesse, nb_roues):
+    def __init__(self, nom : str, x: float=0, y : float=0, vitesse : float =1, nb_roues=2):
         self.nom = nom
         self.x = x
         self.y = y
@@ -17,20 +17,27 @@ class Véhicule:
 #    def accelerometre(self):
 #        pass
     
-    def mouv(self, vitesse):
-        self.x += self.vitesse/3.6
+    def deplacer(self,x , y):
+        while(self.x < x and self.y < y):
+            x+=self.vitesse
+            y+=self.vitesse
+
+
+
         
+    """ 
     def acceleration(self, acc):
          self.vitesse += acc 
     
     def deceleration(self, red):
          self.vitesse -= red
+    """
 
     def arret(self):
         self.vitesse = 0
     
-    def bouger(self):
-        pass
+    # def bouger(self):
+    #   pass
 
     def get_nom(self):
         return self.nom
