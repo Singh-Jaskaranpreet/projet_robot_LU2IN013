@@ -1,6 +1,7 @@
 import pygame
 import sys
 from Vehicule import *
+from Environnement import *
 
 # Initialisation de Pygame
 pygame.init()
@@ -15,7 +16,8 @@ BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
 ROUGE = (255, 0, 0)
 
-# Création d'un véhicule
+# Création de l'environnement et d'un véhicule
+environnement = Environnement(LARGEUR, HAUTEUR)
 vehicule = Vehicule("Voiture", 200, HAUTEUR // 2, 0, 4)
 
 # Boucle principale
@@ -27,30 +29,16 @@ while True:
             pygame.quit()
             sys.exit()
 
-    # Contrôles utilisateur
+    # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_RIGHT]:
-        vehicule.acceleration(0.5)  # Augmenter la vitesse
-    if keys[pygame.K_LEFT]:
-        vehicule.deceleration(0.5)  # Réduire la vitesse
-    if keys[pygame.K_SPACE]:
-        vehicule.arret()  # Arrêter le véhicule
+    vehicule.gerer_controles(keys)
 
-    # Mise à jour du véhicule
+    # Mise à jour des éléments
     vehicule.bouger()
-
-    # Arrêt si le véhicule est à moins de 10 pixels du bord droit
-    if vehicule.x + 25 >= LARGEUR - 10:  # 25 est le rayon du cercle
-        vehicule.arret()
+    environnement.mise_a_jour(vehicule)
 
     # Affichage
     screen.fill(BLANC)
-    pygame.draw.circle(screen, ROUGE, (vehicule.x, vehicule.y), 10)  # Représentation du véhicule sous forme de cercle
-
-    # Affichage de la vitesse
-    font = pygame.font.SysFont(None, 36)
-    vitesse_text = font.render(f"Vitesse: {vehicule.vitesse*2} m/s", True, NOIR)
-    screen.blit(vitesse_text, (10, 10))
-
+    environnement.afficher(screen, vehicule, ROUGE, NOIR)
     pygame.display.flip()
     clock.tick(60)
