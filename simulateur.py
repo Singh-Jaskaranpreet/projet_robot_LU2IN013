@@ -27,8 +27,9 @@ def afficher_instructions():
     # Créer le texte des instructions
     instructions = [
         "Instructions :",
-        "Flèche droite  : Accélérer",
-        "Flèche gauche  : Décélérer",
+        "Flèche droite  : Accélérer et deplace vers la droite",
+        "Flèche haut  : Accélérer et deplace vers le haut",
+        "Flèche gauche et bas : Décélérer",
         "Barre d'espace : Arrêter le véhicule",
         "Touche R : Réinitialiser la position",
         "Appuyez sur une touche pour commencer"
@@ -68,10 +69,17 @@ while True:
 
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
-    vehicule.gerer_controles(keys)
+    dir = vehicule.gerer_controles(keys)
+
 
     # Mise à jour des éléments
-    vehicule.bouger()
+    if dir == 1:
+        vehicule.bouger_x()
+    elif dir == 2:
+        vehicule.bouger_y()
+    elif dir == 0 :
+        vehicule.deceleration(0.5)
+        dir=-1
     environnement.mise_a_jour(vehicule)
 
     # Affichage

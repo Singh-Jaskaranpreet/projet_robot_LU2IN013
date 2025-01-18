@@ -8,7 +8,7 @@ class Environnement:
 
     def mise_a_jour(self, vehicule):
         # Arrêter le véhicule si proche du bord droit
-        if vehicule.x + 25 >= self.largeur - 10:  # 25 est le rayon du cercle
+        if vehicule.x + 17 > self.largeur or vehicule.y  - 17 < 0:  # 25 est le rayon du cercle
             vehicule.arret()
 
     def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte):
