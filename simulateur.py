@@ -27,16 +27,17 @@ def afficher_instructions():
     # Créer le texte des instructions
     instructions = [
         "Instructions :",
-        "Flèche droite  : Accélérer et deplace vers la droite",
-        "Flèche haut  : Accélérer et deplace vers le haut",
-        "Flèche gauche et bas : Décélérer",
+        "Flèche haut  : Accélérer et se deplacer suivant la direction",
+        "Flèche bas  : Deccélérer et se deplacer suivant la direction",
+        "Flèche droite  : Tourner a droite",
+        "Flèche gauche  : Tourner a gauche",
         "Barre d'espace : Arrêter le véhicule",
         "Touche R : Réinitialiser la position",
         "Appuyez sur une touche pour commencer"
     ]
     
     screen.fill(BLANC)  # Remplir l'écran en blanc
-    y_offset = 10 # Position de départ pour l'affichage des instructions
+    y_offset = 20 # Position de départ pour l'affichage des instructions
     
     for line in instructions:
         text = font.render(line, True, NOIR)
@@ -69,17 +70,10 @@ while True:
 
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
-    dir = vehicule.gerer_controles(keys)
+    vehicule.gerer_controles(keys)
 
 
-    # Mise à jour des éléments
-    if dir == 1:
-        vehicule.bouger_x()
-    elif dir == 2:
-        vehicule.bouger_y()
-    elif dir == 0 :
-        vehicule.deceleration(0.5)
-        dir=-1
+
     environnement.mise_a_jour(vehicule)
 
     # Affichage

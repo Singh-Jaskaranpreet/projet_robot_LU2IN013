@@ -1,5 +1,5 @@
 import pygame
-
+import math as m
 # Classe Véhicule
 class Vehicule:
 
@@ -7,6 +7,9 @@ class Vehicule:
         self.nom = nom
         self.x = x
         self.y = y
+        self.angle = 0
+        self.direction_x = 1
+        self.direction_y = 0
         self.vitesse = vitesse
         self.nb_roues = nb_roues
         self.starting_point_x=x
@@ -17,40 +20,60 @@ class Vehicule:
         self.vitesse += acc
 
     def deceleration(self, red):
-        self.vitesse = max(0, self.vitesse - red)
+        self.vitesse = self.vitesse - red
 
     def arret(self):
         self.vitesse = 0
 
     def bouger_x(self):
-        self.x += self.vitesse
+        self.x += self.vitesse*self.direction_x
     #ici on diminue y pour monter car dans pygame l'origine se trouve en haut à gauche et y augmente vers le bas
     def bouger_y(self):
-        self.y -= self.vitesse
-    
+        self.y -= self.vitesse*self.direction_y
+
+    def tourner_gauche(self):
+        self.angle = self.angle + 1
+        tmp = (self.angle/180)*m.pi
+        self.direction_x= m.cos(tmp)
+        self.direction_y= m.sin(tmp)
+
+    def tourner_droite(self):
+        self.angle = self.angle - 1
+        tmp = (self.angle/180)*m.pi
+        self.direction_x= m.cos(tmp)
+        self.direction_y= m.sin(tmp)
+
     def restart(self):
         self.x=self.starting_point_x
         self.y=self.starting_point_y
+        self.angle = 0
+        self.direction_x = 1
+        self.direction_y = 0
         self.vitesse=0
 
     def gerer_controles(self, keys):
     #ici dir est utilisé pour mémoriser la direction(dernière touche appuyée)
-        global dir
+    
         if keys[pygame.K_RIGHT]:
-            self.acceleration(0.5)
-            dir=1
+            self.tourner_droite()
+            
         elif keys[pygame.K_UP]:
-            self.acceleration(0.5)
-            dir=2
+            self.acceleration(0.2)
+            
         elif keys[pygame.K_LEFT]:
-            dir=0
+            self.tourner_gauche()
+            
         elif keys[pygame.K_DOWN]:
-            dir=0
+            self.deceleration(0.2)
+            
         elif keys[pygame.K_SPACE]:
             self.arret()
-            dir=-1
+            
         elif keys[pygame.K_r]:
             self.restart()
-            dir=-1
-        return dir
+            
+        if self.vitesse != 0 :
+            self.bouger_x()
+            self.bouger_y()
+
 
