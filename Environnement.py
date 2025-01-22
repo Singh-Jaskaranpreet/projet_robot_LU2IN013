@@ -1,5 +1,5 @@
 import pygame
-from math import *
+import math
 
 class Environnement:
 
@@ -13,16 +13,13 @@ class Environnement:
             vehicule.arret()
 
     def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte):
-        Hauteur = 30
-        listP = [[vehicule.x+cos(20)*Hauteur, vehicule.y+sin(20)*Hauteur],[vehicule.x-cos(20)*Hauteur, vehicule.y-sin(20)*Hauteur]]
-        pp = pygame.math.Vector2([vehicule.x,vehicule.y])
-        rotated_points = [(pygame.math.Vector2(x,y)-pp).rotate(vehicule.angle)+pp for x, y in listP]
         # Points du triangle
-        point_Rarr = (vehicule.x, vehicule.y)  # Sommet
-        #point_Rgauch = (vehicule.x+cos(vehicule.angle+20)*Hauteur, vehicule.y+sin(vehicule.angle+20)*Hauteur)  # Bas gauche
-        point_Rgauch = (rotated_points[1][0],rotated_points[1][1])
-        point_Rdroite = (rotated_points[0][0],rotated_points[0][1])
-        #point_Rdroite = (vehicule.x+cos(vehicule.angle-20)*Hauteur, vehicule.y+sin(vehicule.angle-20)*Hauteur)  # Bas droite
+        (x,y)=(vehicule.x,vehicule.y)
+        (xg,yg)=(x+vehicule.long*2,y-(vehicule.long//2))
+        (xd,yd)=(x+vehicule.long*2,y+(vehicule.long//2))
+        point_Rarr = (x, y)  # Sommet
+        point_Rgauch = (x+(xg-x)*math.cos(vehicule.angle)-(yg-y)*math.sin(vehicule.angle),y+(xg-x)*math.sin(vehicule.angle)+(yg-y)*math.cos(vehicule.angle))  # Bas gauche
+        point_Rdroite = (x+(xd-x)*math.cos(vehicule.angle)-(yd-y)*math.sin(vehicule.angle),y+(xd-x)*math.sin(vehicule.angle)+(yd-y)*math.cos(vehicule.angle))  # Bas droite
         # Afficher le véhicule
         pygame.draw.polygon(screen, couleur_vehicule,[point_Rarr,point_Rgauch,point_Rdroite])
 

@@ -3,10 +3,11 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, x, y, vitesse, nb_roues):
+    def __init__(self, nom, x, y, vitesse, nb_roues,long):
         self.nom = nom
         self.x = x
         self.y = y
+        self.long=long
         self.angle = 0
         self.direction_x = 1
         self.direction_y = 0

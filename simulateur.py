@@ -18,7 +18,7 @@ ROUGE = (255, 0, 0)
 
 # Création de l'environnement et d'un véhicule
 environnement = Environnement(LARGEUR, HAUTEUR)
-vehicule = Vehicule("Voiture", 200, HAUTEUR // 2, 0, 4)
+vehicule = Vehicule("Voiture", 200, HAUTEUR // 2, 0, 3,150)
 
 # Fonction pour afficher les instructions
 def afficher_instructions():
