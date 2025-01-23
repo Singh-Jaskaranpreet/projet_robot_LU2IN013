@@ -3,18 +3,19 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, x, y, vitesse, nb_roues,long):
+    def __init__(self, nom, vitesse, r_Avg, r_Avd, r_Ar,coord, long):
         self.nom = nom
-        self.x = x
-        self.y = y
         self.long=long
+    
         self.angle = 0
         self.direction_x = 1
         self.direction_y = 0
         self.vitesse = vitesse
-        self.nb_roues = nb_roues
-        self.starting_point_x=x
-        self.starting_point_y=y
+        self.r_Ar=(coord[0],coord[1])
+        self.r_Avd=(coord[0]+long*2,coord[1]-(long//2))
+        self.r_Avg=((coord[0]+long*2,coord[1]+(long//2)))
+        self.starting_point_x=coord[0]
+        self.starting_point_y=coord[1]
 
     
     def acceleration(self, acc):
@@ -27,10 +28,14 @@ class Vehicule:
         self.vitesse = 0
 
     def bouger_x(self):
-        self.x += self.vitesse*self.direction_x
+        self.r_Ar[0] += self.vitesse*self.direction_x
+        self.r_Avd[0] += self.vitesse*self.direction_x
+        self.r_Avg[0] += self.vitesse*self.direction_x
     #ici on diminue y pour monter car dans pygame l'origine se trouve en haut à gauche et y augmente vers le bas
     def bouger_y(self):
-        self.y -= self.vitesse*self.direction_y
+        self.r_Ar[1] += self.vitesse*self.direction_x
+        self.r_Avd[1] += self.vitesse*self.direction_x
+        self.r_Avg[1] += self.vitesse*self.direction_x
 
     def tourner_gauche(self):
         self.angle = self.angle + 1
