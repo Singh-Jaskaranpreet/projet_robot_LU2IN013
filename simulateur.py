@@ -20,6 +20,12 @@ ROUGE = (255, 0, 0)
 environnement = Environnement(LARGEUR, HAUTEUR)
 vehicule = Vehicule("Voiture", 200, HAUTEUR // 2, 0, 3,150)
 
+
+
+
+tmp=[pygame.Rect(750, 200, 10, 400)]
+
+
 # Fonction pour afficher les instructions
 def afficher_instructions():
     font = pygame.font.SysFont(None, 36)
@@ -78,6 +84,6 @@ while True:
 
     # Affichage
     screen.fill(BLANC)
-    environnement.afficher(screen, vehicule, ROUGE, NOIR)
+    environnement.afficher(screen, vehicule, ROUGE, NOIR, tmp)
     pygame.display.flip()
     clock.tick(60)
