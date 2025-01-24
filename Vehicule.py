@@ -3,17 +3,16 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, vitesse, r_Avg, r_Avd, r_Ar,coord, long):
+    def __init__(self, nom, vitesse,coord, long):
         self.nom = nom
         self.long=long
-    
         self.angle = 0
         self.direction_x = 1
         self.direction_y = 0
         self.vitesse = vitesse
-        self.r_Ar=(coord[0],coord[1])
-        self.r_Avd=(coord[0]+long*2,coord[1]-(long//2))
-        self.r_Avg=((coord[0]+long*2,coord[1]+(long//2)))
+        self.r_Ar=[coord[0],coord[1]]
+        self.r_Avd=[coord[0]+long*m.cos(m.pi/9),coord[1]+long*m.sin(m.pi/9)]
+        self.r_Avg=[coord[0]+long*m.cos(m.pi/9),coord[1]-long*m.sin(m.pi/9)]
         self.starting_point_x=coord[0]
         self.starting_point_y=coord[1]
 
@@ -33,25 +32,35 @@ class Vehicule:
         self.r_Avg[0] += self.vitesse*self.direction_x
     #ici on diminue y pour monter car dans pygame l'origine se trouve en haut à gauche et y augmente vers le bas
     def bouger_y(self):
-        self.r_Ar[1] += self.vitesse*self.direction_x
-        self.r_Avd[1] += self.vitesse*self.direction_x
-        self.r_Avg[1] += self.vitesse*self.direction_x
+        self.r_Ar[1] += self.vitesse*self.direction_y
+        self.r_Avd[1] += self.vitesse*self.direction_y
+        self.r_Avg[1] += self.vitesse*self.direction_y
 
     def tourner_gauche(self):
-        self.angle = self.angle + 1
-        tmp = (self.angle/180)*m.pi
-        self.direction_x= m.cos(tmp)
-        self.direction_y= m.sin(tmp)
-
-    def tourner_droite(self):
         self.angle = self.angle - 1
         tmp = (self.angle/180)*m.pi
         self.direction_x= m.cos(tmp)
         self.direction_y= m.sin(tmp)
+        self.r_Avg[0]=self.r_Ar[0]+self.long*m.cos(((self.angle+20)/180)*m.pi)
+        self.r_Avg[1]=self.r_Ar[1]+self.long*m.sin(((self.angle+20)/180)*m.pi)
+        self.r_Avd[0]=self.r_Ar[0]+self.long*m.cos(((self.angle-20)/180)*m.pi)
+        self.r_Avd[1]=self.r_Ar[1]+self.long*m.sin(((self.angle-20)/180)*m.pi)
+
+    def tourner_droite(self):
+        self.angle = self.angle + 1
+        tmp = (self.angle/180)*m.pi
+        self.direction_x= m.cos(tmp)
+        self.direction_y= m.sin(tmp)
+        self.r_Avg[0]=self.r_Ar[0]+self.long*m.cos(((self.angle+20)/180)*m.pi)
+        self.r_Avg[1]=self.r_Ar[1]+self.long*m.sin(((self.angle+20)/180)*m.pi)
+        self.r_Avd[0]=self.r_Ar[0]+self.long*m.cos(((self.angle-20)/180)*m.pi)
+        self.r_Avd[1]=self.r_Ar[1]+self.long*m.sin(((self.angle-20)/180)*m.pi)
+        
 
     def restart(self):
-        self.x=self.starting_point_x
-        self.y=self.starting_point_y
+        self.r_Ar=[self.starting_point_x,self.starting_point_y]
+        self.r_Avd=[self.starting_point_x+self.long*m.cos(m.pi/9),self.starting_point_y+self.long*m.sin(m.pi/9)]
+        self.r_Avg=[self.starting_point_x+self.long*m.cos(m.pi/9),self.starting_point_y-self.long*m.sin(m.pi/9)]
         self.angle = 0
         self.direction_x = 1
         self.direction_y = 0
@@ -59,27 +68,36 @@ class Vehicule:
 
     def gerer_controles(self, keys):
     #ici dir est utilisé pour mémoriser la direction(dernière touche appuyée)
-    
+        dir = 10
+
         if keys[pygame.K_RIGHT]:
-            self.tourner_droite()
+            #self.tourner_droite()
+            dir=1
+
+        elif keys[pygame.K_LEFT]:
+            #self.tourner_gauche()
+            dir=-1
             
         elif keys[pygame.K_UP]:
-            self.acceleration(0.2)
-            
-        elif keys[pygame.K_LEFT]:
-            self.tourner_gauche()
+            #self.acceleration(0.2)
+            dir=2          
             
         elif keys[pygame.K_DOWN]:
-            self.deceleration(0.2)
+            #self.deceleration(0.2)
+            dir=-2
             
         elif keys[pygame.K_SPACE]:
-            self.arret()
+            #self.arret()
+            dir=5
             
         elif keys[pygame.K_r]:
-            self.restart()
+            #self.restart()
+            dir=6
             
-        if self.vitesse != 0 :
-            self.bouger_x()
-            self.bouger_y()
+        #if self.vitesse != 0 :
+            #self.bouger_x()
+            #self.bouger_y()
+
+        return dir
 
 

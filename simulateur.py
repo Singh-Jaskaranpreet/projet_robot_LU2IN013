@@ -7,7 +7,7 @@ from Environnement import *
 pygame.init()
 
 # Dimensions de la fenêtre
-LARGEUR, HAUTEUR = 1080, 800
+LARGEUR, HAUTEUR = 1200, 800
 screen = pygame.display.set_mode((LARGEUR, HAUTEUR))
 pygame.display.set_caption("Simulation de Véhicule")
 
@@ -18,7 +18,7 @@ ROUGE = (255, 0, 0)
 
 # Création de l'environnement et d'un véhicule
 environnement = Environnement(LARGEUR, HAUTEUR)
-vehicule = Vehicule("Voiture", 200, HAUTEUR // 2, 0, 3,150)
+vehicule = Vehicule("Voiture", 0 ,(200,HAUTEUR//2),150)
 
 # Fonction pour afficher les instructions
 def afficher_instructions():
@@ -70,9 +70,35 @@ while True:
 
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
-    vehicule.gerer_controles(keys)
+    dir=vehicule.gerer_controles(keys)
 
-
+    if dir == 1:
+        vehicule.tourner_droite()
+        dir = 10
+            
+    elif dir == 2:
+        vehicule.acceleration(0.2)
+        dir = 10
+            
+    elif dir == -1:
+        vehicule.tourner_gauche()
+        dir = 10
+            
+    elif dir == -2:
+        vehicule.deceleration(0.2)
+        dir = 10
+            
+    elif dir == 5:
+        vehicule.arret()
+        dir = 10
+            
+    elif dir == 6:
+        vehicule.restart()
+        dir = 10
+            
+    if vehicule.vitesse != 0 :
+        vehicule.bouger_x()
+        vehicule.bouger_y()
 
     environnement.mise_a_jour(vehicule)
 
