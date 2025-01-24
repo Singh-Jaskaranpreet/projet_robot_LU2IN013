@@ -72,29 +72,29 @@ while True:
     keys = pygame.key.get_pressed()
     dir=vehicule.gerer_controles(keys)
 
-    if dir == 1:
+    if dir == "droite":
         vehicule.tourner_droite()
-        dir = 10
+        dir = ""
             
-    elif dir == 2:
+    elif dir == "acceleration":
         vehicule.acceleration(0.2)
-        dir = 10
+        dir = ""
             
-    elif dir == -1:
+    elif dir == "gauche":
         vehicule.tourner_gauche()
-        dir = 10
+        dir = ""
             
-    elif dir == -2:
+    elif dir == "deceleration":
         vehicule.deceleration(0.2)
-        dir = 10
+        dir = ""
             
-    elif dir == 5:
+    elif dir == "stop":
         vehicule.arret()
-        dir = 10
+        dir = ""
             
-    elif dir == 6:
+    elif dir == "restart":
         vehicule.restart()
-        dir = 10
+        dir = ""
             
     if vehicule.vitesse != 0 :
         vehicule.bouger_x()

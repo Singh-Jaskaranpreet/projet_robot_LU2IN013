@@ -68,31 +68,31 @@ class Vehicule:
 
     def gerer_controles(self, keys):
     #ici dir est utilisé pour mémoriser la direction(dernière touche appuyée)
-        dir = 10
+        dir = ""
 
         if keys[pygame.K_RIGHT]:
             #self.tourner_droite()
-            dir=1
+            dir="droite"
 
         elif keys[pygame.K_LEFT]:
             #self.tourner_gauche()
-            dir=-1
+            dir="gauche"
             
         elif keys[pygame.K_UP]:
             #self.acceleration(0.2)
-            dir=2          
+            dir="acceleration"        
             
         elif keys[pygame.K_DOWN]:
             #self.deceleration(0.2)
-            dir=-2
+            dir="deceleration"
             
         elif keys[pygame.K_SPACE]:
             #self.arret()
-            dir=5
+            dir="stop"
             
         elif keys[pygame.K_r]:
             #self.restart()
-            dir=6
+            dir="restart"
             
         #if self.vitesse != 0 :
             #self.bouger_x()
