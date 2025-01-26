@@ -20,25 +20,21 @@ class Environnement:
             vehicule.arret()
 
     def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte, objects):
-        # Afficher le véhicule
-        rb=[[vehicule.r_Ar,vehicule.r_Avg,vehicule.r_Avd]]
-                # Afficher le véhicule
-        for v in rb:
-            voi=pygame.draw.polygon(screen, couleur_vehicule,v)
-        #pygame.draw.polygon(screen, couleur_vehicule,[vehicule.r_Ar,vehicule.r_Avg,vehicule.r_Avd])
+    # Afficher le véhicule
+        points_triangle = [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]
+        pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
 
-         # Création de l'obstacle numéro 1
-        
         for obj in objects:
-            pygame.draw.rect(screen, (0,0,0), obj)
-        if voi.colliderect(obj):
-            if vehicule.vitesse > 0:
-                print('il y a un choc')
-            vehicule.arret()
-            vehicule.vitesse = 0
-            
+            pygame.draw.rect(screen, (0, 0, 0), obj)
+
+            # Vérifier la collision triangle-rectangle
+            for point in points_triangle:
+                if obj.collidepoint(point):
+                    print("Collision détectée : sommet")
+                    vehicule.arret()
+                    break
 
         # Afficher la vitesse
         font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {abs(vehicule.vitesse*2)} m/s", True, couleur_texte)
+        vitesse_text = font.render(f"Vitesse: {abs(vehicule.vitesse * 2)} m/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
