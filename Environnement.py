@@ -9,15 +9,19 @@ class Environnement:
         self.hauteur = hauteur
 
     def mise_a_jour(self, vehicule):
-        # Arrêter le véhicule si proche du bord droit
-        if (vehicule.r_Avg[0] + 10 > self.largeur or vehicule.r_Avd[0] + 10 > self.largeur or vehicule.r_Ar[0] + 10 > self.largeur) :  # 25 est le rayon du cercle
+    # Arrêter le véhicule si proche du bord droit
+        if (vehicule.r_Avg[0] + 10 > self.largeur or vehicule.r_Avd[0] + 10 > self.largeur or vehicule.r_Ar[0] + 10 > self.largeur):
+         vehicule.arret()
+    # Arrêter le véhicule si proche du bord gauche
+        elif (vehicule.r_Avg[0] - 10 < 0 or vehicule.r_Avd[0] - 10 < 0 or vehicule.r_Ar[0] - 10 < 0):
             vehicule.arret()
-        elif (vehicule.r_Avg[0] - 10 < 0 or vehicule.r_Avd[0] - 10 < 0 or vehicule.r_Ar[0] -10 < 0) :  # 25 est le rayon du cercle
+    # Arrêter le véhicule si proche du bord bas
+        elif (vehicule.r_Avg[1] + 10 > self.hauteur or vehicule.r_Avd[1] + 10 > self.hauteur or vehicule.r_Ar[1] + 10 > self.hauteur):
             vehicule.arret()
-        elif (vehicule.r_Avg[1] + 10 > self.hauteur or vehicule.r_Avd[1] + 10 > self.hauteur or vehicule.r_Ar[1] + 10 > self .hauteur) :  # 25 est le rayon du cercle
+    # Arrêter le véhicule si proche du bord haut
+        elif (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0):
             vehicule.arret()
-        elif (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0 ) :  # 25 est le rayon du cercle
-            vehicule.arret()
+
 
     def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte, objects):
     # Afficher le véhicule
