@@ -5,29 +5,43 @@ from time import sleep
 class Environnement:
 
     def __init__(self, largeur, hauteur):
+        """
+        Initialise l'environnement avec la largeur et la hauteur spécifiées.
+        """
         self.largeur = largeur
         self.hauteur = hauteur
 
     def mise_a_jour(self, vehicule):
-    # Arrêter le véhicule si proche du bord droit
+        """
+        Met à jour l'état de l'environnement. Si le véhicule est trop proche des bords de l'écran,
+        il est arrêté.
+        """
+        # Arrêter le véhicule si proche du bord droit
         if (vehicule.r_Avg[0] + 10 > self.largeur or vehicule.r_Avd[0] + 10 > self.largeur or vehicule.r_Ar[0] + 10 > self.largeur):
-         vehicule.arret()
-    # Arrêter le véhicule si proche du bord gauche
+            vehicule.arret()
+
+        # Arrêter le véhicule si proche du bord gauche
         elif (vehicule.r_Avg[0] - 10 < 0 or vehicule.r_Avd[0] - 10 < 0 or vehicule.r_Ar[0] - 10 < 0):
             vehicule.arret()
-    # Arrêter le véhicule si proche du bord bas
+
+        # Arrêter le véhicule si proche du bord bas
         elif (vehicule.r_Avg[1] + 10 > self.hauteur or vehicule.r_Avd[1] + 10 > self.hauteur or vehicule.r_Ar[1] + 10 > self.hauteur):
             vehicule.arret()
-    # Arrêter le véhicule si proche du bord haut
+
+        # Arrêter le véhicule si proche du bord haut
         elif (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0):
             vehicule.arret()
 
-
     def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte, objects):
-    # Afficher le véhicule
+        """
+        Affiche l'environnement, y compris le véhicule, les objets (obstacles),
+        et la vitesse du véhicule.
+        """
+        # Afficher le véhicule sous forme de triangle
         points_triangle = [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]
         pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
 
+        # Afficher les objets (obstacles)
         for obj in objects:
             pygame.draw.rect(screen, (0, 0, 0), obj)
 
@@ -48,6 +62,7 @@ class Environnement:
 
         collision_detected = False
 
+        # Vérifier chaque arête du triangle contre les bords du rectangle
         for t_edge in triangle_edges:
             for i in range(0, len(rectangle_edges), 2):
                 r_edge = (rectangle_edges[i], rectangle_edges[i + 1])
@@ -58,11 +73,10 @@ class Environnement:
                 vehicule.arret()
                 break
 
-        # Afficher la vitesse
+        # Afficher la vitesse du véhicule à l'écran
         font = pygame.font.SysFont(None, 36)
         vitesse_text = font.render(f"Vitesse: {abs(vehicule.vitesse * 2)} m/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
-
 
     def segments_intersect(self, seg1, seg2):
         """
@@ -70,29 +84,35 @@ class Environnement:
         Chaque segment est défini par deux points : ((x1, y1), (x2, y2))
         """
         def orientation(p, q, r):
-            # Calculer l'orientation du triplet (p, q, r)
+            """
+            Calcule l'orientation du triplet de points (p, q, r).
+            Retourne 0 si colinéaire, 1 pour anti-horaire et -1 pour horaire.
+            """
             val = (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1])
             if val == 0:
                 return 0  # Colinéaire
             return 1 if val > 0 else -1
 
         def on_segment(p, q, r):
-            # Vérifier si q est sur le segment pr
+            """
+            Vérifie si le point q est sur le segment pr.
+            """
             return (min(p[0], r[0]) <= q[0] <= max(p[0], r[0])) and (min(p[1], r[1]) <= q[1] <= max(p[1], r[1]))
 
         p1, q1 = seg1
         p2, q2 = seg2
 
+        # Calcul des orientations
         o1 = orientation(p1, q1, p2)
         o2 = orientation(p1, q1, q2)
         o3 = orientation(p2, q2, p1)
         o4 = orientation(p2, q2, q1)
 
-        # Cas général
+        # Cas général (les segments se croisent)
         if o1 != o2 and o3 != o4:
             return True
 
-        # Cas particuliers : Les segments sont colinéaires
+        # Cas particuliers : segments colinéaires
         if o1 == 0 and on_segment(p1, p2, q1):
             return True
         if o2 == 0 and on_segment(p1, q2, q1):
@@ -103,8 +123,12 @@ class Environnement:
             return True
 
         return False
-    
+
     def collision_predeplacement(self, vehicule, objects):
+        """
+        Vérifie si une collision se produira lors du prochain déplacement du véhicule.
+        Retourne True si une collision est détectée, sinon False.
+        """
         # Points actuels du véhicule
         points_triangle = [
             vehicule.r_Ar,
@@ -116,8 +140,9 @@ class Environnement:
         prochain_points_triangle = [
             [p[0] + vehicule.vitesse * vehicule.direction_x, p[1] + vehicule.vitesse * vehicule.direction_y]
             for p in points_triangle
-            ]
+        ]
 
+        # Vérifier les collisions avec les objets
         for obj in objects:
             # Convertir l'obstacle en segments
             rectangle_edges = [
@@ -125,22 +150,21 @@ class Environnement:
                 (obj.topright, obj.bottomright),
                 (obj.bottomright, obj.bottomleft),
                 (obj.bottomleft, obj.topleft),
-                ]
+            ]
 
-            # Vérifier la collision avec chaque arête du rectangle
+            # Vérifier la collision avec chaque arête du triangle
             for t_edge in [
                     (prochain_points_triangle[0], prochain_points_triangle[1]),
                     (prochain_points_triangle[1], prochain_points_triangle[2]),
-                (prochain_points_triangle[2], prochain_points_triangle[0]),
-                ]:
+                    (prochain_points_triangle[2], prochain_points_triangle[0]),
+            ]:
                 for r_edge in rectangle_edges:
                     if self.segments_intersect(t_edge, r_edge):
-                        print("oh là là le pare choc")
+                        print("oh là là le pare choc!! My G-WAGON")
                         return True
 
         return False
 
-    
     def corriger_position_apres_collision(self, vehicule, objects):
         """
         Corrige la position du véhicule si une collision est détectée.
@@ -150,8 +174,9 @@ class Environnement:
             vehicule.r_Ar,
             vehicule.r_Avg,
             vehicule.r_Avd
-            ]
+        ]
 
+        # Vérifier les collisions et repositionner le véhicule si nécessaire
         for obj in objects:
             rectangle_edges = [
                 (obj.topleft, obj.topright),
@@ -160,6 +185,7 @@ class Environnement:
                 (obj.bottomleft, obj.topleft),
             ]
 
+            # Vérifier chaque arête du triangle
             for t_edge in [
                     (points_triangle[0], points_triangle[1]),
                     (points_triangle[1], points_triangle[2]),
@@ -184,16 +210,15 @@ class Environnement:
                 (obj.topright, obj.bottomright),
                 (obj.bottomright, obj.bottomleft),
                 (obj.bottomleft, obj.topleft),
-                ]
+            ]
 
             # Vérifier les intersections entre le nouveau triangle et les arêtes du rectangle
             for t_edge in [
                     (nouveau_triangle[0], nouveau_triangle[1]),
                     (nouveau_triangle[1], nouveau_triangle[2]),
                     (nouveau_triangle[2], nouveau_triangle[0]),
-                    ]:
+            ]:
                 for r_edge in rectangle_edges:
                     if self.segments_intersect(t_edge, r_edge):
                         return True  # Collision détectée, retour immédiat
         return False  # Aucune collision détectée
-
