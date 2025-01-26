@@ -1,5 +1,6 @@
 import pygame
 import math
+from time import sleep 
 
 class Environnement:
 
@@ -17,12 +18,14 @@ class Environnement:
             vehicule.arret()
         elif (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0 ) :  # 25 est le rayon du cercle
             vehicule.arret()
+
     def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte):
-               # Afficher le véhicule
-        pygame.draw.polygon(screen, couleur_vehicule,[vehicule.r_Ar,vehicule.r_Avg,vehicule.r_Avd])
+        # Points du triangle
+        
+        # Afficher le véhicule
+        pygame.draw.polygon(screen, couleur_vehicule,[point_Rarr,point_Rgauch,point_Rdroite])
 
         # Afficher la vitesse
         font = pygame.font.SysFont(None, 36)
         vitesse_text = font.render(f"Vitesse: {abs(vehicule.vitesse*2)} m/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
-
