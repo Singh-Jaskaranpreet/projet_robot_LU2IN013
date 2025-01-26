@@ -79,7 +79,7 @@ while True:
     dir=vehicule.gerer_controles(keys)
 
     if dir == "droite":
-        vehicule.tourner_droite()
+        vehicule.tourner_droite(environnement, tmp)
         dir = ""
             
     elif dir == "acceleration":
@@ -87,7 +87,7 @@ while True:
         dir = ""
             
     elif dir == "gauche":
-        vehicule.tourner_gauche()
+        vehicule.tourner_gauche(environnement, tmp)
         dir = ""
             
     elif dir == "deceleration":
@@ -102,9 +102,14 @@ while True:
         vehicule.restart()
         dir = ""
             
-    if vehicule.vitesse != 0 :
+    if not environnement.collision_predeplacement(vehicule, tmp):
         vehicule.bouger_x()
         vehicule.bouger_y()
+    else:
+        vehicule.arret()
+        environnement.corriger_position_apres_collision(vehicule, tmp)
+
+
 
     environnement.mise_a_jour(vehicule)
 
