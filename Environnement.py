@@ -19,21 +19,25 @@ class Environnement:
         # Arrêter le véhicule si proche du bord droit
         if (vehicule.r_Avg[0] + 10 > self.largeur or vehicule.r_Avd[0] + 10 > self.largeur or vehicule.r_Ar[0] + 10 > self.largeur):
             vehicule.arret()
+        if (vehicule.r_Avg[0] > self.largeur or vehicule.r_Avd[0] > self.largeur or vehicule.r_Ar[0] > self.largeur):
             vehicule.restart()
 
         # Arrêter le véhicule si proche du bord gauche
-        elif (vehicule.r_Avg[0] - 10 < 0 or vehicule.r_Avd[0] - 10 < 0 or vehicule.r_Ar[0] - 10 < 0):
+        if (vehicule.r_Avg[0] - 10 < 0 or vehicule.r_Avd[0] - 10 < 0 or vehicule.r_Ar[0] - 10 < 0):
             vehicule.arret()
+        if (vehicule.r_Avg[0] < 0 or vehicule.r_Avd[0] < 0 or vehicule.r_Ar[0] < 0):
             vehicule.restart()
 
         # Arrêter le véhicule si proche du bord bas
-        elif (vehicule.r_Avg[1] + 10 > self.hauteur or vehicule.r_Avd[1] + 10 > self.hauteur or vehicule.r_Ar[1] + 10 > self.hauteur):
+        if (vehicule.r_Avg[1] + 10 > self.hauteur or vehicule.r_Avd[1] + 10 > self.hauteur or vehicule.r_Ar[1] + 10 > self.hauteur):
             vehicule.arret()
+        if (vehicule.r_Avg[1] > self.hauteur or vehicule.r_Avd[1] > self.hauteur or vehicule.r_Ar[1] > self.hauteur):
             vehicule.restart()
 
         # Arrêter le véhicule si proche du bord haut
-        elif (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0):
+        if (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0):
             vehicule.arret()
+        if (vehicule.r_Avg[1] < 0 or vehicule.r_Avd[1]  < 0 or vehicule.r_Ar[1] < 0):
             vehicule.restart()
 
     def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte, objects):
@@ -79,7 +83,7 @@ class Environnement:
 
         # Afficher la vitesse du véhicule à l'écran
         font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {abs(vehicule.vitesse * 2)} m/s", True, couleur_texte)
+        vitesse_text = font.render(f"Vitesse: {round(abs(vehicule.vitesse * 2),3)} m/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
 
     def segments_intersect(self, seg1, seg2):

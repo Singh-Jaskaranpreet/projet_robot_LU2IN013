@@ -19,12 +19,12 @@ ROUGE = (255, 0, 0)
 
 # Création de l'environnement et d'un véhicule
 environnement = Environnement(LARGEUR, HAUTEUR)
-vehicule = Vehicule("Voiture", 0 ,(200,HAUTEUR//2),150)
+vehicule = Vehicule("Voiture", 0 ,(200,HAUTEUR//2),100)
 
 
 
 
-tmp=[pygame.Rect(randint(400, 900), randint(0,200), randint(10,100), randint(200,HAUTEUR//2))]
+tmp=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
 
 
 # Fonction pour afficher les instructions

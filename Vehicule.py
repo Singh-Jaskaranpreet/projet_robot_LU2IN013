@@ -11,8 +11,8 @@ class Vehicule:
         self.direction_y = 0
         self.vitesse = vitesse
         self.r_Ar=[coord[0],coord[1]]
-        self.r_Avd=[coord[0]+long*m.cos(m.pi/9),coord[1]+long*m.sin(m.pi/9)]
-        self.r_Avg=[coord[0]+long*m.cos(m.pi/9),coord[1]-long*m.sin(m.pi/9)]
+        self.r_Avd=[coord[0]+self.long*m.cos(m.pi/9),coord[1]+self.long*m.sin(m.pi/9)]
+        self.r_Avg=[coord[0]+self.long*m.cos(m.pi/9),coord[1]-self.long*m.sin(m.pi/9)]
         self.starting_point_x=coord[0]
         self.starting_point_y=coord[1]
 
