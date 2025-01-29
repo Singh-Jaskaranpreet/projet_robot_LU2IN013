@@ -2,6 +2,7 @@ import pygame
 import sys
 from Vehicule import *
 from Environnement import *
+from random import *
 
 # Initialisation de Pygame
 pygame.init()
@@ -23,7 +24,7 @@ vehicule = Vehicule("Voiture", 0 ,(200,HAUTEUR//2),150)
 
 
 
-tmp=[pygame.Rect(750, 200, 10, 400)]
+tmp=[pygame.Rect(randint(400, 900), randint(0,200), randint(10,100), randint(200,HAUTEUR//2))]
 
 
 # Fonction pour afficher les instructions

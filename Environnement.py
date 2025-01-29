@@ -19,18 +19,22 @@ class Environnement:
         # Arrêter le véhicule si proche du bord droit
         if (vehicule.r_Avg[0] + 10 > self.largeur or vehicule.r_Avd[0] + 10 > self.largeur or vehicule.r_Ar[0] + 10 > self.largeur):
             vehicule.arret()
+            vehicule.restart()
 
         # Arrêter le véhicule si proche du bord gauche
         elif (vehicule.r_Avg[0] - 10 < 0 or vehicule.r_Avd[0] - 10 < 0 or vehicule.r_Ar[0] - 10 < 0):
             vehicule.arret()
+            vehicule.restart()
 
         # Arrêter le véhicule si proche du bord bas
         elif (vehicule.r_Avg[1] + 10 > self.hauteur or vehicule.r_Avd[1] + 10 > self.hauteur or vehicule.r_Ar[1] + 10 > self.hauteur):
             vehicule.arret()
+            vehicule.restart()
 
         # Arrêter le véhicule si proche du bord haut
         elif (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0):
             vehicule.arret()
+            vehicule.restart()
 
     def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte, objects):
         """
