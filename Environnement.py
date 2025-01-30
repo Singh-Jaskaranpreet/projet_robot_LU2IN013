@@ -11,8 +11,10 @@ class Environnement:
         self.largeur = largeur
         self.hauteur = hauteur
 
+
     def mise_a_jour(self, vehicule):
         """
+Supprression de pycatch
         Met à jour l'état de l'environnement. Si le véhicule est trop proche des bords de l'écran,
         il est arrêté.
         """
