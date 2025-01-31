@@ -1,6 +1,5 @@
 import pygame
 import math
-from time import sleep 
 
 class Environnement:
 
