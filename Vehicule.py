@@ -30,10 +30,10 @@ class Vehicule:
 
     
     def acceleration(self, acc):
-        self.vitesse += acc
+        self.vitesse = min(self.vitesse + acc , 7.5)
 
     def deceleration(self, red):
-        self.vitesse = self.vitesse - red
+        self.vitesse = max(self.vitesse + red , -7.5)
 
     def arret(self):
         self.vitesse = 0
