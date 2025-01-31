@@ -33,7 +33,7 @@ class Vehicule:
         self.vitesse = min(self.vitesse + acc , 7.5)
 
     def deceleration(self, red):
-        self.vitesse = max(self.vitesse + red , -7.5)
+        self.vitesse = max(self.vitesse - red , -7.5)
 
     def arret(self):
         self.vitesse = 0
@@ -42,7 +42,7 @@ class Vehicule:
         """Déplace le véhicule en fonction de l'orientation, du braquage et des collisions."""
         if self.angle_braquage != 0 and self.vitesse != 0:
             # Rayon de courbure en fonction de l'angle de braquage
-            rayon_courbure = self.L / m.tan(m.radians(self.angle_braquage))
+            rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
             delta_angle = self.vitesse / rayon_courbure
             self.angle += m.degrees(delta_angle)
 
@@ -53,12 +53,12 @@ class Vehicule:
             self.r_Ar[1] + self.vitesse * m.sin(m.radians(self.angle))
         ]
         prochain_r_Avg = [
-            prochain_r_Ar[0] + self.L * m.cos(m.radians(self.angle + 20)),
-            prochain_r_Ar[1] + self.L * m.sin(m.radians(self.angle + 20))
+            prochain_r_Ar[0] + self.long * m.cos(m.radians(self.angle + 20)),
+            prochain_r_Ar[1] + self.long * m.sin(m.radians(self.angle + 20))
         ]
         prochain_r_Avd = [
-            prochain_r_Ar[0] + self.L * m.cos(m.radians(self.angle - 20)),
-            prochain_r_Ar[1] + self.L * m.sin(m.radians(self.angle - 20))
+            prochain_r_Ar[0] + self.long * m.cos(m.radians(self.angle - 20)),
+            prochain_r_Ar[1] + self.long * m.sin(m.radians(self.angle - 20))
         ]
 
         # Vérifier si le déplacement cause une collision
