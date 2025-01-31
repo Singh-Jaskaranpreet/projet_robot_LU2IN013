@@ -19,7 +19,7 @@ ROUGE = (255, 0, 0)
 
 # Création de l'environnement et d'un véhicule
 environnement = Environnement(LARGEUR, HAUTEUR)
-vehicule = Vehicule("Voiture", 0 ,(200,HAUTEUR//2),100)
+vehicule = Vehicule("Robot",0 , (200, HAUTEUR // 2), 75, nb_roues=3)
 
 
 
@@ -77,35 +77,29 @@ while True:
 
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
-    dir=vehicule.gerer_controles(keys)
 
-    if dir == "droite":
-        vehicule.tourner_droite(environnement, tmp)
-        dir = ""
+    if keys[pygame.K_RIGHT]:
+        vehicule.tourner("droite")
+
+    elif keys[pygame.K_LEFT]:
+        vehicule.tourner("gauche")
             
-    elif dir == "acceleration":
-        vehicule.acceleration(0.2)
-        dir = ""
+    if keys[pygame.K_UP]:
+        vehicule.acceleration(0.2)       
             
-    elif dir == "gauche":
-        vehicule.tourner_gauche(environnement, tmp)
-        dir = ""
-            
-    elif dir == "deceleration":
+    elif keys[pygame.K_DOWN]:
         vehicule.deceleration(0.2)
-        dir = ""
             
-    elif dir == "stop":
+    if keys[pygame.K_SPACE]:
         vehicule.arret()
-        dir = ""
-            
-    elif dir == "restart":
+        
+    if keys[pygame.K_r]:
         vehicule.restart()
-        dir = ""
+
+    
             
     if not environnement.collision_predeplacement(vehicule, tmp):
-        vehicule.bouger_x()
-        vehicule.bouger_y()
+        vehicule.bouger(environnement, tmp)
     else:
         vehicule.arret()
         environnement.corriger_position_apres_collision(vehicule, tmp)
