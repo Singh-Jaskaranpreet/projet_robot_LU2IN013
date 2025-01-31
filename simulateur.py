@@ -22,9 +22,48 @@ environnement = Environnement(LARGEUR, HAUTEUR)
 vehicule = Vehicule("Robot",0 , (200, HAUTEUR // 2), 75, nb_roues=3)
 
 
-
-
 tmp=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
+
+
+def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
+        """
+        Affiche l'environnement, y compris le véhicule, les objets (obstacles),
+        et la vitesse du véhicule.
+        """
+        # Afficher le véhicule sous forme de triangle
+        points_triangle = [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]
+        pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
+
+        # Dessiner les roues arrière
+        pygame.draw.circle(screen, (0, 0, 0), (int(vehicule.r_Ar[0]), int(vehicule.r_Ar[1])), 3)
+
+        # Dessiner les roues avant (ovales) avec la rotation du braquage
+        largeur_roue = 10  # Largeur de l'ellipse
+        hauteur_roue = 5  # Hauteur de l'ellipse
+
+        for roue in [vehicule.r_Avg, vehicule.r_Avd]:
+            x, y = roue
+            rect = pygame.Rect(x - largeur_roue // 2, y - hauteur_roue // 2, largeur_roue, hauteur_roue)
+
+            # Appliquer l'orientation globale (vehicule.angle) + l'angle des roues (vehicule.angle_braquage)
+            rotation_totale = vehicule.angle + vehicule.angle_braquage
+            surface_roue = pygame.Surface((largeur_roue, hauteur_roue), pygame.SRCALPHA)
+            pygame.draw.ellipse(surface_roue, (0, 0, 0), (0, 0, largeur_roue, hauteur_roue))
+
+            # Appliquer la rotation
+            surface_roue = pygame.transform.rotate(surface_roue, -rotation_totale)
+            rect = surface_roue.get_rect(center=(x, y))
+            screen.blit(surface_roue, rect.topleft)
+
+        # Afficher les objets (obstacles)
+        for obj in objects:
+            pygame.draw.rect(screen, (0, 0, 0), obj)
+
+
+        # Afficher la vitesse du véhicule à l'écran
+        font = pygame.font.SysFont(None, 36)
+        vitesse_text = font.render(f"Vitesse: {abs(vehicule.vitesse * 2)} m/s", True, couleur_texte)
+        screen.blit(vitesse_text, (10, 10))
 
 
 # Fonction pour afficher les instructions
