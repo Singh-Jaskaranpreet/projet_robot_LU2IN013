@@ -3,18 +3,30 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, vitesse,coord, long):
+    def __init__(self, nom, vitesse,coord, longueur, nb_roues):
         self.nom = nom
-        self.long=long
+        self.long=longueur # Distance entre les essieux
         self.angle = 0
         self.direction_x = 1
         self.direction_y = 0
         self.vitesse = vitesse
-        self.r_Ar=[coord[0],coord[1]]
-        self.r_Avd=[coord[0]+self.long*m.cos(m.pi/9),coord[1]+self.long*m.sin(m.pi/9)]
-        self.r_Avg=[coord[0]+self.long*m.cos(m.pi/9),coord[1]-self.long*m.sin(m.pi/9)]
         self.starting_point_x=coord[0]
         self.starting_point_y=coord[1]
+        self.angle_braquage = 0  # Angle des roues avant (en degrés)
+        self.nb_roues = nb_roues
+
+        # Position des roues arrière
+        self.r_Ar = [coord[0], coord[1]]
+
+        # Positions des roues avant avec l'angle initial
+        self.r_Avg = [
+            self.r_Ar[0] + self.long * m.cos(m.radians(self.angle + 20)),
+            self.r_Ar[1] + self.long * m.sin(m.radians(self.angle + 20))
+        ]
+        self.r_Avd = [
+            self.r_Ar[0] + self.long * m.cos(m.radians(self.angle - 20)),
+            self.r_Ar[1] + self.long * m.sin(m.radians(self.angle - 20))
+        ]
 
     
     def acceleration(self, acc):
