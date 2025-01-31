@@ -11,35 +11,6 @@ class Environnement:
         self.largeur = largeur
         self.hauteur = hauteur
 
-    def mise_a_jour(self, vehicule):
-        """
-        Met à jour l'état de l'environnement. Si le véhicule est trop proche des bords de l'écran,
-        il est arrêté.
-        """
-        # Arrêter le véhicule si proche du bord droit
-        if (vehicule.r_Avg[0] + 10 > self.largeur or vehicule.r_Avd[0] + 10 > self.largeur or vehicule.r_Ar[0] + 10 > self.largeur):
-            vehicule.arret()
-        if (vehicule.r_Avg[0] > self.largeur or vehicule.r_Avd[0] > self.largeur or vehicule.r_Ar[0] > self.largeur):
-            vehicule.restart()
-
-        # Arrêter le véhicule si proche du bord gauche
-        if (vehicule.r_Avg[0] - 10 < 0 or vehicule.r_Avd[0] - 10 < 0 or vehicule.r_Ar[0] - 10 < 0):
-            vehicule.arret()
-        if (vehicule.r_Avg[0] < 0 or vehicule.r_Avd[0] < 0 or vehicule.r_Ar[0] < 0):
-            vehicule.restart()
-
-        # Arrêter le véhicule si proche du bord bas
-        if (vehicule.r_Avg[1] + 10 > self.hauteur or vehicule.r_Avd[1] + 10 > self.hauteur or vehicule.r_Ar[1] + 10 > self.hauteur):
-            vehicule.arret()
-        if (vehicule.r_Avg[1] > self.hauteur or vehicule.r_Avd[1] > self.hauteur or vehicule.r_Ar[1] > self.hauteur):
-            vehicule.restart()
-
-        # Arrêter le véhicule si proche du bord haut
-        if (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0):
-            vehicule.arret()
-        if (vehicule.r_Avg[1] < 0 or vehicule.r_Avd[1]  < 0 or vehicule.r_Ar[1] < 0):
-            vehicule.restart()
-
 
     def segments_intersect(self, seg1, seg2):
         """
