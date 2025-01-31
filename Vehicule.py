@@ -158,3 +158,8 @@ class Vehicule:
         self.r_Avd[1] -= self.vitesse * self.direction_y
         self.r_Avg[0] -= self.vitesse * self.direction_x
         self.r_Avg[1] -= self.vitesse * self.direction_y
+
+    def braquer(self, angle):
+        """ Modifie l'angle de braquage des roues avant. """
+        self.angle_braquage += angle
+        self.angle_braquage = max(-45, min(45, self.angle_braquage))  # Limite réaliste
