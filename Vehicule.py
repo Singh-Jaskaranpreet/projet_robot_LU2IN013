@@ -48,61 +48,12 @@ class Vehicule:
         self.r_Avd[1] += self.vitesse*self.direction_y
         self.r_Avg[1] += self.vitesse*self.direction_y
 
-    def tourner_gauche(self, environnement, objects):
-        """
-        Tente de tourner à gauche, en vérifiant d'abord les collisions potentielles.
-        """
-        nouvel_angle = self.angle - 1
-        tmp = (nouvel_angle / 180) * m.pi
-
-        # Précalcul des positions après rotation
-        nouveau_r_Avg = [
-            self.r_Ar[0] + self.long * m.cos(((nouvel_angle + 20) / 180) * m.pi),
-            self.r_Ar[1] + self.long * m.sin(((nouvel_angle + 20) / 180) * m.pi),
-            ]
-        nouveau_r_Avd = [
-            self.r_Ar[0] + self.long * m.cos(((nouvel_angle - 20) / 180) * m.pi),
-            self.r_Ar[1] + self.long * m.sin(((nouvel_angle - 20) / 180) * m.pi),
-            ]
-
-        # Tester la collision
-        if not environnement.collision_pre_rotation([self.r_Ar, nouveau_r_Avg, nouveau_r_Avd], objects):
-            # Appliquer la rotation si elle est valide
-            self.angle = nouvel_angle
-            self.direction_x = m.cos(tmp)
-            self.direction_y = m.sin(tmp)
-            self.r_Avg = nouveau_r_Avg
-            self.r_Avd = nouveau_r_Avd
-        else:
-            print("oh là là, où tu crois tourner")
-            
-    def tourner_droite(self, environnement, objects):
-        """
-        Tente de tourner à droite, en vérifiant d'abord les collisions potentielles.
-        """
-        nouvel_angle = self.angle + 1
-        tmp = (nouvel_angle / 180) * m.pi
-
-        # Précalcul des positions après rotation
-        nouveau_r_Avg = [
-            self.r_Ar[0] + self.long * m.cos(((nouvel_angle + 20) / 180) * m.pi),
-            self.r_Ar[1] + self.long * m.sin(((nouvel_angle + 20) / 180) * m.pi),
-            ]
-        nouveau_r_Avd = [
-            self.r_Ar[0] + self.long * m.cos(((nouvel_angle - 20) / 180) * m.pi),
-            self.r_Ar[1] + self.long * m.sin(((nouvel_angle - 20) / 180) * m.pi),
-            ]
-
-        # Tester la collision
-        if not environnement.collision_pre_rotation([self.r_Ar, nouveau_r_Avg, nouveau_r_Avd], objects):
-            # Appliquer la rotation si elle est valide
-            self.angle = nouvel_angle
-            self.direction_x = m.cos(tmp)
-            self.direction_y = m.sin(tmp)
-            self.r_Avg = nouveau_r_Avg
-            self.r_Avd = nouveau_r_Avd
-        else:
-            print("oh là là, où tu crois tourner")
+    def tourner(self, direction):
+        """ Gère le braquage des roues en fonction de la direction. """
+        if direction == "gauche":
+            self.braquer(-1.5)
+        elif direction == "droite":
+            self.braquer(1.5)
 
     def restart(self):
         self.r_Ar=[self.starting_point_x,self.starting_point_y]
