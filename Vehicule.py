@@ -38,15 +38,39 @@ class Vehicule:
     def arret(self):
         self.vitesse = 0
 
-    def bouger_x(self):
-        self.r_Ar[0] += self.vitesse*self.direction_x
-        self.r_Avd[0] += self.vitesse*self.direction_x
-        self.r_Avg[0] += self.vitesse*self.direction_x
-    #ici on diminue y pour monter car dans pygame l'origine se trouve en haut à gauche et y augmente vers le bas
-    def bouger_y(self):
-        self.r_Ar[1] += self.vitesse*self.direction_y
-        self.r_Avd[1] += self.vitesse*self.direction_y
-        self.r_Avg[1] += self.vitesse*self.direction_y
+    def bouger(self, environnement, objects):
+        """Déplace le véhicule en fonction de l'orientation, du braquage et des collisions."""
+        if self.angle_braquage != 0 and self.vitesse != 0:
+            # Rayon de courbure en fonction de l'angle de braquage
+            rayon_courbure = self.L / m.tan(m.radians(self.angle_braquage))
+            delta_angle = self.vitesse / rayon_courbure
+            self.angle += m.degrees(delta_angle)
+
+
+        # Calculer les nouvelles coordonnées sans encore les appliquer
+        prochain_r_Ar = [
+            self.r_Ar[0] + self.vitesse * m.cos(m.radians(self.angle)),
+            self.r_Ar[1] + self.vitesse * m.sin(m.radians(self.angle))
+        ]
+        prochain_r_Avg = [
+            prochain_r_Ar[0] + self.L * m.cos(m.radians(self.angle + 20)),
+            prochain_r_Ar[1] + self.L * m.sin(m.radians(self.angle + 20))
+        ]
+        prochain_r_Avd = [
+            prochain_r_Ar[0] + self.L * m.cos(m.radians(self.angle - 20)),
+            prochain_r_Ar[1] + self.L * m.sin(m.radians(self.angle - 20))
+        ]
+
+        # Vérifier si le déplacement cause une collision
+        prochain_triangle = [prochain_r_Ar, prochain_r_Avg, prochain_r_Avd]
+        if environnement.collision_predeplacement(self, objects):
+            self.vitesse = 0  # Arrête le véhicule en cas de collision
+            return
+
+        # Appliquer les nouvelles coordonnées si aucune collision
+        self.r_Ar = prochain_r_Ar
+        self.r_Avg = prochain_r_Avg
+        self.r_Avd = prochain_r_Avd
 
     def tourner(self, direction):
         """ Gère le braquage des roues en fonction de la direction. """
