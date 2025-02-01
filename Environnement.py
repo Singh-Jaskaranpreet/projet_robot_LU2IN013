@@ -139,3 +139,10 @@ class Environnement:
                     if self.segments_intersect(t_edge, r_edge):
                         return True  # Collision détectée, retour immédiat
         return False  # Aucune collision détectée
+    
+    def collision_roue_arriere(self, vehicule, objects):
+        """ Vérifie si la roue arrière est en collision avec un obstacle. """
+        for obj in objects:
+            if obj.collidepoint(vehicule.r_Ar[0], vehicule.r_Ar[1]):
+                return True  # La roue arrière est bloquée
+        return False
