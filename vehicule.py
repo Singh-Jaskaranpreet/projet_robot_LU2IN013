@@ -7,6 +7,7 @@ class Vehicule:
         self.nom = nom
         self.long=longueur # Distance entre les essieux
         self.angle = 0
+        self.p_centre = p_centre
         self.direction_x = 1
         self.direction_y = 0
         self.vitesse = vitesse
@@ -49,8 +50,6 @@ class Vehicule:
             self.p_centre[1] + self.vitesse * m.sin(m.radians(self.angle))
         ]
         
-        # Vérifier si le déplacement cause une collision
-        prochain_triangle = [self.position_des_roues(prochain_pos)]
         if environnement.collision_predeplacement(self, objects):
             self.vitesse = 0  # Arrête le véhicule en cas de collision
             return
@@ -78,12 +77,8 @@ class Vehicule:
         """
         Recule légèrement pour empêcher le véhicule d'entrer dans un obstacle.
         """
-        self.r_Ar[0] -= self.vitesse * self.direction_x
-        self.r_Ar[1] -= self.vitesse * self.direction_y
-        self.r_Avd[0] -= self.vitesse * self.direction_x
-        self.r_Avd[1] -= self.vitesse * self.direction_y
-        self.r_Avg[0] -= self.vitesse * self.direction_x
-        self.r_Avg[1] -= self.vitesse * self.direction_y
+        self.p_centre[0] -= self.vitesse * self.direction_x
+        self.p_centre[1] -= self.vitesse * self.direction_y
 
     def braquer(self, angle):
         """ Modifie l'angle de braquage des roues avant. """

@@ -31,17 +31,17 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
         et la vitesse du véhicule.
         """
         # Afficher le véhicule sous forme de triangle
-        points_triangle = [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]
+        points_triangle = vehicule.position_des_roues(vehicule.p_centre)
         pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
 
         # Dessiner les roues arrière
-        pygame.draw.circle(screen, (0, 0, 0), (int(vehicule.r_Ar[0]), int(vehicule.r_Ar[1])), 3)
+        pygame.draw.circle(screen, (0, 0, 0), (int(vehicule.position_des_roues(vehicule.p_centre)[0][0]), int(vehicule.position_des_roues(vehicule.p_centre)[1][1])), 3)
 
         # Dessiner les roues avant (ovales) avec la rotation du braquage
         largeur_roue = 10  # Largeur de l'ellipse
         hauteur_roue = 5  # Hauteur de l'ellipse
-
-        for roue in [vehicule.r_Avg, vehicule.r_Avd]:
+        roues = vehicule.position_des_roues(vehicule.p_centre)
+        for roue in [roues[1],roues[2]]:
             x, y = roue
             rect = pygame.Rect(x - largeur_roue // 2, y - hauteur_roue // 2, largeur_roue, hauteur_roue)
 
@@ -95,7 +95,7 @@ def afficher_instructions():
 
 def rester_dans_limites(vehicule):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
-        for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
+        for point in vehicule.position_des_roues(vehicule.p_centre):
             if point[0] < 10 or point[0] > LARGEUR - 10  or point[1] < 10 or point[1] > HAUTEUR - 10 :
                 vehicule.arret()
                 return

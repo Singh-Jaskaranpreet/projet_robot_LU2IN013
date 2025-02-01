@@ -63,11 +63,7 @@ class Environnement:
         Retourne True si une collision est détectée, sinon False.
         """
         # Points actuels du véhicule
-        points_triangle = [
-            vehicule.r_Ar,
-            vehicule.r_Avg,
-            vehicule.r_Avd,
-        ]
+        points_triangle = vehicule.position_des_roues(vehicule.p_centre)
 
         # Prochaines positions en fonction de la vitesse
         prochain_points_triangle = [
@@ -103,11 +99,7 @@ class Environnement:
         Corrige la position du véhicule si une collision est détectée.
         Le véhicule sera repositionné juste avant de toucher l'obstacle.
         """
-        points_triangle = [
-            vehicule.r_Ar,
-            vehicule.r_Avg,
-            vehicule.r_Avd
-        ]
+        points_triangle = vehicule.position_des_roues(vehicule.p_centre)
 
         # Vérifier les collisions et repositionner le véhicule si nécessaire
         for obj in objects:
