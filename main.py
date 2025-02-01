@@ -34,14 +34,14 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
         points_triangle = vehicule.position_des_roues(vehicule.p_centre)
         pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
 
-        # Dessiner les roues arrière
-        pygame.draw.circle(screen, (0, 0, 0), (int(vehicule.position_des_roues(vehicule.p_centre)[0][0]), int(vehicule.position_des_roues(vehicule.p_centre)[1][1])), 3)
+        # Dessiner la roue arrière
+        pygame.draw.circle(screen, (0, 0, 0), (int(points_triangle[0][0]), int(points_triangle[0][1])), 3)
 
         # Dessiner les roues avant (ovales) avec la rotation du braquage
         largeur_roue = 10  # Largeur de l'ellipse
         hauteur_roue = 5  # Hauteur de l'ellipse
-        roues = vehicule.position_des_roues(vehicule.p_centre)
-        for roue in [roues[1],roues[2]]:
+        
+        for roue in [points_triangle[1],points_triangle[2]]:
             x, y = roue
             rect = pygame.Rect(x - largeur_roue // 2, y - hauteur_roue // 2, largeur_roue, hauteur_roue)
 
