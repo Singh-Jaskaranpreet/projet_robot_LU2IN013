@@ -96,10 +96,14 @@ def afficher_instructions():
 def rester_dans_limites(vehicule):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
         for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
-            if point[0] < 10 or point[0] > LARGEUR - 10  or point[1] < 10 or point[1] > HAUTEUR - 10 :
+            if point[0] < 5 or point[0] > LARGEUR - 5  or point[1] < 5 or point[1] > HAUTEUR - 5 :
                 vehicule.arret()
                 return
-
+def in_limite(vehicule):
+    for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
+        if point[0] < 5 or point[0] > LARGEUR - 5  or point[1] < 5 or point[1] > HAUTEUR - 5 :
+            return False
+    return True
 
 # Afficher l'écran d'instructions avant de commencer
 afficher_instructions()
@@ -144,15 +148,16 @@ while True:
     if keys[pygame.K_r]:
         vehicule.restart()
 
-    
-            
-    if not environnement.collision_predeplacement(vehicule, tmp):
+    print(f"distance de l'obstacle :{vehicule.mesurer_distance_obstacle(environnement, tmp)}", end = "\r" ) 
+
+    if in_limite(vehicule):        
         vehicule.bouger(environnement, tmp)
         rester_dans_limites(vehicule)
     else:
         vehicule.arret()
-        environnement.corriger_position_apres_collision(vehicule, tmp)
 
+
+    
 
 
     # Affichage
