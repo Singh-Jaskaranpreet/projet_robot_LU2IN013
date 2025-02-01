@@ -85,8 +85,9 @@ class Vehicule:
         """ Simule un capteur infrarouge détectant la distance jusqu'au premier obstacle en face du véhicule. """
     
         # 🔹 Position du capteur (au centre des roues avant)
-        capteur_x = (self.r_Avg[0] + self.r_Avd[0]) / 2
-        capteur_y = (self.r_Avg[1] + self.r_Avd[1]) / 2
+        roues = self.position_des_roues(self.p_centre)
+        capteur_x = (roues[1][0] + roues[2][0]) / 2
+        capteur_y = (roues[1][1] + roues[2][1]) / 2
 
         # 🔹 Paramètres du capteur
         max_distance = 1000  # Distance maximale du capteur (en pixels)

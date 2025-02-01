@@ -94,7 +94,7 @@ def afficher_instructions():
 
 
 def in_limite(vehicule):
-    for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
+    for point in vehicule.position_des_roues(vehicule.p_centre):
         if point[0] < 0 or point[0] > LARGEUR  or point[1] < 0 or point[1] > HAUTEUR :
             return False
     return True

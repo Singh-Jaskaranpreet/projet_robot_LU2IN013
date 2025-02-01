@@ -57,7 +57,7 @@ class Environnement:
 
         return False
 
-    def collision_predeplacement(self, prochain_triangle, objects):
+    def collision_predeplacement(self, vehicule, objects):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
@@ -81,9 +81,9 @@ class Environnement:
             ]
 
             for t_edge in [
-                    (prochain_triangle[0], prochain_triangle[1]),
-                    (prochain_triangle[1], prochain_triangle[2]),
-                    (prochain_triangle[2], prochain_triangle[0]),
+                    (prochain_points_triangle[0], prochain_points_triangle[1]),
+                    (prochain_points_triangle[1], prochain_points_triangle[2]),
+                    (prochain_points_triangle[2], prochain_points_triangle[0]),
             ]:
                 for r_edge in rectangle_edges:
                     if self.segments_intersect(t_edge, r_edge):
