@@ -105,3 +105,22 @@ class Vehicule:
         """ Modifie l'angle de braquage des roues avant. """
         self.angle_braquage += angle
         self.angle_braquage = max(-45, min(45, self.angle_braquage))  # Limite réaliste
+
+    def mesurer_distance_obstacle(self, environnement, objects):
+        """ Simule un capteur infrarouge détectant la distance jusqu'à un obstacle devant le véhicule """
+        capteur_x = (self.r_Avg[0] + self.r_Avd[0]) / 2  # Position centrale entre les roues avant
+        capteur_y = (self.r_Avg[1] + self.r_Avd[1]) / 2
+
+        max_distance = 300  # Portée max du capteur
+        pas = 5  # Distance entre chaque point de détection
+        direction_angle = m.radians(self.angle)  # Convertir l'angle en radians
+
+        for d in range(0, max_distance, pas):
+            point_x = capteur_x + d * m.cos(direction_angle)
+            point_y = capteur_y + d * m.sin(direction_angle)
+
+            for obj in objects:  # Vérifier si ce point touche un obstacle
+                if obj.collidepoint(point_x, point_y):
+                    return d  # Retourne la distance au premier obstacle
+
+        return max_distance  # Aucune collision détectée
