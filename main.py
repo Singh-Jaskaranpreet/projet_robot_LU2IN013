@@ -1,7 +1,7 @@
 import pygame
 import sys
-from Vehicule import *
-from Environnement import *
+from vehicule import *
+from environnement import *
 from random import *
 
 # Initialisation de Pygame

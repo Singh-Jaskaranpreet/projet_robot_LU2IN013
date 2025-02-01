@@ -136,7 +136,8 @@ class Environnement:
         """
         Vérifie si le triangle `nouveau_triangle` entrerait en collision
         avec l'un des obstacles lors d'une rotation.
-        """
+    """
+        
         for obj in objects:
             rectangle_edges = [
                 (obj.topleft, obj.topright),
@@ -154,4 +155,4 @@ class Environnement:
                 for r_edge in rectangle_edges:
                     if self.segments_intersect(t_edge, r_edge):
                         return True  # Collision détectée, retour immédiat
-        return False  # Aucune collision détectée
+        return False  # Aucune collision détectée"""

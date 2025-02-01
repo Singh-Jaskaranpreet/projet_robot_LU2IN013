@@ -3,32 +3,28 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, vitesse,coord, longueur, nb_roues):
+    def __init__(self, nom, vitesse, p_centre ,longueur, nb_roues):
         self.nom = nom
         self.long=longueur # Distance entre les essieux
         self.angle = 0
         self.direction_x = 1
         self.direction_y = 0
         self.vitesse = vitesse
-        self.starting_point_x=coord[0]
-        self.starting_point_y=coord[1]
+        self.starting_point_x=p_centre[0]
+        self.starting_point_y=p_centre[1]
         self.angle_braquage = 0  # Angle des roues avant (en degrés)
         self.nb_roues = nb_roues
 
         # Position des roues arrière
-        self.r_Ar = [coord[0], coord[1]]
 
-        # Positions des roues avant avec l'angle initial
-        self.r_Avg = [
-            self.r_Ar[0] + self.long * m.cos(m.radians(self.angle + 20)),
-            self.r_Ar[1] + self.long * m.sin(m.radians(self.angle + 20))
-        ]
-        self.r_Avd = [
-            self.r_Ar[0] + self.long * m.cos(m.radians(self.angle - 20)),
-            self.r_Ar[1] + self.long * m.sin(m.radians(self.angle - 20))
-        ]
 
-    
+    def position_des_roues(self,point):
+        r_Ar = [point[0]-(self.long//2),point[1]]
+        r_Avg = [r_Ar[0] + self.long * m.cos(m.radians(self.angle + 20)),r_Ar[1] + self.long * m.sin(m.radians(self.angle + 20))]
+        r_Avd = [r_Ar[0] + self.long * m.cos(m.radians(self.angle - 20)),r_Ar[1] + self.long * m.sin(m.radians(self.angle - 20))]
+        return [r_Ar,r_Avg,r_Avd]
+     
+
     def acceleration(self, acc):
         self.vitesse = min(self.vitesse + acc , 7.5)
 
@@ -48,29 +44,19 @@ class Vehicule:
 
 
         # Calculer les nouvelles coordonnées sans encore les appliquer
-        prochain_r_Ar = [
-            self.r_Ar[0] + self.vitesse * m.cos(m.radians(self.angle)),
-            self.r_Ar[1] + self.vitesse * m.sin(m.radians(self.angle))
+        prochain_pos = [
+            self.p_centre[0] + self.vitesse * m.cos(m.radians(self.angle)),
+            self.p_centre[1] + self.vitesse * m.sin(m.radians(self.angle))
         ]
-        prochain_r_Avg = [
-            prochain_r_Ar[0] + self.long * m.cos(m.radians(self.angle + 20)),
-            prochain_r_Ar[1] + self.long * m.sin(m.radians(self.angle + 20))
-        ]
-        prochain_r_Avd = [
-            prochain_r_Ar[0] + self.long * m.cos(m.radians(self.angle - 20)),
-            prochain_r_Ar[1] + self.long * m.sin(m.radians(self.angle - 20))
-        ]
-
+        
         # Vérifier si le déplacement cause une collision
-        prochain_triangle = [prochain_r_Ar, prochain_r_Avg, prochain_r_Avd]
+        prochain_triangle = [self.position_des_roues(prochain_pos)]
         if environnement.collision_predeplacement(self, objects):
             self.vitesse = 0  # Arrête le véhicule en cas de collision
             return
 
         # Appliquer les nouvelles coordonnées si aucune collision
-        self.r_Ar = prochain_r_Ar
-        self.r_Avg = prochain_r_Avg
-        self.r_Avd = prochain_r_Avd
+        self.p_centre = prochain_pos
 
     def tourner(self, direction):
         """ Gère le braquage des roues en fonction de la direction. """
@@ -80,9 +66,7 @@ class Vehicule:
             self.braquer(1.5)
 
     def restart(self):
-        self.r_Ar=[self.starting_point_x,self.starting_point_y]
-        self.r_Avd=[self.starting_point_x+self.long*m.cos(m.pi/9),self.starting_point_y+self.long*m.sin(m.pi/9)]
-        self.r_Avg=[self.starting_point_x+self.long*m.cos(m.pi/9),self.starting_point_y-self.long*m.sin(m.pi/9)]
+        self.p_centre=[self.starting_point_x,self.starting_point_y]
         self.angle = 0
         self.direction_x = 1
         self.direction_y = 0
