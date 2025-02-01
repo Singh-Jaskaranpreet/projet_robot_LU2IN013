@@ -36,6 +36,12 @@ class Vehicule:
 
     def bouger(self, environnement, objects):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
+        if self.angle_braquage != 0 and self.vitesse != 0:
+            # Rayon de courbure en fonction de l'angle de braquage
+            rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
+            delta_angle = self.vitesse / rayon_courbure
+            self.angle += m.degrees(delta_angle)
+
 
         # Vérifier si la roue arrière est bloquée
         roue_ar_bloquee = environnement.collision_roue_arriere(self, objects)
