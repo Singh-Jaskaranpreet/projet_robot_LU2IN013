@@ -148,7 +148,7 @@ class Vehicule:
         self.r_Avg[1] -= self.vitesse * self.direction_y
 
 
-def mesurer_distance_obstacle(self, environnement, objects):
+    def mesurer_distance_obstacle(self, environnement, objects):
         """ Simule un capteur infrarouge détectant la distance jusqu'à un obstacle devant le véhicule """
         capteur_x = (self.r_Avg[0] + self.r_Avd[0]) / 2  # Position centrale entre les roues avant
         capteur_y = (self.r_Avg[1] + self.r_Avd[1]) / 2
@@ -167,3 +167,11 @@ def mesurer_distance_obstacle(self, environnement, objects):
 
         return max_distance  # Aucune collision détectée
 
+    def mesurer_distance_obstacle(self, environnement, objets):
+        """ Simule un capteur IR qui détecte la distance à l'obstacle le plus proche """
+        distances = []
+        for obj in objets:
+            dist = ((self.r_Avg[0] - obj.x) ** 2 + (self.r_Avg[1] - obj.y) ** 2) ** 0.5
+            distances.append(dist)
+    
+        return min(distances) if distances else float("inf")  # Distance minimale
