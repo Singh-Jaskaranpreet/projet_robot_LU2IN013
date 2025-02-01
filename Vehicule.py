@@ -5,7 +5,7 @@ class Vehicule:
 
     def __init__(self, nom, vitesse,coord, longueur, nb_roues):
         self.nom = nom
-        self.long=longueur # Distance entre les essieux
+        self.long=longueur/2 # Distance entre les essieux
         self.angle = 0
         self.direction_x = 1
         self.direction_y = 0
