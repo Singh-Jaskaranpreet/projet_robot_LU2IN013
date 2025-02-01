@@ -16,11 +16,12 @@ class Vehicule:
         self.angle_braquage = 0  # Angle des roues avant (en degrés)
         self.nb_roues = nb_roues
 
-    #Place les trois points du Triangle par rapport au centre
+    #Place les trois roues de la voiture
     def position_des_roues(self,point):
-        r_Ar = [point[0]-(self.long//2),point[1]]
-        r_Avg = [r_Ar[0] + self.long * m.cos(m.radians(self.angle + 20)),r_Ar[1] + self.long * m.sin(m.radians(self.angle + 20))]
-        r_Avd = [r_Ar[0] + self.long * m.cos(m.radians(self.angle - 20)),r_Ar[1] + self.long * m.sin(m.radians(self.angle - 20))]
+        hyp = self.long / m.cos(m.radians(20))
+        r_Ar = [point[0]-(self.long//2)*m.cos(m.radians(self.angle)),point[1]-m.sin(m.radians(self.angle)) ]
+        r_Avg = [r_Ar[0] + self.long * m.cos(m.radians(self.angle + 20)),r_Ar[1] + hyp * m.sin(m.radians(self.angle + 20))]
+        r_Avd = [r_Ar[0] + self.long * m.cos(m.radians(self.angle - 20)),r_Ar[1] + hyp * m.sin(m.radians(self.angle - 20))]
         return [r_Ar,r_Avg,r_Avd]
      
 

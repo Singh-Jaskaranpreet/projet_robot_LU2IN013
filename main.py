@@ -98,6 +98,8 @@ def rester_dans_limites(vehicule):
         for point in vehicule.position_des_roues(vehicule.p_centre):
             if point[0] < 10 or point[0] > LARGEUR - 10  or point[1] < 10 or point[1] > HAUTEUR - 10 :
                 vehicule.arret()
+            if point[0] < 10 or point[0] > LARGEUR - 10  or point[1] < 10 or point[1] > HAUTEUR - 10 :
+                vehicule.restart()
                 return
 
 
