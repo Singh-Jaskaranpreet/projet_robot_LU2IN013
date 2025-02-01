@@ -57,27 +57,12 @@ class Environnement:
 
         return False
 
-    def collision_predeplacement(self, vehicule, objects):
+    def collision_predeplacement(self, prochain_triangle, objects):
         """
-        Vérifie si une collision se produira lors du prochain déplacement du véhicule.
-        Retourne True si une collision est détectée, sinon False.
+        Vérifie si la future position du véhicule causera une collision.
+        `prochain_triangle` contient les positions calculées après déplacement.
         """
-        # Points actuels du véhicule
-        points_triangle = [
-            vehicule.r_Ar,
-            vehicule.r_Avg,
-            vehicule.r_Avd,
-        ]
-
-        # Prochaines positions en fonction de la vitesse
-        prochain_points_triangle = [
-            [p[0] + vehicule.vitesse * vehicule.direction_x, p[1] + vehicule.vitesse * vehicule.direction_y]
-            for p in points_triangle
-        ]
-
-        # Vérifier les collisions avec les objets
         for obj in objects:
-            # Convertir l'obstacle en segments
             rectangle_edges = [
                 (obj.topleft, obj.topright),
                 (obj.topright, obj.bottomright),
@@ -85,18 +70,17 @@ class Environnement:
                 (obj.bottomleft, obj.topleft),
             ]
 
-            # Vérifier la collision avec chaque arête du triangle
             for t_edge in [
-                    (prochain_points_triangle[0], prochain_points_triangle[1]),
-                    (prochain_points_triangle[1], prochain_points_triangle[2]),
-                    (prochain_points_triangle[2], prochain_points_triangle[0]),
+                    (prochain_triangle[0], prochain_triangle[1]),
+                    (prochain_triangle[1], prochain_triangle[2]),
+                    (prochain_triangle[2], prochain_triangle[0]),
             ]:
                 for r_edge in rectangle_edges:
                     if self.segments_intersect(t_edge, r_edge):
-                        print("oh là là le pare choc!! My G-WAGON")
-                        return True
+                        return True  # Collision détectée
 
-        return False
+        return False  # Pas de collision
+
 
     def corriger_position_apres_collision(self, vehicule, objects):
         """

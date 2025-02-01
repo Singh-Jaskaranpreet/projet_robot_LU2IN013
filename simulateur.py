@@ -94,11 +94,20 @@ def afficher_instructions():
 
 
 def rester_dans_limites(vehicule):
-        """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
-        for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
-            if point[0] < 5 or point[0] > LARGEUR - 5  or point[1] < 5 or point[1] > HAUTEUR - 5 :
-                vehicule.arret()
-                return
+    """ Ajuste la position du véhicule pour éviter qu'il ne sorte de l'écran """
+    for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
+        if point[0] < 5:
+            vehicule.r_Ar[0] += 5 - point[0]
+        elif point[0] > LARGEUR - 5:
+            vehicule.r_Ar[0] -= point[0] - (LARGEUR - 5)
+        
+        if point[1] < 5:
+            vehicule.r_Ar[1] += 5 - point[1]
+        elif point[1] > HAUTEUR - 5:
+            vehicule.r_Ar[1] -= point[1] - (HAUTEUR - 5)
+    
+    vehicule.vitesse = 0  # Stopper le véhicule pour éviter qu'il force la sortie
+
 def in_limite(vehicule):
     for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
         if point[0] < 5 or point[0] > LARGEUR - 5  or point[1] < 5 or point[1] > HAUTEUR - 5 :

@@ -63,7 +63,9 @@ class Vehicule:
 
         # Vérifier si le déplacement cause une collision
         prochain_triangle = [prochain_r_Ar, prochain_r_Avg, prochain_r_Avd]
-        if environnement.collision_predeplacement(self, objects):
+        if environnement.collision_predeplacement(prochain_triangle, objects):
+            while environnement.collision_predeplacement([self.r_Ar, self.r_Avg, self.r_Avd], objects):
+                self.bouger_retour()
             self.vitesse = 0  # Arrête le véhicule en cas de collision
             return
 
