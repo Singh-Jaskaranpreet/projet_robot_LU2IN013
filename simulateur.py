@@ -103,7 +103,7 @@ def rester_dans_limites(vehicule):
 
 def in_limite(vehicule):
     for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
-        if point[0] < 5 or point[0] > LARGEUR - 5  or point[1] < 5 or point[1] > HAUTEUR - 5 :
+        if point[0] < 0 or point[0] > LARGEUR  or point[1] < 0 or point[1] > HAUTEUR :
             return False
     return True
 
@@ -152,12 +152,11 @@ while True:
 
     print(f"distance de l'obstacle :{vehicule.mesurer_distance_obstacle(environnement, tmp)}", end = "\r" ) 
 
-    if in_limite:
+    if in_limite(vehicule):
         vehicule.bouger(environnement, tmp)
         rester_dans_limites(vehicule)
     else:
-        vehicule.arret()
-        vehicule.bouger_retour()
+        vehicule.restart()
 
     
 
