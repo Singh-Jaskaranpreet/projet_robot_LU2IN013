@@ -94,19 +94,11 @@ def afficher_instructions():
 
 
 def rester_dans_limites(vehicule):
-    """ Empêche le véhicule de sortir des limites sans bloquer tous les mouvements. """
-    
-    correction_x, correction_y = 0, 0
-    
-    if vehicule.r_Ar[0] < 5 and vehicule.vitesse * m.cos(m.radians(vehicule.angle)) < 0:
-        vehicule.vitesse = max(0, vehicule.vitesse)  # 🚨 Empêche d'aller vers la gauche
-    if vehicule.r_Ar[0] > LARGEUR - 5 and vehicule.vitesse * m.cos(m.radians(vehicule.angle)) > 0:
-        vehicule.vitesse = min(0, vehicule.vitesse)  # 🚨 Empêche d'aller vers la droite
-    if vehicule.r_Ar[1] < 5 and vehicule.vitesse * m.sin(m.radians(vehicule.angle)) < 0:
-        vehicule.vitesse = max(0, vehicule.vitesse)  # 🚨 Empêche de monter
-    if vehicule.r_Ar[1] > HAUTEUR - 5 and vehicule.vitesse * m.sin(m.radians(vehicule.angle)) > 0:
-        vehicule.vitesse = min(0, vehicule.vitesse)  # 🚨 Empêche de descendre
-
+        """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
+        for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
+            if point[0] < 10 or point[0] > LARGEUR - 10  or point[1] < 10 or point[1] > HAUTEUR - 10 :
+                vehicule.arret()
+                return
 
 
 def in_limite(vehicule):
@@ -160,12 +152,12 @@ while True:
 
     print(f"distance de l'obstacle :{vehicule.mesurer_distance_obstacle(environnement, tmp)}", end = "\r" ) 
 
-    if in_limite(vehicule):        
+    if in_limite:
         vehicule.bouger(environnement, tmp)
         rester_dans_limites(vehicule)
     else:
         vehicule.arret()
-
+        vehicule.bouger_retour()
 
     
 

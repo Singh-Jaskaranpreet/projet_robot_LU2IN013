@@ -41,6 +41,9 @@ class Vehicule:
     def bouger(self, environnement, objects):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
 
+        # Vérifier si la roue arrière est bloquée
+        roue_ar_bloquee = environnement.collision_roue_arriere(self, objects)
+
         # Calcul du prochain déplacement AVANT de l'appliquer
         prochain_r_Ar = [
             self.r_Ar[0] + self.vitesse * m.cos(m.radians(self.angle)),
@@ -71,9 +74,10 @@ class Vehicule:
         self.r_Ar = prochain_r_Ar
         self.r_Avg = prochain_r_Avg
         self.r_Avd = prochain_r_Avd
+        collision_avant = environnement.collision_predeplacement(prochain_triangle, objects)
 
         # 🔄 Appliquer la rotation UNIQUEMENT si aucune collision détectée
-        if self.angle_braquage != 0 and self.vitesse != 0:
+        if self.angle_braquage != 0 and (not roue_ar_bloquee or not collision_avant):
             rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
             delta_angle = self.vitesse / rayon_courbure
             self.angle += m.degrees(delta_angle)
