@@ -57,7 +57,7 @@ class Environnement:
 
         return False
 
-    def collision_predeplacement(self, vehicule, objects):
+    def collision_predeplacement(self, prochain_triangle, objects):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
@@ -73,7 +73,6 @@ class Environnement:
 
         # Vérifier les collisions avec les objets
         for obj in objects:
-            # Convertir l'obstacle en segments
             rectangle_edges = [
                 (obj.topleft, obj.topright),
                 (obj.topright, obj.bottomright),
@@ -81,18 +80,17 @@ class Environnement:
                 (obj.bottomleft, obj.topleft),
             ]
 
-            # Vérifier la collision avec chaque arête du triangle
             for t_edge in [
-                    (prochain_points_triangle[0], prochain_points_triangle[1]),
-                    (prochain_points_triangle[1], prochain_points_triangle[2]),
-                    (prochain_points_triangle[2], prochain_points_triangle[0]),
+                    (prochain_triangle[0], prochain_triangle[1]),
+                    (prochain_triangle[1], prochain_triangle[2]),
+                    (prochain_triangle[2], prochain_triangle[0]),
             ]:
                 for r_edge in rectangle_edges:
                     if self.segments_intersect(t_edge, r_edge):
-                        print("oh là là le pare choc!! My G-WAGON")
-                        return True
+                        return True  # Collision détectée
 
-        return False
+        return False  # Pas de collision
+
 
     def corriger_position_apres_collision(self, vehicule, objects):
         """
@@ -148,3 +146,11 @@ class Environnement:
                     if self.segments_intersect(t_edge, r_edge):
                         return True  # Collision détectée, retour immédiat
         return False  # Aucune collision détectée"""
+    
+    def collision_roue_arriere(self, vehicule, objects):
+        """ Vérifie si la roue arrière est en collision avec un obstacle. """
+        roues = vehicule.position_des_roues(vehicule.p_centre)
+        for obj in objects:
+            if obj.collidepoint(roues[0][0], roues[0][1]):
+                return True  # La roue arrière est bloquée
+        return False
