@@ -117,20 +117,47 @@ class Vehicule:
         self.angle_braquage = max(-45, min(45, self.angle_braquage))  # Limite réaliste
 
     def mesurer_distance_obstacle(self, environnement, objects):
-        """ Simule un capteur infrarouge détectant la distance jusqu'à un obstacle devant le véhicule """
-        capteur_x = (self.r_Avg[0] + self.r_Avd[0]) / 2  # Position centrale entre les roues avant
+        """ Simule un capteur infrarouge détectant la distance jusqu'au premier obstacle en face du véhicule. """
+    
+        # 🔹 Position du capteur (au centre des roues avant)
+        capteur_x = (self.r_Avg[0] + self.r_Avd[0]) / 2
         capteur_y = (self.r_Avg[1] + self.r_Avd[1]) / 2
 
-        max_distance = 300  # Portée max du capteur
-        pas = 5  # Distance entre chaque point de détection
+        # 🔹 Paramètres du capteur
+        max_distance = 1000  # Distance maximale du capteur (en pixels)
+        pas = 5  # Précision du scan (plus petit = plus précis)
         direction_angle = m.radians(self.angle)  # Convertir l'angle en radians
 
+        print(f"\n📡 Capteur placé en ({capteur_x:.2f}, {capteur_y:.2f}) avec un angle de {self.angle}°")
+        print(f"🔍 Nombre d'obstacles détectés : {len(objects)}")
+
+        # 🔹 Scanner point par point en ligne droite
         for d in range(0, max_distance, pas):
             point_x = capteur_x + d * m.cos(direction_angle)
             point_y = capteur_y + d * m.sin(direction_angle)
 
-            for obj in objects:  # Vérifier si ce point touche un obstacle
-                if obj.collidepoint(point_x, point_y):
-                    return d  # Retourne la distance au premier obstacle
+            print(f"📡 Scan en ({point_x:.2f}, {point_y:.2f}) pour d={d}")
 
+            # Vérifier si ce point touche un obstacle
+            for obj in objects:
+                # 🔴 Cas 1 : L'obstacle est un `pygame.Rect`
+                if isinstance(obj, pygame.Rect):
+                    if obj.collidepoint(point_x, point_y):
+                        print(f"🚨 Détection d'un obstacle rectangulaire à {d} px !")
+                        return d  # Distance au premier obstacle détecté
+
+                # 🔵 Cas 2 : L'obstacle est un objet avec `x`, `y` et un `rayon` (cercle)
+                elif hasattr(obj, "x") and hasattr(obj, "y") and hasattr(obj, "rayon"):
+                    distance_objet = m.sqrt((point_x - obj.x) ** 2 + (point_y - obj.y) ** 2)
+                    if distance_objet <= obj.rayon:
+                        print(f"🚨 Détection d'un obstacle circulaire à {d} px !")
+                        return d  # Distance au premier obstacle détecté
+
+                # 🟢 Cas 3 : L'obstacle est un objet sans `pygame.Rect` mais avec `width` et `height` (rectangle custom)
+                elif hasattr(obj, "x") and hasattr(obj, "y") and hasattr(obj, "width") and hasattr(obj, "height"):
+                    if (obj.x <= point_x <= obj.x + obj.width) and (obj.y <= point_y <= obj.y + obj.height):
+                        print(f"🚨 Détection d'un obstacle rectangle custom à {d} px !")
+                        return d  # Distance au premier obstacle détecté
+
+        print(f"✅ Aucun obstacle détecté, distance max : {max_distance}")
         return max_distance  # Aucune collision détectée

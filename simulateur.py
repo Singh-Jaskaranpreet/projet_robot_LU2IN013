@@ -129,7 +129,9 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-
+    distance_obstacle = vehicule.mesurer_distance_obstacle(environnement, tmp)
+    print(f"🔍 Distance obstacle : {distance_obstacle} px")
+    
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
 
