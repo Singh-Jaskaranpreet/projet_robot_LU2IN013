@@ -161,7 +161,6 @@ while True:
 
 
 
-    environnement.mise_a_jour(vehicule)
 
     # Affichage
     screen.fill(BLANC)
