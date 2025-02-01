@@ -1,6 +1,5 @@
 import pygame
 import math
-from time import sleep 
 
 class Environnement:
 
@@ -11,82 +10,6 @@ class Environnement:
         self.largeur = largeur
         self.hauteur = hauteur
 
-
-    def mise_a_jour(self, vehicule):
-        """
-Supprression de pycatch
-        Met à jour l'état de l'environnement. Si le véhicule est trop proche des bords de l'écran,
-        il est arrêté.
-        """
-        # Arrêter le véhicule si proche du bord droit
-        if (vehicule.r_Avg[0] + 10 > self.largeur or vehicule.r_Avd[0] + 10 > self.largeur or vehicule.r_Ar[0] + 10 > self.largeur):
-            vehicule.arret()
-        if (vehicule.r_Avg[0] > self.largeur or vehicule.r_Avd[0] > self.largeur or vehicule.r_Ar[0] > self.largeur):
-            vehicule.restart()
-
-        # Arrêter le véhicule si proche du bord gauche
-        if (vehicule.r_Avg[0] - 10 < 0 or vehicule.r_Avd[0] - 10 < 0 or vehicule.r_Ar[0] - 10 < 0):
-            vehicule.arret()
-        if (vehicule.r_Avg[0] < 0 or vehicule.r_Avd[0] < 0 or vehicule.r_Ar[0] < 0):
-            vehicule.restart()
-
-        # Arrêter le véhicule si proche du bord bas
-        if (vehicule.r_Avg[1] + 10 > self.hauteur or vehicule.r_Avd[1] + 10 > self.hauteur or vehicule.r_Ar[1] + 10 > self.hauteur):
-            vehicule.arret()
-        if (vehicule.r_Avg[1] > self.hauteur or vehicule.r_Avd[1] > self.hauteur or vehicule.r_Ar[1] > self.hauteur):
-            vehicule.restart()
-
-        # Arrêter le véhicule si proche du bord haut
-        if (vehicule.r_Avg[1] - 10 < 0 or vehicule.r_Avd[1] - 10 < 0 or vehicule.r_Ar[1] - 10 < 0):
-            vehicule.arret()
-        if (vehicule.r_Avg[1] < 0 or vehicule.r_Avd[1]  < 0 or vehicule.r_Ar[1] < 0):
-            vehicule.restart()
-
-    def afficher(self, screen, vehicule, couleur_vehicule, couleur_texte, objects):
-        """
-        Affiche l'environnement, y compris le véhicule, les objets (obstacles),
-        et la vitesse du véhicule.
-        """
-        # Afficher le véhicule sous forme de triangle
-        points_triangle = [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]
-        pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
-
-        # Afficher les objets (obstacles)
-        for obj in objects:
-            pygame.draw.rect(screen, (0, 0, 0), obj)
-
-            # Convertir le rectangle en 4 segments de bordures
-        rectangle_edges = [
-            obj.topleft, obj.topright,
-            obj.topright, obj.bottomright,
-            obj.bottomright, obj.bottomleft,
-            obj.bottomleft, obj.topleft
-        ]
-
-        # Tester les intersections entre les arêtes du triangle et les bords du rectangle
-        triangle_edges = [
-            (points_triangle[0], points_triangle[1]),
-            (points_triangle[1], points_triangle[2]),
-            (points_triangle[2], points_triangle[0])
-        ]
-
-        collision_detected = False
-
-        # Vérifier chaque arête du triangle contre les bords du rectangle
-        for t_edge in triangle_edges:
-            for i in range(0, len(rectangle_edges), 2):
-                r_edge = (rectangle_edges[i], rectangle_edges[i + 1])
-                if self.segments_intersect(t_edge, r_edge):
-                    collision_detected = True
-                    break
-            if collision_detected:
-                vehicule.arret()
-                break
-
-        # Afficher la vitesse du véhicule à l'écran
-        font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {round(abs(vehicule.vitesse * 2),3)} m/s", True, couleur_texte)
-        screen.blit(vitesse_text, (10, 10))
 
     def segments_intersect(self, seg1, seg2):
         """
