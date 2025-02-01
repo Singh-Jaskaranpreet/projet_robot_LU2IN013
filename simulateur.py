@@ -94,27 +94,21 @@ def afficher_instructions():
 
 
 def rester_dans_limites(vehicule):
-    """ Corrige la position du véhicule pour qu'il ne sorte pas de l'écran, sans bloquer ses mouvements. """
-    for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
-        if point[0] < 5:
-            vehicule.r_Ar[0] += 5 - point[0]
-            vehicule.r_Avg[0] += 5 - point[0]
-            vehicule.r_Avd[0] += 5 - point[0]
+    """ Empêche le véhicule de sortir des limites sans bloquer tous les mouvements. """
+    
+    correction_x, correction_y = 0, 0
+    
+    if vehicule.r_Ar[0] < 5 and vehicule.vitesse * m.cos(m.radians(vehicule.angle)) < 0:
+        vehicule.vitesse = max(0, vehicule.vitesse)  # 🚨 Empêche d'aller vers la gauche
+    if vehicule.r_Ar[0] > LARGEUR - 5 and vehicule.vitesse * m.cos(m.radians(vehicule.angle)) > 0:
+        vehicule.vitesse = min(0, vehicule.vitesse)  # 🚨 Empêche d'aller vers la droite
+    if vehicule.r_Ar[1] < 5 and vehicule.vitesse * m.sin(m.radians(vehicule.angle)) < 0:
+        vehicule.vitesse = max(0, vehicule.vitesse)  # 🚨 Empêche de monter
+    if vehicule.r_Ar[1] > HAUTEUR - 5 and vehicule.vitesse * m.sin(m.radians(vehicule.angle)) > 0:
+        vehicule.vitesse = min(0, vehicule.vitesse)  # 🚨 Empêche de descendre
 
-        if point[0] > LARGEUR - 5:
-            vehicule.r_Ar[0] -= point[0] - (LARGEUR - 5)
-            vehicule.r_Avg[0] -= point[0] - (LARGEUR - 5)
-            vehicule.r_Avd[0] -= point[0] - (LARGEUR - 5)
 
-        if point[1] < 5:
-            vehicule.r_Ar[1] += 5 - point[1]
-            vehicule.r_Avg[1] += 5 - point[1]
-            vehicule.r_Avd[1] += 5 - point[1]
 
-        if point[1] > HAUTEUR - 5:
-            vehicule.r_Ar[1] -= point[1] - (HAUTEUR - 5)
-            vehicule.r_Avg[1] -= point[1] - (HAUTEUR - 5)
-            vehicule.r_Avd[1] -= point[1] - (HAUTEUR - 5)
 def in_limite(vehicule):
     for point in [vehicule.r_Ar, vehicule.r_Avg, vehicule.r_Avd]:
         if point[0] < 5 or point[0] > LARGEUR - 5  or point[1] < 5 or point[1] > HAUTEUR - 5 :

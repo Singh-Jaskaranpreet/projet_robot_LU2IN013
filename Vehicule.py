@@ -39,15 +39,9 @@ class Vehicule:
         self.vitesse = 0
 
     def bouger(self, environnement, objects):
-        """Déplace le véhicule en fonction de l'orientation, du braquage et des collisions."""
-        if self.angle_braquage != 0 and self.vitesse != 0:
-            # Rayon de courbure en fonction de l'angle de braquage
-            rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
-            delta_angle = self.vitesse / rayon_courbure
-            self.angle += m.degrees(delta_angle)
+        """Déplace le véhicule en tenant compte des collisions et des limites."""
 
-
-        # Calculer les nouvelles coordonnées sans encore les appliquer
+        # Calcul du prochain déplacement AVANT de l'appliquer
         prochain_r_Ar = [
             self.r_Ar[0] + self.vitesse * m.cos(m.radians(self.angle)),
             self.r_Ar[1] + self.vitesse * m.sin(m.radians(self.angle))
@@ -61,18 +55,28 @@ class Vehicule:
             prochain_r_Ar[1] + self.long * m.sin(m.radians(self.angle - 20))
         ]
 
-        # Vérifier si le déplacement cause une collision
         prochain_triangle = [prochain_r_Ar, prochain_r_Avg, prochain_r_Avd]
+
+        # 🚨 Vérification des collisions AVANT déplacement
         if environnement.collision_predeplacement(prochain_triangle, objects):
-            while environnement.collision_predeplacement([self.r_Ar, self.r_Avg, self.r_Avd], objects):
-                self.bouger_retour()
-            self.vitesse = 0  # Arrête le véhicule en cas de collision
+            self.vitesse = 0
             return
 
-        # Appliquer les nouvelles coordonnées si aucune collision
+        # 🛑 Vérification spécifique : roue arrière bloquée en reculant
+        if self.vitesse < 0 and environnement.collision_roue_arriere(self, objects):
+            self.vitesse = 0
+            return  # 🚨 Empêche complètement la rotation et le mouvement
+
+        # 📌 Mise à jour des positions SI aucune collision détectée
         self.r_Ar = prochain_r_Ar
         self.r_Avg = prochain_r_Avg
         self.r_Avd = prochain_r_Avd
+
+        # 🔄 Appliquer la rotation UNIQUEMENT si aucune collision détectée
+        if self.angle_braquage != 0 and self.vitesse != 0:
+            rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
+            delta_angle = self.vitesse / rayon_courbure
+            self.angle += m.degrees(delta_angle)
 
     def tourner(self, direction):
         """ Gère le braquage des roues en fonction de la direction. """
