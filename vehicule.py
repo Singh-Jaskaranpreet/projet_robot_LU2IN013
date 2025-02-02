@@ -36,35 +36,43 @@ class Vehicule:
 
     def bouger(self, environnement, objects):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
-        if self.angle_braquage != 0 and self.vitesse != 0:
-            # Rayon de courbure en fonction de l'angle de braquage
-            rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
-            delta_angle = self.vitesse / rayon_courbure
-            self.angle += m.degrees(delta_angle)
 
 
         # Vérifier si la roue arrière est bloquée
         roue_ar_bloquee = environnement.collision_roue_arriere(self, objects)
 
-        # Calcul du prochain déplacement AVANT de l'appliquer
         prochain_pos = [
             self.p_centre[0] + self.vitesse * m.cos(m.radians(self.angle)),
             self.p_centre[1] + self.vitesse * m.sin(m.radians(self.angle))
-        ]
         
-        if environnement.collision_predeplacement(self, objects):
-            self.vitesse = 0  # Arrête le véhicule en cas de collision
+        ]
+
+        if environnement.collision_predeplacement(self, prochain_pos, objects):
+            self.vitesse = 0
             return
 
-        # Appliquer les nouvelles coordonnées si aucune collision
+        # 🛑 Vérification spécifique : roue arrière bloquée en reculant
+        if self.vitesse < 0 and environnement.collision_roue_arriere(self, objects):
+            self.vitesse = 0
+            return  # 🚨 Empêche complètement la rotation et le mouvement
+        
         self.p_centre = prochain_pos
 
-    def tourner(self, direction):
-        """ Gère le braquage des roues en fonction de la direction. """
+        if self.angle_braquage != 0 and (not roue_ar_bloquee or not environnement.collision_predeplacement(self,prochain_pos, objects)):
+            rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
+            delta_angle = self.vitesse / rayon_courbure
+            self.angle += m.degrees(delta_angle)
+
+        # Appliquer les nouvelles coordonnées si aucune collision
+
+    def tourner(self, direction, environnement, objects):
+        """ Gère le braquage des roues en fonction de la direction,
+        mais empêche la rotation si la roue arrière est bloquée. """
         if direction == "gauche":
-            self.braquer(-1.5)
+            self.angle_braquage = max(self.angle_braquage - 1.5, -45)
         elif direction == "droite":
-            self.braquer(1.5)
+            self.angle_braquage = min(self.angle_braquage + 1.5, 45)
+
 
     def restart(self):
         self.p_centre=[self.starting_point_x,self.starting_point_y]
@@ -73,6 +81,7 @@ class Vehicule:
         self.direction_y = 0
         self.vitesse=0
         self.angle_braquage = 0
+        self.angle = 0
 
 
     def bouger_retour(self):
@@ -82,10 +91,6 @@ class Vehicule:
         self.p_centre[0] -= self.vitesse * self.direction_x
         self.p_centre[1] -= self.vitesse * self.direction_y
 
-    def braquer(self, angle):
-        """ Modifie l'angle de braquage des roues avant. """
-        self.angle_braquage += angle
-        self.angle_braquage = max(-45, min(45, self.angle_braquage))  # Limite réaliste
 
     def mesurer_distance_obstacle(self, environnement, objects):
         """ Simule un capteur infrarouge détectant la distance jusqu'au premier obstacle en face du véhicule. """

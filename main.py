@@ -130,10 +130,10 @@ while True:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_RIGHT]:
-        vehicule.tourner("droite")
+        vehicule.tourner("droite", environnement, tmp)
 
     elif keys[pygame.K_LEFT]:
-        vehicule.tourner("gauche")
+        vehicule.tourner("gauche", environnement, tmp)
             
     if keys[pygame.K_UP]:
         vehicule.acceleration(0.2)       

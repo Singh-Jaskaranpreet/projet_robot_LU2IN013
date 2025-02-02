@@ -57,19 +57,24 @@ class Environnement:
 
         return False
 
-    def collision_predeplacement(self, vehicule, objects):
+    def collision_predeplacement(self, vehicule, po, objects):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
         """
         # Points actuels du véhicule
-        points_triangle = vehicule.position_des_roues(vehicule.p_centre)
+        points_triangle = vehicule.position_des_roues(po)
 
         # Prochaines positions en fonction de la vitesse
         prochain_points_triangle = [
             [p[0] + vehicule.vitesse * vehicule.direction_x, p[1] + vehicule.vitesse * vehicule.direction_y]
             for p in points_triangle
         ]
+        print(prochain_points_triangle)
+
+        for obj in objects:
+            if obj.collidepoint(points_triangle[0][0], points_triangle[0][1]):
+                return True  # La roue arrière est bloquée
 
         # Vérifier les collisions avec les objets
         for obj in objects:
@@ -107,7 +112,7 @@ class Environnement:
                 (obj.bottomright, obj.bottomleft),
                 (obj.bottomleft, obj.topleft),
             ]
-
+            
             # Vérifier chaque arête du triangle
             for t_edge in [
                     (points_triangle[0], points_triangle[1]),
@@ -121,31 +126,6 @@ class Environnement:
                         return True
 
         return False
-
-    def collision_pre_rotation(self, nouveau_triangle, objects):
-        """
-        Vérifie si le triangle `nouveau_triangle` entrerait en collision
-        avec l'un des obstacles lors d'une rotation.
-    """
-        
-        for obj in objects:
-            rectangle_edges = [
-                (obj.topleft, obj.topright),
-                (obj.topright, obj.bottomright),
-                (obj.bottomright, obj.bottomleft),
-                (obj.bottomleft, obj.topleft),
-            ]
-
-            # Vérifier les intersections entre le nouveau triangle et les arêtes du rectangle
-            for t_edge in [
-                    (nouveau_triangle[0], nouveau_triangle[1]),
-                    (nouveau_triangle[1], nouveau_triangle[2]),
-                    (nouveau_triangle[2], nouveau_triangle[0]),
-            ]:
-                for r_edge in rectangle_edges:
-                    if self.segments_intersect(t_edge, r_edge):
-                        return True  # Collision détectée, retour immédiat
-        return False  # Aucune collision détectée"""
     
     def collision_roue_arriere(self, vehicule, objects):
         """ Vérifie si la roue arrière est en collision avec un obstacle. """
