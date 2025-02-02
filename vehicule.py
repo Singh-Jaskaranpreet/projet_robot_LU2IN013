@@ -54,8 +54,6 @@ class Vehicule:
 
         # Appliquer les nouvelles coordonnées si aucune collision
         self.p_centre = prochain_pos
-        
-        print(self.angle_braquage)
 
 
     def tourner(self, direction, environnement, objects):
