@@ -93,13 +93,6 @@ def afficher_instructions():
     pygame.display.flip()  # Met à jour l'écran
 
 
-def in_limite(vehicule):
-    for point in vehicule.position_des_roues(vehicule.p_centre):
-        if point[0] < 0 or point[0] > LARGEUR  or point[1] < 0 or point[1] > HAUTEUR :
-            return False
-    return True
-
-
 def rester_dans_limites(vehicule):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
         for point in vehicule.position_des_roues(vehicule.p_centre):
