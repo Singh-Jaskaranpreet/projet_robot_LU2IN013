@@ -65,16 +65,10 @@ class Environnement:
         # Points actuels du véhicule
         points_triangle = vehicule.position_des_roues(po)
 
-        # Prochaines positions en fonction de la vitesse
-        prochain_points_triangle = [
-            [p[0] + vehicule.vitesse * vehicule.direction_x, p[1] + vehicule.vitesse * vehicule.direction_y]
-            for p in points_triangle
-        ]
-        print(prochain_points_triangle)
-
         for obj in objects:
-            if obj.collidepoint(points_triangle[0][0], points_triangle[0][1]):
-                return True  # La roue arrière est bloquée
+            for point in points_triangle :
+                if obj.collidepoint(point[0], point[1]):
+                    return True  # La roue arrière est bloquée
 
         # Vérifier les collisions avec les objets
         for obj in objects:
@@ -86,51 +80,12 @@ class Environnement:
             ]
 
             for t_edge in [
-                    (prochain_points_triangle[0], prochain_points_triangle[1]),
-                    (prochain_points_triangle[1], prochain_points_triangle[2]),
-                    (prochain_points_triangle[2], prochain_points_triangle[0]),
-            ]:
-                for r_edge in rectangle_edges:
-                    if self.segments_intersect(t_edge, r_edge):
-                        return True  # Collision détectée
-
-        return False  # Pas de collision
-
-
-    def corriger_position_apres_collision(self, vehicule, objects):
-        """
-        Corrige la position du véhicule si une collision est détectée.
-        Le véhicule sera repositionné juste avant de toucher l'obstacle.
-        """
-        points_triangle = vehicule.position_des_roues(vehicule.p_centre)
-
-        # Vérifier les collisions et repositionner le véhicule si nécessaire
-        for obj in objects:
-            rectangle_edges = [
-                (obj.topleft, obj.topright),
-                (obj.topright, obj.bottomright),
-                (obj.bottomright, obj.bottomleft),
-                (obj.bottomleft, obj.topleft),
-            ]
-            
-            # Vérifier chaque arête du triangle
-            for t_edge in [
                     (points_triangle[0], points_triangle[1]),
                     (points_triangle[1], points_triangle[2]),
                     (points_triangle[2], points_triangle[0]),
             ]:
                 for r_edge in rectangle_edges:
                     if self.segments_intersect(t_edge, r_edge):
-                        # Repositionner le véhicule juste avant l'obstacle
-                        vehicule.bouger_retour()  # Déplace le véhicule en arrière
-                        return True
+                        return True  # Collision détectée
 
-        return False
-    
-    def collision_roue_arriere(self, vehicule, objects):
-        """ Vérifie si la roue arrière est en collision avec un obstacle. """
-        roues = vehicule.position_des_roues(vehicule.p_centre)
-        for obj in objects:
-            if obj.collidepoint(roues[0][0], roues[0][1]):
-                return True  # La roue arrière est bloquée
-        return False
+        return False  # Pas de collision

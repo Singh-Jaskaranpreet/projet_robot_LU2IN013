@@ -19,7 +19,7 @@ ROUGE = (255, 0, 0)
 
 # Création de l'environnement et d'un véhicule
 environnement = Environnement(LARGEUR, HAUTEUR)
-vehicule = Vehicule("Robot",0 , (200, HAUTEUR // 2), 75, nb_roues=3)
+vehicule = Vehicule("Robot",0 , [200, HAUTEUR // 2], 75, nb_roues=3)
 
 
 tmp=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
@@ -149,8 +149,6 @@ while True:
 
     vehicule.bouger(environnement, tmp)
     rester_dans_limites(vehicule)
-
-
 
 
     # Affichage

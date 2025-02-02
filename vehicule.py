@@ -8,8 +8,6 @@ class Vehicule:
         self.long=longueur/2 # Distance entre les essieux
         self.angle = 0
         self.p_centre = p_centre
-        self.direction_x = 1
-        self.direction_y = 0
         self.vitesse = vitesse
         self.starting_point_x=p_centre[0]
         self.starting_point_y=p_centre[1]
@@ -37,32 +35,28 @@ class Vehicule:
     def bouger(self, environnement, objects):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
 
+        tmp = self.angle
 
-        # Vérifier si la roue arrière est bloquée
-        roue_ar_bloquee = environnement.collision_roue_arriere(self, objects)
-
+        if self.angle_braquage != 0 :
+            rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
+            delta_angle = self.vitesse / rayon_courbure
+            self.angle += m.degrees(delta_angle)
+            
         prochain_pos = [
             self.p_centre[0] + self.vitesse * m.cos(m.radians(self.angle)),
             self.p_centre[1] + self.vitesse * m.sin(m.radians(self.angle))
-        
         ]
 
         if environnement.collision_predeplacement(self, prochain_pos, objects):
             self.vitesse = 0
-            return
-
-        # 🛑 Vérification spécifique : roue arrière bloquée en reculant
-        if self.vitesse < 0 and environnement.collision_roue_arriere(self, objects):
-            self.vitesse = 0
-            return  # 🚨 Empêche complètement la rotation et le mouvement
-        
-        if self.angle_braquage != 0 and (not roue_ar_bloquee or not environnement.collision_predeplacement(self,prochain_pos, objects)):
-            rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
-            delta_angle = self.vitesse / rayon_courbure
-            self.angle += m.degrees(delta_angle)
+            self.angle = tmp
+            return       
 
         # Appliquer les nouvelles coordonnées si aucune collision
         self.p_centre = prochain_pos
+        
+        print(self.angle_braquage)
+
 
     def tourner(self, direction, environnement, objects):
         """ Gère le braquage des roues en fonction de la direction,
@@ -76,19 +70,9 @@ class Vehicule:
     def restart(self):
         self.p_centre=[self.starting_point_x,self.starting_point_y]
         self.angle = 0
-        self.direction_x = 1
-        self.direction_y = 0
         self.vitesse=0
         self.angle_braquage = 0
         self.angle = 0
-
-
-    def bouger_retour(self):
-        """
-        Recule légèrement pour empêcher le véhicule d'entrer dans un obstacle.
-        """
-        self.p_centre[0] -= self.vitesse * self.direction_x
-        self.p_centre[1] -= self.vitesse * self.direction_y
 
 
     def mesurer_distance_obstacle(self, environnement, objects):
@@ -114,21 +98,21 @@ class Vehicule:
                 # 🔴 Cas 1 : L'obstacle est un `pygame.Rect`
                 if isinstance(obj, pygame.Rect):
                     if obj.collidepoint(point_x, point_y):
-                        print(f"🚨 Détection d'un obstacle rectangulaire à {d} px !", end = "\r")
+                        print(f" Détection d'un obstacle rectangulaire à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
 
                 # 🔵 Cas 2 : L'obstacle est un objet avec `x`, `y` et un `rayon` (cercle)
                 elif hasattr(obj, "x") and hasattr(obj, "y") and hasattr(obj, "rayon"):
                     distance_objet = m.sqrt((point_x - obj.x) ** 2 + (point_y - obj.y) ** 2)
                     if distance_objet <= obj.rayon:
-                        print(f"🚨 Détection d'un obstacle circulaire à {d} px !", end = "\r")
+                        print(f" Détection d'un obstacle circulaire à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
 
                 # 🟢 Cas 3 : L'obstacle est un objet sans `pygame.Rect` mais avec `width` et `height` (rectangle custom)
                 elif hasattr(obj, "x") and hasattr(obj, "y") and hasattr(obj, "width") and hasattr(obj, "height"):
                     if (obj.x <= point_x <= obj.x + obj.width) and (obj.y <= point_y <= obj.y + obj.height):
-                        print(f"🚨 Détection d'un obstacle rectangle custom à {d} px !", end = "\r")
+                        print(f" Détection d'un obstacle rectangle custom à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
 
-        print(f"✅ Aucun obstacle détecté, distance max : {max_distance}", end = "\r")
+        print(f" Aucun obstacle détecté, distance max : {max_distance}", end = "\r")
         return max_distance  # Aucune collision détectée
