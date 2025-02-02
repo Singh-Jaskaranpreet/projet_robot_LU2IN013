@@ -105,9 +105,9 @@ def rester_dans_limites(vehicule):
         for point in vehicule.position_des_roues(vehicule.p_centre):
             if point[0] < 10 or point[0] > LARGEUR - 10  or point[1] < 10 or point[1] > HAUTEUR - 10 :
                 vehicule.arret()
-            if point[0] < 10 or point[0] > LARGEUR - 10  or point[1] < 10 or point[1] > HAUTEUR - 10 :
+            if point[0] < 0 or point[0] > LARGEUR   or point[1] < 0 or point[1] > HAUTEUR :
                 vehicule.restart()
-                return
+        return
 
 
 # Afficher l'écran d'instructions avant de commencer
@@ -131,8 +131,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    distance_obstacle = vehicule.mesurer_distance_obstacle(environnement, tmp)
-    print(f"🔍 Distance obstacle : {distance_obstacle} px")
+    vehicule.mesurer_distance_obstacle(environnement, tmp)
     
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
@@ -155,13 +154,8 @@ while True:
     if keys[pygame.K_r]:
         vehicule.restart()
 
-    print(f"distance de l'obstacle :{vehicule.mesurer_distance_obstacle(environnement, tmp)}", end = "\r" ) 
-
-    if in_limite(vehicule):
-        vehicule.bouger(environnement, tmp)
-        rester_dans_limites(vehicule)
-    else:
-        vehicule.restart()
+    vehicule.bouger(environnement, tmp)
+    rester_dans_limites(vehicule)
 
 
 
