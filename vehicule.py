@@ -17,12 +17,12 @@ class Vehicule:
         self.nb_roues = nb_roues
 
     #Place les trois roues de la voiture
-    def position_des_roues(self,point):
+    def position_des_roues(self, point):
         hyp = self.long / m.cos(m.radians(20))
-        r_Ar = [point[0]-(self.long//2)*m.cos(m.radians(self.angle)),point[1]-(self.long//2)*m.sin(m.radians(self.angle)) ]
-        r_Avg = [r_Ar[0] + hyp * m.cos(m.radians(self.angle + 20)),r_Ar[1] + hyp * m.sin(m.radians(self.angle + 20))]
-        r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.angle - 20)),r_Ar[1] + hyp * m.sin(m.radians(self.angle - 20))]
-        return [r_Ar,r_Avg,r_Avd]
+        r_Ar = [point[0] - (self.long//2) * m.cos(m.radians(self.angle)), point[1] - (self.long//2) * m.sin(m.radians(self.angle))]
+        r_Avg = [r_Ar[0] + hyp * m.cos(m.radians(self.angle + 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle + 20))]
+        r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle - 20))]
+        return [r_Ar, r_Avg, r_Avd]
      
 
     def acceleration(self, acc):
@@ -56,14 +56,13 @@ class Vehicule:
             self.vitesse = 0
             return  # 🚨 Empêche complètement la rotation et le mouvement
         
-        self.p_centre = prochain_pos
-
         if self.angle_braquage != 0 and (not roue_ar_bloquee or not environnement.collision_predeplacement(self,prochain_pos, objects)):
             rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
             delta_angle = self.vitesse / rayon_courbure
             self.angle += m.degrees(delta_angle)
 
         # Appliquer les nouvelles coordonnées si aucune collision
+        self.p_centre = prochain_pos
 
     def tourner(self, direction, environnement, objects):
         """ Gère le braquage des roues en fonction de la direction,
