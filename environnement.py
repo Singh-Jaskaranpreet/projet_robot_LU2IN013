@@ -68,7 +68,7 @@ class Environnement:
         for obj in objects:
             for point in points_triangle :
                 if obj.collidepoint(point[0], point[1]):
-                    return True  # La roue arrière est bloquée
+                    return True  # Une des roues est bloquées
 
         # Vérifier les collisions avec les objets
         for obj in objects:

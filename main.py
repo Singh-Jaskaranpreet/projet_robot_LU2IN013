@@ -19,10 +19,10 @@ ROUGE = (255, 0, 0)
 
 # Création de l'environnement et d'un véhicule
 environnement = Environnement(LARGEUR, HAUTEUR)
-vehicule = Vehicule("Robot",0 , [200, HAUTEUR // 2], 75, nb_roues=3)
+vehicule = Vehicule("Robot",0 , [200, HAUTEUR // 2], 50, nb_roues=3)
 
 
-tmp=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
+obs=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
 
 
 def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
@@ -124,16 +124,16 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    vehicule.mesurer_distance_obstacle(environnement, tmp)
+    vehicule.mesurer_distance_obstacle(environnement, obs)
     
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_RIGHT]:
-        vehicule.tourner("droite", environnement, tmp)
+        vehicule.tourner("droite", environnement, obs)
 
     elif keys[pygame.K_LEFT]:
-        vehicule.tourner("gauche", environnement, tmp)
+        vehicule.tourner("gauche", environnement, obs)
             
     if keys[pygame.K_UP]:
         vehicule.acceleration(0.2)       
@@ -147,12 +147,12 @@ while True:
     if keys[pygame.K_r]:
         vehicule.restart()
 
-    vehicule.bouger(environnement, tmp)
+    vehicule.bouger(environnement, obs)
     rester_dans_limites(vehicule)
 
 
     # Affichage
     screen.fill(BLANC)
-    afficher(screen, vehicule, ROUGE, NOIR, tmp)
+    afficher(screen, vehicule, ROUGE, NOIR, obs)
     pygame.display.flip()
     clock.tick(60)

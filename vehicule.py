@@ -5,7 +5,7 @@ class Vehicule:
 
     def __init__(self, nom, vitesse, p_centre ,longueur, nb_roues):
         self.nom = nom
-        self.long=longueur/2 # Distance entre les essieux
+        self.long=longueur# Distance entre les essieux
         self.angle = 0
         self.p_centre = p_centre
         self.vitesse = vitesse
@@ -55,7 +55,7 @@ class Vehicule:
         # Appliquer les nouvelles coordonnées si aucune collision
         self.p_centre = prochain_pos
         
-        print(self.angle_braquage)
+        #print(self.angle_braquage)
 
 
     def tourner(self, direction, environnement, objects):
@@ -72,7 +72,7 @@ class Vehicule:
         self.angle = 0
         self.vitesse=0
         self.angle_braquage = 0
-        self.angle = 0
+        
 
 
     def mesurer_distance_obstacle(self, environnement, objects):
