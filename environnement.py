@@ -5,6 +5,9 @@ class Environnement:
 
     def __init__(self, largeur, hauteur):
         """
+
+
+        
         Initialise l'environnement avec la largeur et la hauteur spécifiées.
         """
         self.largeur = largeur
