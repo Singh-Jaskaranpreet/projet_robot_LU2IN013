@@ -3,6 +3,7 @@ import sys
 from vehicule import *
 from environnement import *
 from random import *
+from horloge import *
 
 # Initialisation de Pygame
 pygame.init()
@@ -23,7 +24,7 @@ vehicule = Vehicule("Robot",0 , [200, HAUTEUR // 2], 50, nb_roues=3)
 
 
 obs=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
-
+temps = Horloge()
 
 def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
         """
@@ -62,7 +63,7 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
 
         # Afficher la vitesse du véhicule à l'écran
         font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {round(abs(vehicule.vitesse * 2), 3)} m/s", True, couleur_texte)
+        vitesse_text = font.render(f"Vitesse: {round(abs(vehicule.vitesse * 2), 3)} pixel/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
 
 
@@ -118,6 +119,7 @@ while attente:
 
 # Boucle principale de la simulation
 clock = pygame.time.Clock()
+temps.demarrer()
 
 while True:
     for event in pygame.event.get():
@@ -136,10 +138,10 @@ while True:
         vehicule.tourner("gauche", environnement, obs)
             
     if keys[pygame.K_UP]:
-        vehicule.acceleration(0.2)       
+        vehicule.acceleration(0.5)       
             
     elif keys[pygame.K_DOWN]:
-        vehicule.deceleration(0.2)
+        vehicule.deceleration(0.5)
             
     if keys[pygame.K_SPACE]:
         vehicule.arret()
@@ -147,7 +149,8 @@ while True:
     if keys[pygame.K_r]:
         vehicule.restart()
 
-    vehicule.bouger(environnement, obs)
+    vehicule.bouger(environnement, obs, temps.get_temps_ecoule())
+    temps.demarrer()
     rester_dans_limites(vehicule)
 
 
@@ -156,3 +159,5 @@ while True:
     afficher(screen, vehicule, ROUGE, NOIR, obs)
     pygame.display.flip()
     clock.tick(60)
+
+temps.arreter()

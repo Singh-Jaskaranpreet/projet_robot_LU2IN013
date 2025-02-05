@@ -24,27 +24,27 @@ class Vehicule:
      
 
     def acceleration(self, acc):
-        self.vitesse = min(self.vitesse + acc , 7.5)
+        self.vitesse = min(self.vitesse + acc , 150)
 
     def deceleration(self, red):
-        self.vitesse = max(self.vitesse - red , -7.5)
+        self.vitesse = max(self.vitesse - red , -150)
 
     def arret(self):
         self.vitesse = 0
 
-    def bouger(self, environnement, objects):
+    def bouger(self, environnement, objects, temps):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
 
         tmp = self.angle
 
         if self.angle_braquage != 0 :
             rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
-            delta_angle = self.vitesse / rayon_courbure
+            delta_angle = (self.vitesse * temps)/ rayon_courbure
             self.angle += m.degrees(delta_angle)
             
         prochain_pos = [
-            self.p_centre[0] + self.vitesse * m.cos(m.radians(self.angle)),
-            self.p_centre[1] + self.vitesse * m.sin(m.radians(self.angle))
+            self.p_centre[0] + self.vitesse * m.cos(m.radians(self.angle)) * temps,
+            self.p_centre[1] + self.vitesse * m.sin(m.radians(self.angle)) * temps
         ]
 
         if environnement.collision_predeplacement(self, prochain_pos, objects):
