@@ -13,22 +13,11 @@ pygame.init()
 LARGEUR, HAUTEUR = 1200, 800
 
 # Création de l'environnement et d'un véhicule
-environnement = Environnement(LARGEUR, HAUTEUR)
 vehicule = Vehicule("Robot",0 ,0 , [200, HAUTEUR // 2], 50)
-
-
 obs=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
+environnement = Environnement(LARGEUR, HAUTEUR, vehicule, obs)
+
 temps = Horloge()
-
-
-def rester_dans_limites(vehicule):
-        """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
-        for point in vehicule.position_des_roues(vehicule.p_centre):
-            if point[0] < 10 or point[0] > LARGEUR - 10  or point[1] < 10 or point[1] > HAUTEUR - 10 :
-                vehicule.arret()
-            if point[0] < 0 or point[0] > LARGEUR   or point[1] < 0 or point[1] > HAUTEUR :
-                vehicule.restart()
-        return
 
 
 # Afficher l'écran d'instructions avant de commencer

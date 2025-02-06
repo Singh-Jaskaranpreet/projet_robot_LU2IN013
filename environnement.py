@@ -1,14 +1,16 @@
-import pygame
 import math
+from vehicule import *
 
 class Environnement:
 
-    def __init__(self, largeur, hauteur):
+    def __init__(self, largeur, hauteur, vehicule, objects):
         """
         Initialise l'environnement avec la largeur et la hauteur spécifiées.
         """
         self.largeur = largeur
         self.hauteur = hauteur
+        self.vehicule = vehicule
+        self.objects = objects
 
 
     def segments_intersect(self, seg1, seg2):
@@ -57,7 +59,7 @@ class Environnement:
 
         return False
 
-    def collision_predeplacement(self, vehicule, po, objects):
+    def collision_predeplacement(self):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
@@ -92,3 +94,12 @@ class Environnement:
 
 
         return False  # Pas de collision
+
+    def rester_dans_limites(self, vehicule):
+        """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
+        for point in vehicule.position_des_roues(vehicule.p_centre):
+            if point[0] < 10 or point[0] > self.largeur - 10  or point[1] < 10 or point[1] > self.hauteur - 10 :
+                vehicule.arret()
+            if point[0] < 0 or point[0] > self.largeur   or point[1] < 0 or point[1] > self.hauteur :
+                vehicule.restart()
+        return
