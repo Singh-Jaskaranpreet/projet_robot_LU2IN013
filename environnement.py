@@ -5,9 +5,6 @@ class Environnement:
 
     def __init__(self, largeur, hauteur):
         """
-
-
-        
         Initialise l'environnement avec la largeur et la hauteur spécifiées.
         """
         self.largeur = largeur
@@ -90,5 +87,8 @@ class Environnement:
                 for r_edge in rectangle_edges:
                     if self.segments_intersect(t_edge, r_edge):
                         return True  # Collision détectée
+
+
+
 
         return False  # Pas de collision
