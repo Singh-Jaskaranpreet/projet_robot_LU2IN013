@@ -67,7 +67,7 @@ while True:
 
     vehicule.bouger(environnement, obs, temps.get_temps_ecoule())
     temps.demarrer()
-    rester_dans_limites(vehicule)
+    environnement.rester_dans_limites(vehicule)
 
 
     # Affichage

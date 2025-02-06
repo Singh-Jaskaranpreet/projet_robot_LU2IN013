@@ -65,15 +65,15 @@ class Environnement:
         Retourne True si une collision est détectée, sinon False.
         """
         # Points actuels du véhicule
-        points_triangle = vehicule.position_des_roues(po)
+        points_triangle = self.vehicule.position_des_roues(self.vehicule.p_centre)
 
-        for obj in objects:
+        for obj in self.objects:
             for point in points_triangle :
                 if obj.collidepoint(point[0], point[1]):
                     return True  # Une des roues est bloquées
 
         # Vérifier les collisions avec les objets
-        for obj in objects:
+        for obj in self.objects:
             rectangle_edges = [
                 (obj.topleft, obj.topright),
                 (obj.topright, obj.bottomright),
