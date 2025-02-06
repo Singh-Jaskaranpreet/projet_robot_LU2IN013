@@ -3,16 +3,17 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, vitesse, p_centre ,longueur, nb_roues):
+    def __init__(self, nom, vit_Rg , vit_Rd , p_centre ,longueur):
         self.nom = nom
         self.long=longueur# Distance entre les essieux.
         self.angle = 0
         self.p_centre = p_centre
-        self.vitesse = vitesse
+        self.vit_Rg = 0
+        self.vit_Rd = 0
         self.starting_point_x=p_centre[0]
         self.starting_point_y=p_centre[1]
         self.angle_braquage = 0  # Angle des roues avant (en degrés)
-        self.nb_roues = nb_roues
+        self.nb_roues = 3
 
     #Place les trois roues de la voiture
     def position_des_roues(self, point):
@@ -22,15 +23,6 @@ class Vehicule:
         r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle - 20))]
         return [r_Ar, r_Avg, r_Avd]
      
-
-    def acceleration(self, acc):
-        self.vitesse = min(self.vitesse + acc , 150)
-
-    def deceleration(self, red):
-        self.vitesse = max(self.vitesse - red , -150)
-
-    def arret(self):
-        self.vitesse = 0
 
     def bouger(self, environnement, objects, temps):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
