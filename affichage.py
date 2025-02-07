@@ -78,3 +78,13 @@ def afficher_instructions():
         y_offset += 100  # Espacement entre les lignes
     
     pygame.display.flip()  # Met à jour l'écran
+
+    # Attendre que l'utilisateur appuie sur une touche pour commencer
+    attente = True
+    while attente:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:  # Une touche a été pressée
+                attente = False  # On sort de la boucle et commence la simulation
