@@ -67,30 +67,17 @@ class Environnement:
         # Points actuels du véhicule
         points_triangle = self.vehicule.position_des_roues(point)
 
-        for obj in self.objects:
-            for point in points_triangle :
-                if obj.collidepoint(point[0], point[1]):
-                    return True  # Une des roues est bloquées
-
         # Vérifier les collisions avec les objets
         for obj in self.objects:
-            rectangle_edges = [
-                (obj.topleft, obj.topright),
-                (obj.topright, obj.bottomright),
-                (obj.bottomright, obj.bottomleft),
-                (obj.bottomleft, obj.topleft),
-            ]
-
             for t_edge in [
                     (points_triangle[0], points_triangle[1]),
                     (points_triangle[1], points_triangle[2]),
                     (points_triangle[2], points_triangle[0]),
             ]:
-                for r_edge in rectangle_edges:
-                    if self.segments_intersect(t_edge, r_edge):
-                        return True  # Collision détectée
-
-
+                if (len(obj) > 2):
+                    for i in range(0 , len(obj)):
+                        if self.segments_intersect(t_edge, (obj[i], obj[(i+1)%len(obj)])):
+                            return True  # Collision détectée
 
 
         return False  # Pas de collision
@@ -98,11 +85,9 @@ class Environnement:
     def rester_dans_limites(self):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
         for point in self.vehicule.position_des_roues(self.vehicule.p_centre):
-            if point[0] < 10 or point[0] > self.largeur - 10  or point[1] < 10 or point[1] > self.hauteur - 10 :
-                #self.vehicule.arret()
-                pass
             if point[0] < 0 or point[0] > self.largeur   or point[1] < 0 or point[1] > self.hauteur :
                 self.vehicule.restart()
+                return
         return
 
     def add_objet(self,objet):
