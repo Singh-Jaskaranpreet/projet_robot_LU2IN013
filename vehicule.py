@@ -23,10 +23,13 @@ class Vehicule:
         r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle - 20))]
         return [r_Ar, r_Avg, r_Avd]
     
+    def accelerer(self, val):
+        self.vit_Rg = min(150,self.vit_Rg+val)
+        self.vit_Rd = min(150,self.vit_Rd+val)
     
-    def freiner(self):
-        self.vit_Rg = max(0,self.vit_Rg-0.5)
-        self.vit_Rd = max(0,self.vit_Rd-0.5)
+    def freiner(self, val):
+        self.vit_Rg = max(0,self.vit_Rg-val)
+        self.vit_Rd = max(0,self.vit_Rd-val)
 
     def bouger(self, environnement, objects, temps):
         """Déplace le véhicule en tenant compte des collisions et des limites."""

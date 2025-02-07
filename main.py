@@ -42,36 +42,33 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    vehicule.mesurer_distance_obstacle(environnement, obs)
+    environnement.vehicule.mesurer_distance_obstacle(environnement, obs)
     
     # Gestion des contrôles utilisateur
-    #keys = pygame.key.get_pressed()
+    keys = pygame.key.get_pressed()
 
-    #if keys[pygame.K_RIGHT]:
-        #vehicule.tourner("droite", environnement, obs)
+    if keys[pygame.K_RIGHT]:
+        environnement.vehicule.tourner("droite",temps.get_temps_ecoule())
 
-    #elif keys[pygame.K_LEFT]:
-        #vehicule.tourner("gauche", environnement, obs)
+    elif keys[pygame.K_LEFT]:
+        environnement.vehicule.tourner("gauche",temps.get_temps_ecoule())
             
-    #if keys[pygame.K_UP]:
-        #vehicule.acceleration(0.5)       
+    if keys[pygame.K_UP]:
+        environnement.vehicule.accelerer(0.5)       
             
-    #elif keys[pygame.K_DOWN]:
-        #vehicule.deceleration(0.5)
-            
-    #if keys[pygame.K_SPACE]:
-        #vehicule.arret()
+    elif keys[pygame.K_DOWN]:
+        environnement.vehicule.freiner(0.5)
         
-    #if keys[pygame.K_r]:
-        #vehicule.restart()
+    if keys[pygame.K_r]:
+        environnement.vehicule.restart()
 
-    vehicule.bouger(environnement, obs, temps.get_temps_ecoule())
+    environnement.vehicule.bouger(environnement, obs, temps.get_temps_ecoule())
     temps.demarrer()
     environnement.rester_dans_limites()
 
 
     # Affichage
-    afficher(screen, vehicule, ROUGE, NOIR, obs)
+    afficher(screen, environnement.vehicule, ROUGE, NOIR, obs)
     clock.tick(60)
 
 temps.arreter()
