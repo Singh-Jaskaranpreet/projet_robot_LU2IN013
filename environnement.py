@@ -10,7 +10,7 @@ class Environnement:
         self.largeur = largeur
         self.hauteur = hauteur
         self.vehicule = vehicule
-        self.objects = objects
+        self.objects = objects  #Liste des objets
 
 
     def segments_intersect(self, seg1, seg2):
@@ -95,11 +95,20 @@ class Environnement:
 
         return False  # Pas de collision
 
-    def rester_dans_limites(self, vehicule):
+    def rester_dans_limites(self):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
-        for point in vehicule.position_des_roues(vehicule.p_centre):
+        for point in self.vehicule.position_des_roues(self.vehicule.p_centre):
             if point[0] < 10 or point[0] > self.largeur - 10  or point[1] < 10 or point[1] > self.hauteur - 10 :
-                vehicule.arret()
+                self.vehicule.arret()
             if point[0] < 0 or point[0] > self.largeur   or point[1] < 0 or point[1] > self.hauteur :
-                vehicule.restart()
+                self.vehicule.restart()
         return
+
+    def add_objet(self,objet):
+        """Ajoute l'objet dans l'environnement
+            :param objet: l'objet a ajouter
+            :return: rien
+        """
+        self.objects.append(objet)
+
+

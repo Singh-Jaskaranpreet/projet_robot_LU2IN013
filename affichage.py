@@ -17,6 +17,9 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
         Affiche l'environnement, y compris le véhicule, les objets (obstacles),
         et la vitesse du véhicule.
         """
+
+        screen.fill(BLANC) # Remplir l'écran en blanc
+
         # Afficher le véhicule sous forme de triangle
         points_triangle = vehicule.position_des_roues(vehicule.p_centre)
         pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
@@ -51,6 +54,7 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
         font = pygame.font.SysFont(None, 36)
         vitesse_text = font.render(f"Vitesse: {round(abs(vehicule.vitesse * 2), 3)} pixel/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
+        pygame.display.flip() # Met à jour l'écran
 
 
 # Fonction pour afficher les instructions
@@ -78,13 +82,3 @@ def afficher_instructions():
         y_offset += 100  # Espacement entre les lignes
     
     pygame.display.flip()  # Met à jour l'écran
-
-    # Attendre que l'utilisateur appuie sur une touche pour commencer
-    attente = True
-    while attente:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:  # Une touche a été pressée
-                attente = False  # On sort de la boucle et commence la simulation

@@ -13,15 +13,25 @@ pygame.init()
 LARGEUR, HAUTEUR = 1200, 800
 
 # Création de l'environnement et d'un véhicule
-vehicule = Vehicule("Robot",0 ,0 , [200, HAUTEUR // 2], 50)
+vehicule = Vehicule("Robot",[0, 0] , 50, 50)
 obs=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
 environnement = Environnement(LARGEUR, HAUTEUR, vehicule, obs)
 
 temps = Horloge()
 
 
-# Affiche l'écran d'instructions avant de commencer et attendre que l'utilisateur appuie sur une touche pour commencer
+# Affiche l'écran d'instructions avant de commencer
 afficher_instructions()
+
+# Attendre que l'utilisateur appuie sur une touche pour commencer
+attente = True
+while attente:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:  # Une touche a été pressée
+            attente = False  # On sort de la boucle et commence la simulation
 
 # Boucle principale de la simulation
 clock = pygame.time.Clock()
@@ -61,9 +71,7 @@ while True:
 
 
     # Affichage
-    screen.fill(BLANC)
     afficher(screen, vehicule, ROUGE, NOIR, obs)
-    pygame.display.flip()
     clock.tick(60)
 
 temps.arreter()
