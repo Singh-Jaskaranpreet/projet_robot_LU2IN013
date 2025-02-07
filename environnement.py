@@ -59,13 +59,13 @@ class Environnement:
 
         return False
 
-    def collision_predeplacement(self):
+    def collision_predeplacement(self, point):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
         """
         # Points actuels du véhicule
-        points_triangle = self.vehicule.position_des_roues(self.vehicule.p_centre)
+        points_triangle = self.vehicule.position_des_roues(point)
 
         for obj in self.objects:
             for point in points_triangle :
