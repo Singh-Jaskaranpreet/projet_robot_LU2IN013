@@ -36,7 +36,7 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
             rect = pygame.Rect(x - largeur_roue // 2, y - hauteur_roue // 2, largeur_roue, hauteur_roue)
 
             # Appliquer l'orientation globale (vehicule.angle) + l'angle des roues (vehicule.angle_braquage)
-            rotation_totale = vehicule.angle + vehicule.angle_braquage
+            rotation_totale = vehicule.angle
             surface_roue = pygame.Surface((largeur_roue, hauteur_roue), pygame.SRCALPHA)
             pygame.draw.ellipse(surface_roue, (0, 0, 0), (0, 0, largeur_roue, hauteur_roue))
 
@@ -52,7 +52,7 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
 
         # Afficher la vitesse du véhicule à l'écran
         font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {round(abs(vehicule.vitesse * 2), 3)} pixel/s", True, couleur_texte)
+        vitesse_text = font.render(f"Vitesse: {round(abs(41 * 2), 3)} pixel/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
         pygame.display.flip() # Met à jour l'écran
 

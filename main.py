@@ -13,7 +13,7 @@ pygame.init()
 LARGEUR, HAUTEUR = 1200, 800
 
 # Création de l'environnement et d'un véhicule
-vehicule = Vehicule("Robot",[0, 0] , 50, 50)
+vehicule = Vehicule("Robot",[200, 400] , 50, 50)
 obs=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
 environnement = Environnement(LARGEUR, HAUTEUR, vehicule, obs)
 
@@ -45,29 +45,29 @@ while True:
     vehicule.mesurer_distance_obstacle(environnement, obs)
     
     # Gestion des contrôles utilisateur
-    keys = pygame.key.get_pressed()
+    #keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_RIGHT]:
-        vehicule.tourner("droite", environnement, obs)
+    #if keys[pygame.K_RIGHT]:
+        #vehicule.tourner("droite", environnement, obs)
 
-    elif keys[pygame.K_LEFT]:
-        vehicule.tourner("gauche", environnement, obs)
+    #elif keys[pygame.K_LEFT]:
+        #vehicule.tourner("gauche", environnement, obs)
             
-    if keys[pygame.K_UP]:
-        vehicule.acceleration(0.5)       
+    #if keys[pygame.K_UP]:
+        #vehicule.acceleration(0.5)       
             
-    elif keys[pygame.K_DOWN]:
-        vehicule.deceleration(0.5)
+    #elif keys[pygame.K_DOWN]:
+        #vehicule.deceleration(0.5)
             
-    if keys[pygame.K_SPACE]:
-        vehicule.arret()
+    #if keys[pygame.K_SPACE]:
+        #vehicule.arret()
         
-    if keys[pygame.K_r]:
-        vehicule.restart()
+    #if keys[pygame.K_r]:
+        #vehicule.restart()
 
     vehicule.bouger(environnement, obs, temps.get_temps_ecoule())
     temps.demarrer()
-    environnement.rester_dans_limites(vehicule)
+    environnement.rester_dans_limites()
 
 
     # Affichage
