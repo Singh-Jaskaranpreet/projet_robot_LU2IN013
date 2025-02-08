@@ -3,7 +3,7 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, p_centre,empattement,essieux):
+    def __init__(self, nom, p_centre,empattement,essieux,):
         self.nom = nom
         self.long=empattement
         self.essieux = essieux
@@ -19,7 +19,7 @@ class Vehicule:
     def position_des_roues(self, point):
         hyp = self.long / m.cos(m.radians(20))
         r_Ar = [point[0] - (self.long//2) * m.cos(m.radians(self.angle)), point[1] - (self.long//2) * m.sin(m.radians(self.angle))]
-        r_Avg = [r_Ar[0] + hyp * m.cos(m.radians(self.angle + 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle + 20))]
+        r_Avg = [point[0] + hyp * m.cos(m.radians(self.angle + 20)), point[1] + hyp * m.sin(m.radians(self.angle + 20))]
         r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle - 20))]
         return [r_Ar, r_Avg, r_Avd]
     
@@ -33,18 +33,15 @@ class Vehicule:
 
     def bouger(self, environnement, objects, temps):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
+        tmp=self.angle
 
-        tmp = self.angle
+        vit_moyenne=(self.vit_Rd+self.vit_Rg)/2
 
-        #if self.angle_braquage != 0 :
-        #    rayon_courbure = self.long / m.tan(m.radians(self.angle_braquage))
-        #    delta_angle = (self.vitesse * temps)/ rayon_courbure
-        #    self.angle += m.degrees(delta_angle)
 
         if self.vit_Rd == self.vit_Rd :
             prochain_pos = [
-                self.p_centre[0] + self.vit_Rd * m.cos(m.radians(self.angle)) * temps,
-                self.p_centre[1] + self.vit_Rd * m.sin(m.radians(self.angle)) * temps
+                self.p_centre[0] + vit_moyenne * m.cos(m.radians(self.angle)) * temps,
+                self.p_centre[1] + vit_moyenne * m.sin(m.radians(self.angle)) * temps
             ]   
 
         if environnement.collision_predeplacement(prochain_pos):
@@ -63,11 +60,11 @@ class Vehicule:
         if direction == "gauche":
             self.vit_Rg = 0
             omega = self.vit_Rd / self.essieux #vitesse angulaire
-            self.angle += omega* temps
+            self.angle += m.degrees(omega* temps)
         elif direction == "droite":
             self.vit_Rd = 0
             omega = -self.vit_Rg / self.essieux
-            self.angle += omega* temps
+            self.angle += m.degrees(omega* temps)
 
 
     def restart(self):
