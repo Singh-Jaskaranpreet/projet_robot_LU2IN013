@@ -75,10 +75,10 @@ class Environnement:
                     (points_triangle[2], points_triangle[0]),
             ]:
                 if (len(obj) > 2):
-                    for i in range(0 , len(obj)):
-                        if self.segments_intersect(t_edge, (obj[i], obj[(i+1)%len(obj)])):
+                    t = len(obj)
+                    for i in range(0 , t):
+                        if self.segments_intersect(t_edge, (obj[i], obj[(i+1)%t])):
                             return True  # Collision détectée
-
 
         return False  # Pas de collision
 

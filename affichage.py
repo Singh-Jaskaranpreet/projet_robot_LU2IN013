@@ -47,7 +47,7 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
 
         # Afficher les objets (obstacles)
         for obj in objects:
-            pygame.draw.rect(screen, (0, 0, 0), obj)
+            pygame.draw.polygon(screen, (0, 0, 0), obj)
 
 
         # Afficher la vitesse du véhicule à l'écran

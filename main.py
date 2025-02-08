@@ -14,7 +14,7 @@ LARGEUR, HAUTEUR = 1200, 800
 
 # Création de l'environnement et d'un véhicule
 vehicule = Vehicule("Robot",[200, 400] , 50, 50)
-obs=[pygame.Rect(randint(400, 900), randint(0,HAUTEUR//2), randint(10,100), randint(200,HAUTEUR//2))]
+obs=[[(400,100),(600,100),(600,600),(400,600)]]
 environnement = Environnement(LARGEUR, HAUTEUR, vehicule, obs)
 
 temps = Horloge()
@@ -68,7 +68,7 @@ while True:
 
 
     # Affichage
-    afficher(screen, environnement.vehicule, ROUGE, NOIR, obs)
+    afficher(screen, environnement.vehicule, ROUGE, NOIR, environnement.objects)
     clock.tick(60)
 
 temps.arreter()
