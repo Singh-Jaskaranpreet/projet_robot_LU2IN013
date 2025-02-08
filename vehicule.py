@@ -62,12 +62,12 @@ class Vehicule:
         mais empêche l' angle si la roue arrière est bloquée. """
         if direction == "gauche":
             self.vit_Rg = 0
-            self.vit_Rd = self.vit_Rd / self.essieux #vitesse angulaire
-            self.angle = self.vit_Rd * temps
+            omega = self.vit_Rd / self.essieux #vitesse angulaire
+            self.angle += omega* temps
         elif direction == "droite":
             self.vit_Rd = 0
-            self.vit_Rg = self.vit_Rg / self.essieux
-            self.angle = self.vit_Rg * temps
+            omega = -self.vit_Rg / self.essieux
+            self.angle += omega* temps
 
 
     def restart(self):
