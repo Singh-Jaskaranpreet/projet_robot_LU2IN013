@@ -42,7 +42,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    environnement.vehicule.mesurer_distance_obstacle(environnement, obs)
+    environnement.vehicule.mesurer_distance_obstacle(environnement)
     
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()

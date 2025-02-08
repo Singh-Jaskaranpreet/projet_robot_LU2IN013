@@ -1,4 +1,3 @@
-import pygame
 import math as m
 # Classe Véhicule
 class Vehicule:
@@ -76,7 +75,7 @@ class Vehicule:
         
 
 
-    def mesurer_distance_obstacle(self, environnement, objects):
+    def mesurer_distance_obstacle(self, environnement):
         """ Simule un capteur infrarouge détectant la distance jusqu'au premier obstacle en face du véhicule. """
     
         # 🔹 Position du capteur (au centre des roues avant)
@@ -95,24 +94,17 @@ class Vehicule:
             point_y = capteur_y + d * m.sin(direction_angle)
 
             # Vérifier si ce point touche un obstacle
-            for obj in objects:
+            for obj in environnement.objects:
                 # 🔴 Cas 1 : L'obstacle est un `pygame.Rect`
-                if isinstance(obj, pygame.Rect):
-                    if obj.collidepoint(point_x, point_y):
-                        print(f" Détection d'un obstacle rectangulaire à {d} px !", end = "\r")
-                        return d  # Distance au premier obstacle détecté
-
-                # 🔵 Cas 2 : L'obstacle est un objet avec `x`, `y` et un `rayon` (cercle)
-                elif hasattr(obj, "x") and hasattr(obj, "y") and hasattr(obj, "rayon"):
-                    distance_objet = m.sqrt((point_x - obj.x) ** 2 + (point_y - obj.y) ** 2)
-                    if distance_objet <= obj.rayon:
-                        print(f" Détection d'un obstacle circulaire à {d} px !", end = "\r")
-                        return d  # Distance au premier obstacle détecté
-
-                # 🟢 Cas 3 : L'obstacle est un objet sans `pygame.Rect` mais avec `width` et `height` (rectangle custom)
-                elif hasattr(obj, "x") and hasattr(obj, "y") and hasattr(obj, "width") and hasattr(obj, "height"):
-                    if (obj.x <= point_x <= obj.x + obj.width) and (obj.y <= point_y <= obj.y + obj.height):
+                if len(obj) == 4:
+                    if (obj[0][0] <= point_x <= obj[2][0]) and (obj[0][1] <= point_y <= obj[2][1]):
                         print(f" Détection d'un obstacle rectangle custom à {d} px !", end = "\r")
+                        return d  # Distance au premier obstacle détecté
+                # 🔵 Cas 2 : L'obstacle est un objet avec `x`, `y` et un `rayon` (cercle)
+                elif len(obj) == 2:
+                    distance_objet = m.sqrt((point_x - obj[0][0]) ** 2 + (point_y - obj[0][1]) ** 2)
+                    if distance_objet <= obj[1]:
+                        print(f" Détection d'un obstacle circulaire à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
 
         print(f" Aucun obstacle détecté, distance max : {max_distance}", end = "\r")
