@@ -56,7 +56,7 @@ def faire_carre(vehicule, temps, screen, couleur_vehicule, couleur_texte, enviro
                 vehicule.p_centre[1] -= (distance_parcourue - cote) * math.sin(math.radians(vehicule.angle))
                 break
 
-            afficher(screen, vehicule, couleur_vehicule, couleur_texte, environnement.objects)
+            afficher(screen, vehicule, couleur_vehicule, couleur_texte, environnement.objects, environnement)
             time.sleep(0.05)  # Pause pour affichage progressif
 
         vehicule.freiner(vitesse)
@@ -72,7 +72,7 @@ def faire_carre(vehicule, temps, screen, couleur_vehicule, couleur_texte, enviro
                 vehicule.angle = (angle_initial + 90) % 360
                 break
 
-            afficher(screen, vehicule, couleur_vehicule, couleur_texte, environnement.objects)
+            afficher(screen, vehicule, couleur_vehicule, couleur_texte, environnement.objects, environnement)
             time.sleep(0.05)  # Pause pour affichage progressif
         
         print(vehicule.p_centre)
@@ -90,7 +90,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    environnement.vehicule.mesurer_distance_obstacle(environnement)
     
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
@@ -139,7 +138,7 @@ while True:
     tourner = ""
 
     # Affichage
-    afficher(screen, environnement.vehicule, ROUGE, NOIR, environnement.objects)
+    afficher(screen, environnement.vehicule, ROUGE, NOIR, environnement.objects, environnement)
     clock.tick(60)
 
 temps.arreter()

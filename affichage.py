@@ -12,7 +12,7 @@ BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
 ROUGE = (255, 0, 0)
 
-def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
+def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects, environnement):
         """
         Affiche l'environnement, y compris le véhicule, les objets (obstacles),
         et la vitesse du véhicule.
@@ -54,6 +54,8 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
         font = pygame.font.SysFont(None, 36)
         vitesse_text = font.render(f"Vitesse: {round(abs((vehicule.vit_Rd+vehicule.vit_Rg)/2), 3)} pixel/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
+        distance = font.render(f"Distance:{vehicule.mesurer_distance_obstacle(environnement)} pixel", True, couleur_texte)
+        screen.blit(distance, (10, 40))
         pygame.display.flip() # Met à jour l'écran
 
 
