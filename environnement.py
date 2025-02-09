@@ -108,7 +108,7 @@ class Environnement:
             ]
         self.vehicule.p_centre = pos
         self.vehicule.vit_Rg = 0
-        self.vehicule.vit_Rg = 0      
+        self.vehicule.vit_Rd = 0      
 
     def rester_dans_limites(self):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
