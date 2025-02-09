@@ -52,7 +52,7 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects):
 
         # Afficher la vitesse du véhicule à l'écran
         font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {round(abs(41 * 2), 3)} pixel/s", True, couleur_texte)
+        vitesse_text = font.render(f"Vitesse: {round(abs((vehicule.vit_Rd+vehicule.vit_Rg)/2), 3)} pixel/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
         pygame.display.flip() # Met à jour l'écran
 

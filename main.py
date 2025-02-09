@@ -9,13 +9,8 @@ from affichage import *
 # Initialisation de Pygame
 pygame.init()
 
-# Dimensions de la fenêtre
-LARGEUR, HAUTEUR = 1200, 800
-
 # Création de l'environnement et d'un véhicule
-vehicule = Vehicule("Robot",[200, 400] , 50, 50)
-obs=[[(400,100),(600,100),(600,600),(400,600)]]
-environnement = Environnement(LARGEUR, HAUTEUR, vehicule, obs)
+environnement = Environnement()
 
 temps = Horloge()
 

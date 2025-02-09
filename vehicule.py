@@ -100,6 +100,6 @@ class Vehicule:
                     if distance_objet <= obj[1]:
                         print(f" Détection d'un obstacle circulaire à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
-
+        print("                                                       ", end ="\r")
         print(f" Aucun obstacle détecté, distance max : {max_distance}", end = "\r")
         return max_distance  # Aucune collision détectée

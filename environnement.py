@@ -3,14 +3,14 @@ from vehicule import *
 
 class Environnement:
 
-    def __init__(self, largeur, hauteur, vehicule, objects):
+    def __init__(self):
         """
         Initialise l'environnement avec la largeur et la hauteur spécifiées.
         """
-        self.largeur = largeur
-        self.hauteur = hauteur
-        self.vehicule = vehicule
-        self.objects = objects  #Liste des objets
+        self.largeur = 1200
+        self.hauteur = 800
+        self.vehicule = Vehicule("Robot",[200, 400] , 50, 50)
+        self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
 
 
     def segments_intersect(self, seg1, seg2):
