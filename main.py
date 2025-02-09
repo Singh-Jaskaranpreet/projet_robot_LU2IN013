@@ -62,7 +62,8 @@ while True:
     if keys[pygame.K_r]:
         environnement.vehicule.restart()
 
-    environnement.vehicule.bouger(environnement, obs, temps.get_temps_ecoule())
+    environnement.vehicule.bouger(temps.get_temps_ecoule())
+    environnement.collision()
     temps.demarrer()
     environnement.rester_dans_limites()
 

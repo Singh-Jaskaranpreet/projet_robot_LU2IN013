@@ -30,7 +30,7 @@ class Vehicule:
         self.vit_Rg = max(0,self.vit_Rg-val)
         self.vit_Rd = max(0,self.vit_Rd-val)
 
-    def bouger(self, environnement, objects, temps):
+    def bouger(self, temps):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
         tmp=self.angle
 
@@ -41,13 +41,7 @@ class Vehicule:
             prochain_pos = [
                 self.p_centre[0] + vit_moyenne * m.cos(m.radians(self.angle)) * temps,
                 self.p_centre[1] + vit_moyenne * m.sin(m.radians(self.angle)) * temps
-            ]   
-
-        if environnement.collision_predeplacement(prochain_pos):
-            self.vit_Rg = 0
-            self.vit_Rd = 0
-            self.angle = tmp
-            return       
+            ]         
 
         # Appliquer les nouvelles coordonnées si aucune collision
         self.p_centre = prochain_pos

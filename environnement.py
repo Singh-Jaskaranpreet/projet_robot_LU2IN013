@@ -98,13 +98,13 @@ class Environnement:
         """
         if segment == {0,2} :
             pos = [
-                self.p_centre[0] + m.cos(m.radians(self.angle)),
-                self.p_centre[1] + m.sin(m.radians(self.angle))
+                self.vehicule.p_centre[0] + m.cos(m.radians(self.vehicule.angle)),
+                self.vehicule.p_centre[1] + m.sin(m.radians(self.vehicule.angle))
             ]
         else :
             pos = [
-                self.p_centre[0] - m.cos(m.radians(self.angle)),
-                self.p_centre[1] - m.sin(m.radians(self.angle))
+                self.vehicule.p_centre[0] - m.cos(m.radians(self.vehicule.angle)),
+                self.vehicule.p_centre[1] - m.sin(m.radians(self.vehicule.angle))
             ]
         self.vehicule.p_centre = pos
         self.vehicule.vit_Rg = 0
