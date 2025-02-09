@@ -41,12 +41,12 @@ class Vehicule:
         vit_moyenne=(self.vit_Rd+self.vit_Rg)/2
 
 
-        if self.vit_Rd == self.vit_Rd :
-            prochain_pos = [
-                self.p_centre[0] + vit_moyenne * m.cos(m.radians(self.angle)) * temps,
-                self.p_centre[1] + vit_moyenne * m.sin(m.radians(self.angle)) * temps
-            ]         
 
+        prochain_pos = [
+            self.p_centre[0] + vit_moyenne * m.cos(m.radians(self.angle)) * temps,
+            self.p_centre[1] + vit_moyenne * m.sin(m.radians(self.angle)) * temps
+        ]         
+        
         # Appliquer les nouvelles coordonnées si aucune collision
         self.p_centre = prochain_pos
 
@@ -104,6 +104,6 @@ class Vehicule:
                     if distance_objet <= obj[1]:
                         print(f" Détection d'un obstacle circulaire à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
-        print("                                                       ", end ="\r")
-        print(f" Aucun obstacle détecté, distance max : {max_distance}", end = "\r")
+        #print("                                                       ", end ="\r")
+        #print(f" Aucun obstacle détecté, distance max : {max_distance}", end = "\r")
         return max_distance  # Aucune collision détectée
