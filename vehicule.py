@@ -57,10 +57,10 @@ class Vehicule:
         if direction == "gauche":
             self.vit_Rg = 0
             omega = self.vit_Rd / self.essieux #vitesse angulaire
-            self.angle += m.degrees(omega* temps)
+            self.angle -= m.degrees(omega* temps)
         elif direction == "droite":
             self.vit_Rd = 0
-            omega = -self.vit_Rg / self.essieux
+            omega = self.vit_Rg / self.essieux
             self.angle += m.degrees(omega* temps)
 
 
