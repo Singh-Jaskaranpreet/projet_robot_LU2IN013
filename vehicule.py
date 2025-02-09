@@ -30,6 +30,10 @@ class Vehicule:
         self.vit_Rg = max(0,self.vit_Rg-val)
         self.vit_Rd = max(0,self.vit_Rd-val)
 
+    def reculer(self, val):
+        self.vit_Rg = max(-50, self.vit_Rg - val)
+        self.vit_Rd = max(-50, self.vit_Rd - val)
+    
     def bouger(self, temps):
         """Déplace le véhicule en tenant compte des collisions et des limites."""
         tmp=self.angle

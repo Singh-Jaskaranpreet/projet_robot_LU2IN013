@@ -50,8 +50,11 @@ while True:
             
     if keys[pygame.K_UP]:
         environnement.vehicule.accelerer(0.5)       
-            
+
     elif keys[pygame.K_DOWN]:
+        environnement.vehicule.reculer(0.5)
+
+    elif keys[pygame.K_f]:
         environnement.vehicule.freiner(0.5)
         
     if keys[pygame.K_r]:
