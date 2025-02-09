@@ -96,14 +96,10 @@ class Vehicule:
                 # 🔴 Cas 1 : L'obstacle est un `pygame.Rect`
                 if len(obj) == 4:
                     if (obj[0][0] <= point_x <= obj[2][0]) and (obj[0][1] <= point_y <= obj[2][1]):
-                        print(f" Détection d'un obstacle rectangle custom à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
                 # 🔵 Cas 2 : L'obstacle est un objet avec `x`, `y` et un `rayon` (cercle)
                 elif len(obj) == 2:
                     distance_objet = m.sqrt((point_x - obj[0][0]) ** 2 + (point_y - obj[0][1]) ** 2)
                     if distance_objet <= obj[1]:
-                        print(f" Détection d'un obstacle circulaire à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
-        print("                                                       ", end ="\r")
-        print(f" Aucun obstacle détecté, distance max : {max_distance}", end = "\r")
         return max_distance  # Aucune collision détectée
