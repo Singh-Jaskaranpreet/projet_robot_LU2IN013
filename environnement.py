@@ -59,7 +59,7 @@ class Environnement:
 
         return False
 
-    def collision(self):
+    def collision(self, tourner):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
@@ -71,7 +71,7 @@ class Environnement:
         point_collision =set()
 
         # Indice du segment en collsion
-        i = 0
+        indice = 0
 
         # Vérifier les collisions avec les objets
         for obj in self.objects:
@@ -84,27 +84,33 @@ class Environnement:
                     t = len(obj)
                     for i in range(0 , t):
                         if self.segments_intersect(t_edge, (obj[i], obj[(i+1)%t])):
-                            point_collision.add(i)
-                i = i+1
+                            point_collision.add(indice)
+                indice = indice+1
         if len(point_collision)>0:
-            self.correction_apres_collision(point_collision)
-            self.collision()
+            self.correction_apres_collision(point_collision, tourner)
+            self.collision(tourner)
         return False  # Pas de collision
     
-    def correction_apres_collision(self,segment):
+    def correction_apres_collision(self,segment,tourner):
         """
         Corrige la position du véhicule.
-        :param segment: côté du triangle en collision
+        :param segment: côté du véhicule en collision
+        :param tourner: savoir si le véhicule a tourné  
         """
+        angle = self.vehicule.angle
+        if tourner == "d" :
+            angle = angle - 90
+        if tourner == "g" :
+            angle = angle + 90
         if segment == {0,2} :
             pos = [
-                self.vehicule.p_centre[0] + m.cos(m.radians(self.vehicule.angle)),
-                self.vehicule.p_centre[1] + m.sin(m.radians(self.vehicule.angle))
+                self.vehicule.p_centre[0] + m.cos(m.radians(angle)),
+                self.vehicule.p_centre[1] + m.sin(m.radians(angle))
             ]
         else :
             pos = [
-                self.vehicule.p_centre[0] - m.cos(m.radians(self.vehicule.angle)),
-                self.vehicule.p_centre[1] - m.sin(m.radians(self.vehicule.angle))
+                self.vehicule.p_centre[0] - m.cos(m.radians(angle)),
+                self.vehicule.p_centre[1] - m.sin(m.radians(angle))
             ]
         self.vehicule.p_centre = pos
         self.vehicule.vit_Rg = 0

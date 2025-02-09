@@ -41,13 +41,13 @@ while True:
     
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
-
+    tourner = ""
     if keys[pygame.K_RIGHT]:
         environnement.vehicule.tourner("droite",temps.get_temps_ecoule())
-
+        tourner = "d"
     elif keys[pygame.K_LEFT]:
         environnement.vehicule.tourner("gauche",temps.get_temps_ecoule())
-            
+        tourner = "g"   
     if keys[pygame.K_UP]:
         environnement.vehicule.accelerer(0.5)       
 
@@ -61,10 +61,10 @@ while True:
         environnement.vehicule.restart()
 
     environnement.vehicule.bouger(temps.get_temps_ecoule())
-    environnement.collision()
+    environnement.collision(tourner)
     temps.demarrer()
     environnement.rester_dans_limites()
-
+    tourner = ""
 
     # Affichage
     afficher(screen, environnement.vehicule, ROUGE, NOIR, environnement.objects)
