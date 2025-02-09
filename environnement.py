@@ -89,6 +89,7 @@ class Environnement:
         if len(point_collision)>0:
             self.correction_apres_collision(point_collision, tourner)
             self.collision(tourner)
+            return True
         return False  # Pas de collision
     
     def correction_apres_collision(self,segment,tourner):
