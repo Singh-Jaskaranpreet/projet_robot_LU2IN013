@@ -97,25 +97,38 @@ while True:
     tourner = ""
     if keys[pygame.K_RIGHT]:
         environnement.vehicule.tourner("droite",temps.get_temps_ecoule())
-        tourner = "d"
+        print("                                                       ", end ="\r")
+        print("je tourne à droite, Tick... Tick... Tick...", end ="\r")
+
     elif keys[pygame.K_LEFT]:
         environnement.vehicule.tourner("gauche",temps.get_temps_ecoule())
-        tourner = "g"   
+        print("                                                       ", end ="\r")
+        print("je tourne à gauche, Tick... Tick... Tick...", end ="\r")
+ 
     if keys[pygame.K_UP]:
-        environnement.vehicule.accelerer(0.5)       
+        environnement.vehicule.accelerer(0.5) 
+        print("                                                       ", end ="\r")      
+        print("le vehicule accèlere, Vroum Vroum", end ="\r")
 
     elif keys[pygame.K_DOWN]:
         environnement.vehicule.reculer(0.5)
+        print("                                                       ", end ="\r")
+        print("le vehicule recule, Bip... Bip... ", end ="\r")
 
     elif keys[pygame.K_f]:
         environnement.vehicule.freiner(0.5)
-        
+        print("                                                       ", end ="\r")
+        print("le vehicule freine, Pschhh", end ="\r")
+
     if keys[pygame.K_r]:
         environnement.vehicule.restart()
+        print("                                                       ", end ="\r")
+        print("oh la la on retourne à zero", end ="\r")
 
     if keys[pygame.K_c]:  
         faire_carre(environnement.vehicule, temps, screen, ROUGE, NOIR, environnement)
-
+        print("                                                       ", end ="\r")
+        print("le vehicule fait un carré", end ="\r")
 
 
 
