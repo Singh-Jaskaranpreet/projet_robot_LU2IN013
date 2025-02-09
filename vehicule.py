@@ -27,8 +27,14 @@ class Vehicule:
         self.vit_Rd = min(150,self.vit_Rd+val)
     
     def freiner(self, val):
-        self.vit_Rg = max(0,self.vit_Rg-val)
-        self.vit_Rd = max(0,self.vit_Rd-val)
+        if self.vit_Rg > 0:
+            self.vit_Rg = max(0,self.vit_Rg-val)
+        elif self.vit_Rg < 0:
+            self.vit_Rg = min(0,self.vit_Rg+val)
+        if self.vit_Rd > 0:
+            self.vit_Rd = max(0,self.vit_Rd-val)
+        elif self.vit_Rd < 0:
+            self.vit_Rd = min(0,self.vit_Rd+val)
 
     def reculer(self, val):
         self.vit_Rg = max(-50, self.vit_Rg - val)
@@ -57,10 +63,10 @@ class Vehicule:
         if direction == "gauche":
             self.vit_Rg = 0
             omega = self.vit_Rd / self.essieux #vitesse angulaire
-            self.angle -= m.degrees(omega* temps)
+            self.angle += m.degrees(omega* temps)
         elif direction == "droite":
             self.vit_Rd = 0
-            omega = self.vit_Rg / self.essieux
+            omega = -self.vit_Rg / self.essieux
             self.angle += m.degrees(omega* temps)
 
 
@@ -95,11 +101,17 @@ class Vehicule:
             for obj in environnement.objects:
                 # 🔴 Cas 1 : L'obstacle est un `pygame.Rect`
                 if len(obj) == 4:
+                    #print(f"obstacle rectangulaire de coordonée : {obj}", end = "\r")
                     if (obj[0][0] <= point_x <= obj[2][0]) and (obj[0][1] <= point_y <= obj[2][1]):
+                        print(f" Détection d'un obstacle rectangle custom à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
                 # 🔵 Cas 2 : L'obstacle est un objet avec `x`, `y` et un `rayon` (cercle)
                 elif len(obj) == 2:
+                    #print(f"obstacle circulaire de coordonée : {obj}", end = "\r")
                     distance_objet = m.sqrt((point_x - obj[0][0]) ** 2 + (point_y - obj[0][1]) ** 2)
                     if distance_objet <= obj[1]:
+                        print(f" Détection d'un obstacle circulaire à {d} px !", end = "\r")
                         return d  # Distance au premier obstacle détecté
+        #print("                                                       ", end ="\r")
+        #print(f" Aucun obstacle détecté, distance max : {max_distance}", end = "\r")
         return max_distance  # Aucune collision détectée
