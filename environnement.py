@@ -59,13 +59,19 @@ class Environnement:
 
         return False
 
-    def collision_predeplacement(self, point):
+    def collision(self):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
         """
         # Points actuels du véhicule
-        points_triangle = self.vehicule.position_des_roues(point)
+        points_triangle = self.vehicule.position_des_roues(self.vehicule.p_centre)
+
+        # Partie du vehicule qui sont en collision
+        point_collision =set()
+
+        # Indice du segment en collsion
+        i = 0
 
         # Vérifier les collisions avec les objets
         for obj in self.objects:
@@ -78,9 +84,31 @@ class Environnement:
                     t = len(obj)
                     for i in range(0 , t):
                         if self.segments_intersect(t_edge, (obj[i], obj[(i+1)%t])):
-                            return True  # Collision détectée
-
+                            point_collision.add(i)
+                i = i+1
+        if len(point_collision)>0:
+            self.correction_apres_collision(point_collision)
+            self.collision()
         return False  # Pas de collision
+    
+    def correction_apres_collision(self,segment):
+        """
+        Corrige la position du véhicule.
+        :param segment: côté du triangle en collision
+        """
+        if segment == {0,2} :
+            pos = [
+                self.p_centre[0] + m.cos(m.radians(self.angle)),
+                self.p_centre[1] + m.sin(m.radians(self.angle))
+            ]
+        else :
+            pos = [
+                self.p_centre[0] - m.cos(m.radians(self.angle)),
+                self.p_centre[1] - m.sin(m.radians(self.angle))
+            ]
+        self.vehicule.p_centre = pos
+        self.vehicule.vit_Rg = 0
+        self.vehicule.vit_Rg = 0      
 
     def rester_dans_limites(self):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
