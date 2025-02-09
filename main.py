@@ -132,10 +132,17 @@ while True:
 
 
     environnement.vehicule.bouger(temps.get_temps_ecoule())
-    environnement.collision(0)
+    collision = environnement.collision()
+    la = 0
+    while(collision):
+        environnement.correction_apres_collision(collision)
+        collision = environnement.collision()
+        la=1
+    if la == 1 :
+        environnement.arrete()
+        la=0
     temps.demarrer()
     environnement.rester_dans_limites()
-    tourner = ""
 
     # Affichage
     afficher(screen, environnement.vehicule, ROUGE, NOIR, environnement.objects, environnement)

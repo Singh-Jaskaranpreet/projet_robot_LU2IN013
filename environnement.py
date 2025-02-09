@@ -59,7 +59,7 @@ class Environnement:
 
         return False
 
-    def collision(self, rec):
+    def collision(self):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
@@ -97,13 +97,13 @@ class Environnement:
                 indice = indice+1
             if len(point_collision) > 0 :
                 break
-        if rec == 1 and len(point_collision)==0 :
-            self.vehicule.vit_Rd = 0
-            self.vehicule.vit_Rg = 0
         if len(point_collision)>0:
-            self.correction_apres_collision(point_collision)
-            self.collision(1)
-        
+            return point_collision
+        return False
+
+    def arrete(self):
+        self.vehicule.vit_Rd = 0
+        self.vehicule.vit_Rg = 0        
 
     def correction_apres_collision(self,segment):
         """
@@ -125,13 +125,13 @@ class Environnement:
                 angle = angle + 90
         if segment == {0,2} or segment == {0} :
             pos = [
-                self.vehicule.p_centre[0] + 0.02 * m.cos(m.radians(angle)),
-                self.vehicule.p_centre[1] + 0.02 * m.sin(m.radians(angle))
+                self.vehicule.p_centre[0] + 0.01 * m.cos(m.radians(angle)),
+                self.vehicule.p_centre[1] + 0.01 * m.sin(m.radians(angle))
             ]
         else :
             pos = [
-                self.vehicule.p_centre[0] - 0.02 * m.cos(m.radians(angle)),
-                self.vehicule.p_centre[1] - 0.02 * m.sin(m.radians(angle))
+                self.vehicule.p_centre[0] - 0.01 * m.cos(m.radians(angle)),
+                self.vehicule.p_centre[1] - 0.01 * m.sin(m.radians(angle))
             ]
         self.vehicule.p_centre = pos      
 
