@@ -94,7 +94,7 @@ while True:
     
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
-    tourner = ""
+
     if keys[pygame.K_RIGHT]:
         environnement.vehicule.tourner("droite",temps.get_temps_ecoule())
         print("                                                       ", end ="\r")
@@ -133,7 +133,7 @@ while True:
 
 
     environnement.vehicule.bouger(temps.get_temps_ecoule())
-    environnement.collision(tourner)
+    environnement.collision(0)
     temps.demarrer()
     environnement.rester_dans_limites()
     tourner = ""

@@ -10,8 +10,8 @@ class Environnement:
         self.largeur = 1200
         self.hauteur = 800
         self.vehicule = Vehicule("Robot",[200, 400] , 50, 50)
-        #self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
-        self.objects = [] #pour pas avoir d'obstacle
+        self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
+        #self.objects = [] #pour pas avoir d'obstacle
 
     def segments_intersect(self, seg1, seg2):
         """
@@ -59,7 +59,7 @@ class Environnement:
 
         return False
 
-    def collision(self, tourner):
+    def collision(self, rec):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
@@ -75,6 +75,15 @@ class Environnement:
 
         # Vérifier les collisions avec les objets
         for obj in self.objects:
+            for point in points_triangle :
+                if len(obj) == 4 :
+                    if (obj[0][0] <= point[0] <= obj[2][0]) and (obj[0][1] <= point[1] <= obj[2][1]):
+                        point_collision.add(indice)
+                        break
+                indice = indice + 1
+            if len(point_collision) > 0 :
+                break
+            indice = 0            
             for t_edge in [
                     (points_triangle[0], points_triangle[1]),
                     (points_triangle[1], points_triangle[2]),
@@ -86,36 +95,45 @@ class Environnement:
                         if self.segments_intersect(t_edge, (obj[i], obj[(i+1)%t])):
                             point_collision.add(indice)
                 indice = indice+1
+            if len(point_collision) > 0 :
+                break
+        if rec == 1 and len(point_collision)==0 :
+            self.vehicule.vit_Rd = 0
+            self.vehicule.vit_Rg = 0
         if len(point_collision)>0:
-            self.correction_apres_collision(point_collision, tourner)
-            self.collision(tourner)
-            return True
-        return False  # Pas de collision
-    
-    def correction_apres_collision(self,segment,tourner):
+            self.correction_apres_collision(point_collision)
+            self.collision(1)
+        
+
+    def correction_apres_collision(self,segment):
         """
         Corrige la position du véhicule.
         :param segment: côté du véhicule en collision
         :param tourner: savoir si le véhicule a tourné  
         """
         angle = self.vehicule.angle
-        if tourner == "d" :
-            angle = angle - 90
-        if tourner == "g" :
-            angle = angle + 90
-        if segment == {0,2} :
+
+        if self.vehicule.vit_Rd > self.vehicule.vit_Rd :
+            if segment == {1}:
+                angle = angle + 90
+            else :
+                angle = angle - 90
+        if self.vehicule.vit_Rd < self.vehicule.vit_Rd :
+            if segment == {2}:
+                angle = angle + 90
+            else :
+                angle = angle - 90
+        if segment == {0,2} or segment == {0} :
             pos = [
-                self.vehicule.p_centre[0] + m.cos(m.radians(angle)),
-                self.vehicule.p_centre[1] + m.sin(m.radians(angle))
+                self.vehicule.p_centre[0] + 0.02 * m.cos(m.radians(angle)),
+                self.vehicule.p_centre[1] + 0.02 * m.sin(m.radians(angle))
             ]
         else :
             pos = [
-                self.vehicule.p_centre[0] - m.cos(m.radians(angle)),
-                self.vehicule.p_centre[1] - m.sin(m.radians(angle))
+                self.vehicule.p_centre[0] - 0.02 * m.cos(m.radians(angle)),
+                self.vehicule.p_centre[1] - 0.02 * m.sin(m.radians(angle))
             ]
-        self.vehicule.p_centre = pos
-        self.vehicule.vit_Rg = 0
-        self.vehicule.vit_Rd = 0      
+        self.vehicule.p_centre = pos      
 
     def rester_dans_limites(self):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
