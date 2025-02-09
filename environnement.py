@@ -139,8 +139,11 @@ class Environnement:
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
         for point in self.vehicule.position_des_roues(self.vehicule.p_centre):
             if point[0] < 0 or point[0] > self.largeur   or point[1] < 0 or point[1] > self.hauteur :
+                self.vehicule.vit_Rd = 0
+                self.vehicule.vit_Rg = 0
+            if point[0] < -1 or point[0] > self.largeur +1   or point[1] < -1 or point[1] > self.hauteur +1 :
                 self.vehicule.restart()
-                return
+        
         return
 
     def add_objet(self,objet):

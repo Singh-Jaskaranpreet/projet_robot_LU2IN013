@@ -61,12 +61,12 @@ class Vehicule:
         """ Gère le braquage des roues en fonction de la direction,
         mais empêche l' angle si la roue arrière est bloquée. """
         if direction == "gauche":
-            self.vit_Rg = 0
-            omega = self.vit_Rd / self.essieux #vitesse angulaire
+            self.vit_Rg = max(0,self.vit_Rg-2)
+            omega = -self.vit_Rd / self.essieux #vitesse angulaire
             self.angle += m.degrees(omega* temps)
         elif direction == "droite":
-            self.vit_Rd = 0
-            omega = -self.vit_Rg / self.essieux
+            self.vit_Rd = max(0,self.vit_Rd-2)
+            omega = self.vit_Rg / self.essieux
             self.angle += m.degrees(omega* temps)
 
 
