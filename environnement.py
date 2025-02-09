@@ -113,16 +113,16 @@ class Environnement:
         """
         angle = self.vehicule.angle
 
-        if self.vehicule.vit_Rd > self.vehicule.vit_Rd :
+        if self.vehicule.vit_Rd > self.vehicule.vit_Rg :
             if segment == {1}:
                 angle = angle + 90
             else :
                 angle = angle - 90
-        if self.vehicule.vit_Rd < self.vehicule.vit_Rd :
+        if self.vehicule.vit_Rd < self.vehicule.vit_Rg :
             if segment == {2}:
-                angle = angle + 90
-            else :
                 angle = angle - 90
+            else :
+                angle = angle + 90
         if segment == {0,2} or segment == {0} :
             pos = [
                 self.vehicule.p_centre[0] + 0.02 * m.cos(m.radians(angle)),
