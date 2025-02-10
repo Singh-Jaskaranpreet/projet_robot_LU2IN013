@@ -18,16 +18,8 @@ temps = Horloge()
 
 # Affiche l'écran d'instructions avant de commencer
 afficher_instructions()
-
 # Attendre que l'utilisateur appuie sur une touche pour commencer
-attente = True
-while attente:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN:  # Une touche a été pressée
-            attente = False  # On sort de la boucle et commence la simulation
+controleur.gerer_affichage()
 
 # Boucle principale de la simulation
 clock = pygame.time.Clock()
