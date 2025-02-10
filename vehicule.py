@@ -2,17 +2,18 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, p_centre,empattement,essieux,):
+    def __init__(self, nom, p_centre,empattement,essieux,environnement, angle = 0):
         self.nom = nom
         self.long=empattement
         self.essieux = essieux
-        self.angle = 0
+        self.angle = angle %360
         self.p_centre = p_centre
         self.vit_Rg = 0
         self.vit_Rd = 0
         self.starting_point_x=p_centre[0]
         self.starting_point_y=p_centre[1]
         self.nb_roues = 3
+        self.environnement = environnement
 
     #Place les trois roues de la voiture
     def position_des_roues(self, point):

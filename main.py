@@ -5,16 +5,14 @@ from horloge import *
 from affichage import *
 import time
 import controleur
+from strategy import *
 
 # Initialisation de Pygame
 pygame.init()
 
-# Création de l'environnement et d'un véhicule
+#temps Création de l'environnement et d'un véhicule
 environnement = Environnement()
 controleur = controleur.Controleur(environnement.vehicule, environnement)
-
-temps = Horloge()
-
 
 # Affiche l'écran d'instructions avant de commencer
 afficher_instructions()
@@ -23,17 +21,18 @@ controleur.gerer_affichage()
 
 # Boucle principale de la simulation
 clock = pygame.time.Clock()
-temps.demarrer()
+environnement.temps.demarrer()
 
 while True:
 
-    
+    controleur.executer_strategie()
+
     # Gestion des contrôles utilisateur
     controleur.gerer_evenements()
 
 
-    environnement.bouger(temps.get_temps_ecoule())
-    temps.demarrer()
+    environnement.bouger(environnement.temps.get_temps_ecoule())
+    environnement.temps.demarrer()
     environnement.rester_dans_limites()
 
     # Affichage

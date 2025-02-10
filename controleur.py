@@ -1,11 +1,13 @@
 import pygame
 import environnement
 import sys
+from strategy import *
 
 class Controleur:
     def __init__(self, vehicule, environnement):
         self.vehicule = vehicule
         self.environnement = environnement
+        self.sequence = None
 
     def gerer_evenements(self):
         for event in pygame.event.get():
@@ -35,6 +37,15 @@ class Controleur:
             print("                                                       ", end ="\r")
             print("oh la la on retourne à zero", end ="\r")
 
+        if keys[pygame.K_s]:  # Définir une séquence de stratégies
+            if self.sequence is None:  # Si aucune séquence n'est en cours
+                # Créer une séquence de stratégies et la démarrer
+                self.sequence = StrategieSequence([AvancerDroitStrategy(150), TournerAngleStrategy(90)] * 4)
+                self.sequence.start(self.vehicule)
+                print("Stratégie séquentielle activée")
+            else:
+                print("Une séquence est déjà en cours. Attendez qu'elle se termine.")
+
     def gerer_affichage(self):
         attente = True
         while attente:
@@ -44,3 +55,10 @@ class Controleur:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:  # Une touche a été pressée
                     attente = False  # On sort de la boucle et commence la simulation
+
+    def executer_strategie(self):
+        if self.sequence:  # Si une séquence est définie
+            if not self.sequence.stop(self.vehicule):  # Si la séquence n'est pas terminée
+                self.sequence.step(self.vehicule)  # Passer à l'étape suivante
+            else:  # Si la séquence est terminée
+                self.sequence = None  # Réinitialiser la séquence
