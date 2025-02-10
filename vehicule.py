@@ -41,21 +41,26 @@ class Vehicule:
         self.vit_Rd = max(-50, self.vit_Rd - val)
     
     def bouger(self, temps):
-        """Déplace le véhicule en tenant compte des collisions et des limites."""
-        tmp=self.angle
+        """Déplace le véhicule en fonction des vitesses différentielles des roues avant."""
+        if self.vit_Rg == self.vit_Rd:  # Mouvement en ligne droite
+            vitesse = self.vit_Rg
+            self.p_centre[0] += vitesse * m.cos(m.radians(self.angle)) * temps
+            self.p_centre[1] += vitesse * m.sin(m.radians(self.angle)) * temps
+        else:  # Mouvement en rotation
+            R = (self.essieux / 2) * ((self.vit_Rg + self.vit_Rd) / (self.vit_Rd - self.vit_Rg))
+            omega = (self.vit_Rd - self.vit_Rg) / self.essieux  # Vitesse angulaire
+            delta_theta = m.degrees(omega * temps)  # Angle de rotation
 
-        vit_moyenne=(self.vit_Rd+self.vit_Rg)/2
+            # Calcul du centre instantané de rotation (CIR)
+            cir_x = self.p_centre[0] - R * m.sin(m.radians(self.angle))
+            cir_y = self.p_centre[1] + R * m.cos(m.radians(self.angle))
 
-
-
-        prochain_pos = [
-            self.p_centre[0] + vit_moyenne * m.cos(m.radians(self.angle)) * temps,
-            self.p_centre[1] + vit_moyenne * m.sin(m.radians(self.angle)) * temps
-        ]         
-        
-        # Appliquer les nouvelles coordonnées si aucune collision
-        self.p_centre = prochain_pos
-
+            # Mise à jour de la position et de l'angle
+            self.angle = (self.angle + delta_theta) % 360
+            self.p_centre[0] = cir_x + R * m.sin(m.radians(self.angle))
+            self.p_centre[1] = cir_y - R * m.cos(m.radians(self.angle))
+            
+ 
 
     def tourner(self, direction, temps):
         """ Gère le braquage des roues en fonction de la direction,

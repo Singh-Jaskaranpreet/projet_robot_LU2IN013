@@ -94,25 +94,17 @@ while True:
     # Gestion des contrôles utilisateur
     keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_RIGHT]:
-        environnement.vehicule.tourner("droite",temps.get_temps_ecoule())
-        print("                                                       ", end ="\r")
-        print("je tourne à droite, Tick... Tick... Tick...", end ="\r")
+    if keys[pygame.K_RIGHT]:  # Augmenter la vitesse de la roue droite
+        environnement.vehicule.vit_Rd = min(150, environnement.vehicule.vit_Rd + 1)
+         
+    elif keys[pygame.K_UP]:  # Ralentir la roue droite
+        environnement.vehicule.vit_Rd = max(-50, environnement.vehicule.vit_Rd - 1)
 
-    elif keys[pygame.K_LEFT]:
-        environnement.vehicule.tourner("gauche",temps.get_temps_ecoule())
-        print("                                                       ", end ="\r")
-        print("je tourne à gauche, Tick... Tick... Tick...", end ="\r")
- 
-    if keys[pygame.K_UP]:
-        environnement.vehicule.accelerer(0.5) 
-        print("                                                       ", end ="\r")      
-        print("le vehicule accèlere, Vroum Vroum", end ="\r")
+    if keys[pygame.K_LEFT]:  # Augmenter la vitesse de la roue gauche
+        environnement.vehicule.vit_Rg = min(150, environnement.vehicule.vit_Rg + 1)
 
-    elif keys[pygame.K_DOWN]:
-        environnement.vehicule.reculer(0.5)
-        print("                                                       ", end ="\r")
-        print("le vehicule recule, Bip... Bip... ", end ="\r")
+    elif keys[pygame.K_DOWN]:  # Ralentir la roue gauche
+        environnement.vehicule.vit_Rg = max(-50, environnement.vehicule.vit_Rg - 1)
 
     elif keys[pygame.K_f]:
         environnement.vehicule.freiner(0.5)
