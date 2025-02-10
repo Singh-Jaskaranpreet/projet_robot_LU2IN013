@@ -56,8 +56,9 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects, environ
         screen.blit(vitesse_text, (10, 10))
         distance = font.render(f"Distance:{vehicule.mesurer_distance_obstacle(environnement)} pixel", True, couleur_texte)
         screen.blit(distance, (10, 40))
+        vitesse = font.render(f"vitesse droite = {vehicule.vit_Rd}, vitesse gauche {vehicule.vit_Rg}", True, couleur_texte)
+        screen.blit(vitesse, (10, 770))
         pygame.display.flip() # Met à jour l'écran
-
 
 # Fonction pour afficher les instructions
 def afficher_instructions():
