@@ -154,3 +154,27 @@ class Environnement:
         self.objects.append(objet)
 
 
+    def bouger(self, temps):
+        """Déplace le véhicule en fonction des vitesses différentielles des roues avant."""
+        collision = self.collision()
+        if not collision:
+            if self.vehicule.vit_Rg == self.vehicule.vit_Rd:  # Mouvement en ligne droite
+                vitesse = self.vehicule.vit_Rg
+                self.vehicule.p_centre[0] += vitesse * m.cos(m.radians(self.vehicule.angle)) * temps
+                self.vehicule.p_centre[1] += vitesse * m.sin(m.radians(self.vehicule.angle)) * temps
+            
+            else:  # Mouvement en rotation
+                R = (self.vehicule.essieux / 2) * ((self.vehicule.vit_Rg + self.vehicule.vit_Rd) / (self.vehicule.vit_Rd - self.vehicule.vit_Rg))
+                omega = (self.vehicule.vit_Rd - self.vehicule.vit_Rg) / self.vehicule.essieux  # Vitesse angulaire
+                delta_theta = m.degrees(omega * temps)  # Angle de rotation
+
+                # Calcul du centre instantané de rotation (CIR)
+                cir_x = self.vehicule.p_centre[0] - R * m.sin(m.radians(self.vehicule.angle))
+                cir_y = self.vehicule.p_centre[1] + R * m.cos(m.radians(self.vehicule.angle))
+
+                # Mise à jour de la position et de l'angle
+                self.vehicule.angle = (self.vehicule.angle + delta_theta) % 360
+                self.vehicule.p_centre[0] = cir_x + R * m.sin(m.radians(self.vehicule.angle))
+                self.vehicule.p_centre[1] = cir_y - R * m.cos(m.radians(self.vehicule.angle))
+        else:
+            self.correction_apres_collision(collision)

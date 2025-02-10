@@ -39,40 +39,6 @@ class Vehicule:
     def reculer(self, val):
         self.vit_Rg = max(-50, self.vit_Rg - val)
         self.vit_Rd = max(-50, self.vit_Rd - val)
-    
-    def bouger(self, temps):
-        """Déplace le véhicule en fonction des vitesses différentielles des roues avant."""
-        if self.vit_Rg == self.vit_Rd:  # Mouvement en ligne droite
-            vitesse = self.vit_Rg
-            self.p_centre[0] += vitesse * m.cos(m.radians(self.angle)) * temps
-            self.p_centre[1] += vitesse * m.sin(m.radians(self.angle)) * temps
-        else:  # Mouvement en rotation
-            R = (self.essieux / 2) * ((self.vit_Rg + self.vit_Rd) / (self.vit_Rd - self.vit_Rg))
-            omega = (self.vit_Rd - self.vit_Rg) / self.essieux  # Vitesse angulaire
-            delta_theta = m.degrees(omega * temps)  # Angle de rotation
-
-            # Calcul du centre instantané de rotation (CIR)
-            cir_x = self.p_centre[0] - R * m.sin(m.radians(self.angle))
-            cir_y = self.p_centre[1] + R * m.cos(m.radians(self.angle))
-
-            # Mise à jour de la position et de l'angle
-            self.angle = (self.angle + delta_theta) % 360
-            self.p_centre[0] = cir_x + R * m.sin(m.radians(self.angle))
-            self.p_centre[1] = cir_y - R * m.cos(m.radians(self.angle))
-            
- 
-
-    def tourner(self, direction, temps):
-        """ Gère le braquage des roues en fonction de la direction,
-        mais empêche l' angle si la roue arrière est bloquée. """
-        if direction == "gauche":
-            self.vit_Rg = max(0,self.vit_Rg-2)
-            omega = -self.vit_Rd / self.essieux #vitesse angulaire
-            self.angle += m.degrees(omega* temps)
-        elif direction == "droite":
-            self.vit_Rd = max(0,self.vit_Rd-2)
-            omega = self.vit_Rg / self.essieux
-            self.angle += m.degrees(omega* temps)
 
 
     def restart(self):
@@ -81,8 +47,6 @@ class Vehicule:
         self.vit_Rd=0
         self.vit_Rg=0
         
-        
-
 
     def mesurer_distance_obstacle(self, environnement):
         """ Simule un capteur infrarouge détectant la distance jusqu'au premier obstacle en face du véhicule. """

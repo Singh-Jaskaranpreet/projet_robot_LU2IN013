@@ -32,16 +32,7 @@ while True:
     controleur.gerer_evenements()
 
 
-    environnement.vehicule.bouger(temps.get_temps_ecoule())
-    collision = environnement.collision()
-    la = 0
-    while(collision):
-        environnement.correction_apres_collision(collision)
-        collision = environnement.collision()
-        la=1
-    if la == 1 :
-        environnement.arrete()
-        la=0
+    environnement.bouger(temps.get_temps_ecoule())
     temps.demarrer()
     environnement.rester_dans_limites()
 
