@@ -40,5 +40,13 @@ class TestEnvironnement(unittest.TestCase):
         self.vehicule.p_centre = [500, 500]
         self.assertTrue(self.env.collision())
 
+    def test_correction_apres_collision(self):
+        """Teste la correction de la position après une collision."""
+        # Simuler une collision
+        self.vehicule.p_centre = [500, 500]
+        collision = self.env.collision()
+        self.env.correction_apres_collision(collision)
+        self.assertNotEqual(self.vehicule.p_centre, [500, 500])
+
 if __name__ == '__main__':
     unittest.main()
