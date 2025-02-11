@@ -1,5 +1,4 @@
 import pygame
-from vehicule import *
 from environnement import *
 
 # Dimensions de la fenêtre
@@ -12,7 +11,7 @@ BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
 ROUGE = (255, 0, 0)
 
-def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects, environnement):
+def afficher(screen, couleur_vehicule, couleur_texte, objects, environnement):
         """
         Affiche l'environnement, y compris le véhicule, les objets (obstacles),
         et la vitesse du véhicule.
@@ -21,7 +20,7 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects, environ
         screen.fill(BLANC) # Remplir l'écran en blanc
 
         # Afficher le véhicule sous forme de triangle
-        points_triangle = vehicule.position_des_roues(vehicule.p_centre)
+        points_triangle = environnement.position_des_roues(environnement.vehicule.p_centre)
         pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
 
         # Dessiner la roue arrière
@@ -36,7 +35,7 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects, environ
             rect = pygame.Rect(x - largeur_roue // 2, y - hauteur_roue // 2, largeur_roue, hauteur_roue)
 
             # Appliquer l'orientation globale (vehicule.angle) + l'angle des roues (vehicule.angle_braquage)
-            rotation_totale = vehicule.angle
+            rotation_totale = environnement.vehicule.angle
             surface_roue = pygame.Surface((largeur_roue, hauteur_roue), pygame.SRCALPHA)
             pygame.draw.ellipse(surface_roue, (0, 0, 0), (0, 0, largeur_roue, hauteur_roue))
 
@@ -52,11 +51,11 @@ def afficher(screen, vehicule, couleur_vehicule, couleur_texte, objects, environ
 
         # Afficher la vitesse du véhicule à l'écran
         font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {round(abs((vehicule.vit_Rd+vehicule.vit_Rg)/2), 3)} pixel/s", True, couleur_texte)
+        vitesse_text = font.render(f"Vitesse: {round(abs((environnement.vehicule.vit_Rd+environnement.vehicule.vit_Rg)/2), 3)} pixel/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
-        distance = font.render(f"Distance:{vehicule.mesurer_distance_obstacle(environnement)} pixel", True, couleur_texte)
+        distance = font.render(f"Distance:{environnement.vehicule.mesurer_distance_obstacle(environnement)} pixel", True, couleur_texte)
         screen.blit(distance, (10, 40))
-        vitesse = font.render(f"vitesse droite = {vehicule.vit_Rd}, vitesse gauche {vehicule.vit_Rg}", True, couleur_texte)
+        vitesse = font.render(f"vitesse droite = {environnement.vehicule.vit_Rd}, vitesse gauche {environnement.vehicule.vit_Rg}", True, couleur_texte)
         screen.blit(vitesse, (10, 770))
         pygame.display.flip() # Met à jour l'écran
 

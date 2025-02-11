@@ -36,7 +36,7 @@ while True:
     environnement.rester_dans_limites()
 
     # Affichage
-    afficher(screen, environnement.vehicule, ROUGE, NOIR, environnement.objects, environnement)
+    afficher(screen, ROUGE, NOIR, environnement.objects, environnement)
     clock.tick(60)
 
 temps.arreter()

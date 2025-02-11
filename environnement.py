@@ -11,8 +11,8 @@ class Environnement:
         self.largeur = 1200
         self.hauteur = 800
         self.vehicule = Vehicule("Robot",[200, 400] , 50, 50, self)
-        #self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
-        self.objects = [] #pour pas avoir d'obstacle
+        self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
+        #self.objects = [] #pour pas avoir d'obstacle
         self.temps = horloge.Horloge()
 
     def segments_intersect(self, seg1, seg2):
@@ -67,7 +67,7 @@ class Environnement:
         Retourne True si une collision est détectée, sinon False.
         """
         # Points actuels du véhicule
-        points_triangle = self.vehicule.position_des_roues(self.vehicule.p_centre)
+        points_triangle = self.position_des_roues(self.vehicule.p_centre)
 
         # Partie du vehicule qui sont en collision
         point_collision =set()
@@ -139,7 +139,7 @@ class Environnement:
 
     def rester_dans_limites(self):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
-        for point in self.vehicule.position_des_roues(self.vehicule.p_centre):
+        for point in self.position_des_roues(self.vehicule.p_centre):
             if point[0] < 0 or point[0] > self.largeur   or point[1] < 0 or point[1] > self.hauteur :
                 self.vehicule.vit_Rd = 0
                 self.vehicule.vit_Rg = 0
@@ -179,4 +179,14 @@ class Environnement:
                 self.vehicule.p_centre[0] = cir_x + R * m.sin(m.radians(self.vehicule.angle))
                 self.vehicule.p_centre[1] = cir_y - R * m.cos(m.radians(self.vehicule.angle))
         else:
+            self.vehicule.vit_Rd = 0
+            self.vehicule.vit_Rg = 0
             self.correction_apres_collision(collision)
+
+    #Place les trois roues de la voiture
+    def position_des_roues(self, point):
+        hyp = self.vehicule.long / m.cos(m.radians(20))
+        r_Ar = [point[0] - (self.vehicule.long//2) * m.cos(m.radians(self.vehicule.angle)), point[1] - (self.vehicule.long//2) * m.sin(m.radians(self.vehicule.angle))]
+        r_Avg = [r_Ar[0] + hyp * m.cos(m.radians(self.vehicule.angle + 20)), r_Ar[1] + hyp * m.sin(m.radians(self.vehicule.angle + 20))]
+        r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.vehicule.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.vehicule.angle - 20))]
+        return [r_Ar, r_Avg, r_Avd]

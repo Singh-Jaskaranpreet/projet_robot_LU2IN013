@@ -15,13 +15,6 @@ class Vehicule:
         self.nb_roues = 3
         self.environnement = environnement
 
-    #Place les trois roues de la voiture
-    def position_des_roues(self, point):
-        hyp = self.long / m.cos(m.radians(20))
-        r_Ar = [point[0] - (self.long//2) * m.cos(m.radians(self.angle)), point[1] - (self.long//2) * m.sin(m.radians(self.angle))]
-        r_Avg = [r_Ar[0] + hyp * m.cos(m.radians(self.angle + 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle + 20))]
-        r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle - 20))]
-        return [r_Ar, r_Avg, r_Avd]
     
     def accelerer(self, val):
         self.vit_Rg = min(150,self.vit_Rg+val)
@@ -53,7 +46,7 @@ class Vehicule:
         """ Simule un capteur infrarouge détectant la distance jusqu'au premier obstacle en face du véhicule. """
     
         # 🔹 Position du capteur (au centre des roues avant)
-        roues = self.position_des_roues(self.p_centre)
+        roues = environnement.position_des_roues(self.p_centre)
         capteur_x = (roues[1][0] + roues[2][0]) / 2
         capteur_y = (roues[1][1] + roues[2][1]) / 2
 
