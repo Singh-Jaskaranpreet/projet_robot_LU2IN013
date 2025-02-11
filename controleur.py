@@ -42,9 +42,11 @@ class Controleur:
                 # Créer une séquence de stratégies et la démarrer
                 self.sequence = StrategieSequence([AvancerDroitStrategy(150), TournerAngleStrategy(90)] * 4)
                 self.sequence.start(self.vehicule)
+                print("                                                            ", end = "\r")
                 print("Stratégie séquentielle activée")
             else:
-                print("Une séquence est déjà en cours. Attendez qu'elle se termine.")
+                print("                                           ", end = "\r")
+                print("Une séquence est déjà en cours. Attendez qu'elle se termine.", end = "\r")
 
     def gerer_affichage(self):
         attente = True
@@ -58,7 +60,13 @@ class Controleur:
 
     def executer_strategie(self):
         if self.sequence:  # Si une séquence est définie
-            if not self.sequence.stop(self.vehicule):  # Si la séquence n'est pas terminée
+            if self.environnement.collision():  # Vérifier s'il y a une collision
+                print("                                                            ", end = "\r")
+                print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
+                self.sequence = None  # Arrêter la stratégie
+                self.vehicule.vit_Rd = 0
+                self.vehicule.vit_Rg = 0
+            elif not self.sequence.stop(self.vehicule):  # Si la séquence n'est pas terminée
                 self.sequence.step(self.vehicule)  # Passer à l'étape suivante
             else:  # Si la séquence est terminée
                 self.sequence = None  # Réinitialiser la séquence
