@@ -27,26 +27,54 @@ class AvancerDroitStrategy(StrategyAsync):
 
 class TournerAngleStrategy(StrategyAsync):
     def __init__(self, angle):
-        self.angle_cible = angle
-        self.angle_parcouru = 0
-    
+        # angle cible en degrés (positif pour gauche, négatif pour droite)
+        self.angle_cible = angle  
+        self.angle_parcouru = 0  
+        self.vitesse_rotation = 30  # vitesse utilisée pour la roue active durant le virage
+
     def start(self, vehicule):
         self.angle_parcouru = 0
 
     def step(self, vehicule):
-        vitesse_rotation = 10
-        vehicule.vit_Rg = -vitesse_rotation
-        vehicule.vit_Rd = vitesse_rotation
-
-        self.angle_parcouru += m.degrees((vehicule.vit_Rd - vehicule.vit_Rg) / vehicule.essieux * vehicule.temps.get_temps_ecoule())
+        dt = vehicule.temps.get_temps_ecoule()
         
-        # Simulation d'un pas de rotation
-        
-    def stop(self, vehicule):
-        if self.angle_parcouru >= self.angle_cible:
+        if self.angle_cible > 0:
+            # Virage à gauche : faire pivoter autour de la roue gauche (pivot = vit_Rg)
             vehicule.vit_Rg = 0
+            vehicule.vit_Rd = self.vitesse_rotation
+            # La vitesse angulaire est donnée par omega = vitesse_active / empattement (en rad/s)
+            omega = self.vitesse_rotation / vehicule.essieux
+            # Calcul de l'incrément d'angle en degrés
+            dtheta = m.degrees(omega * dt)
+            self.angle_parcouru += dtheta
+            
+        elif self.angle_cible < 0:
+            # Virage à droite : faire pivoter autour de la roue droite (pivot = vit_Rd)
             vehicule.vit_Rd = 0
-        return abs(self.angle_parcouru) >=self.angle_cible
+            vehicule.vit_Rg = self.vitesse_rotation
+            # Dans ce cas, omega sera négatif
+            omega = -self.vitesse_rotation / vehicule.essieux
+            dtheta = m.degrees(omega * dt)
+            self.angle_parcouru += dtheta
+
+    def stop(self, vehicule):
+        # Arrêter le virage lorsque l'angle accumulé atteint (ou dépasse) l'angle cible.
+        if self.angle_cible > 0:
+            if self.angle_parcouru >= self.angle_cible:
+                vehicule.vit_Rg = 0
+                vehicule.vit_Rd = 0
+                return True
+            else:
+                return False
+        elif self.angle_cible < 0:
+            if self.angle_parcouru <= self.angle_cible:
+                vehicule.vit_Rg = 0
+                vehicule.vit_Rd = 0
+                return True
+            else:
+                return False
+        else:
+            return True
 
 class StrategieSequence(StrategyAsync):
     def __init__(self, strategies):
