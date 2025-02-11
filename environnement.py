@@ -143,7 +143,7 @@ class Environnement:
                 self.vehicule.vit_Rd = 0
                 self.vehicule.vit_Rg = 0
             if point[0] < -1 or point[0] > self.largeur +1   or point[1] < -1 or point[1] > self.hauteur +1 :
-                self.vehicule.restart()
+                self.restart()
         
         return
 
@@ -190,3 +190,10 @@ class Environnement:
         r_Avg = [r_Ar[0] + hyp * m.cos(m.radians(self.vehicule.angle + 20)), r_Ar[1] + hyp * m.sin(m.radians(self.vehicule.angle + 20))]
         r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.vehicule.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.vehicule.angle - 20))]
         return [r_Ar, r_Avg, r_Avd]
+    
+
+    def restart(self):
+        self.vehicule.p_centre=[self.vehicule.starting_point_x,self.vehicule.starting_point_y]
+        self.vehicule.angle = 0
+        self.vehicule.vit_Rd=0
+        self.vehicule.vit_Rg=0

@@ -35,12 +35,6 @@ class Vehicule:
         self.vit_Rg = max(-50, self.vit_Rg - val)
         self.vit_Rd = max(-50, self.vit_Rd - val)
 
-
-    def restart(self):
-        self.p_centre=[self.starting_point_x,self.starting_point_y]
-        self.angle = 0
-        self.vit_Rd=0
-        self.vit_Rg=0
         
 
     def mesurer_distance_obstacle(self, environnement):
