@@ -56,5 +56,43 @@ class TestEnvironnement(unittest.TestCase):
         self.assertEqual(self.vehicule.vit_Rd, 0)
         self.assertEqual(self.vehicule.vit_Rg, 0)
 
+    def test_bouger(self):
+        """Teste le déplacement du véhicule."""
+        initial_position = self.vehicule.p_centre.copy()
+        self.vehicule.vit_Rd = 10
+        self.vehicule.vit_Rg = 10
+
+        # Simuler un temps écoulé
+        self.vehicule.temps.get_temps_ecoule = lambda: 0.1  # Simuler 0.1 seconde
+
+        self.env.bouger()
+        self.assertNotEqual(self.vehicule.p_centre, initial_position)
+
+    def test_restart(self):
+        """Teste la réinitialisation du véhicule."""
+        self.vehicule.p_centre = [500, 500]
+        self.vehicule.angle = 45
+        self.vehicule.vit_Rd = 10
+        self.vehicule.vit_Rg = 10
+        self.env.restart()
+        self.assertEqual(self.vehicule.p_centre, [self.vehicule.starting_point_x, self.vehicule.starting_point_y])
+        self.assertEqual(self.vehicule.angle, 0)
+        self.assertEqual(self.vehicule.vit_Rd, 0)
+        self.assertEqual(self.vehicule.vit_Rg, 0)
+
+    def test_add_objet(self):
+        """Teste l'ajout d'un objet dans l'environnement."""
+        initial_length = len(self.env.objects)
+        new_object = [(100, 100), (200, 100), (200, 200), (100, 200)]
+        self.env.add_objet(new_object)
+        self.assertEqual(len(self.env.objects), initial_length + 1)
+
+    def test_position_des_roues(self):
+        """Teste le calcul des positions des roues."""
+        positions = self.env.position_des_roues(self.vehicule.p_centre)
+        self.assertEqual(len(positions), 3)  # Vérifie qu'il y a 3 points (roues)
+        for point in positions:
+            self.assertEqual(len(point), 2)  # Vérifie que chaque point a 2 coordonnées (x, y)
+
 if __name__ == '__main__':
     unittest.main()
