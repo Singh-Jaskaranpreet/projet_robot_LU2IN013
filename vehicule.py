@@ -19,8 +19,8 @@ class Vehicule:
         self.infrarouge = infrarouge.Infrarouge()
     
     def accelerer(self, val):
-        self.vit_Rg = min(150,self.vit_Rg+val)
-        self.vit_Rd = min(150,self.vit_Rd+val)
+        self.vit_Rg = max(0,min(150,self.vit_Rg+val))
+        self.vit_Rd = max(min(150,self.vit_Rd+val))
     
     def freiner(self, val):
         if self.vit_Rg > 0:
@@ -40,3 +40,14 @@ class Vehicule:
     def get_distance(self, environnement):
         return self.infrarouge.mesurer_distance_obstacle(environnement)
     
+    def set_vrd(self, x):
+        self.vit_Rd = max(-100, min(x, 150))
+
+    def set_vrg(self, x):
+        self.vit_Rg = max(-100, min(x, 150))
+
+    def acr_Rg(self, val):
+        self.vit_Rg = max(-100,min(150,self.vit_Rg+val))
+
+    def acr_Rd(self, val):
+        self.vit_Rd = max(-100,min(150,self.vit_Rd+val))

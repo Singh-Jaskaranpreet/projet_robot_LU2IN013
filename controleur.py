@@ -16,16 +16,16 @@ class Controleur:
                 sys.exit()
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT]:  # Augmenter la vitesse de la roue droite
-            self.vehicule.vit_Rd = min(150, self.vehicule.vit_Rd + 1)
+            self.vehicule.acr_Rd(1)
          
         elif keys[pygame.K_UP]:  # Ralentir la roue droite
-            self.vehicule.vit_Rd = max(-50, self.vehicule.vit_Rd - 1)
+            self.vehicule.acr_Rd(-1)
 
         if keys[pygame.K_LEFT]:  # Augmenter la vitesse de la roue gauche
-            self.vehicule.vit_Rg = min(150, self.vehicule.vit_Rg + 1)
+            self.vehicule.acr_Rg(1)
 
         elif keys[pygame.K_DOWN]:  # Ralentir la roue gauche
-            self.vehicule.vit_Rg = max(-50, self.vehicule.vit_Rg - 1)
+            self.vehicule.acr_Rg(-1)
 
         elif keys[pygame.K_f]:
             self.vehicule.freiner(0.5)
