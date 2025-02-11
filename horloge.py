@@ -6,6 +6,7 @@ class Horloge:
     def __init__(self):
         self.start_time = None
         self.running = False
+        self.time_scale = 1.0  # Facteur de vitesse (1.0 = temps normal)
 
     def demarrer(self):
         """Démarre l'horloge."""
@@ -33,3 +34,10 @@ class Horloge:
             return "00:00:00"
         elapsed_time = time.time() - self.start_time
         return timedelta(seconds=elapsed_time).total_seconds()
+    
+    def set_time_scale(self, scale):
+        """Définit le facteur de vitesse."""
+        if scale > 0:  # Assurez-vous que le facteur de vitesse est positif
+            self.time_scale = scale
+        else:
+            print("Le facteur de vitesse doit être supérieur à 0.")
