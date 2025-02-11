@@ -1,11 +1,10 @@
 import pygame
 import sys
 from environnement import *
-from horloge import *
 from affichage import *
 import time
 import controleur
-from strategy import *
+
 
 # Initialisation de Pygame
 pygame.init()
