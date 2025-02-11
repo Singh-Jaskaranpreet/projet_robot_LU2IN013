@@ -30,5 +30,15 @@ class TestEnvironnement(unittest.TestCase):
         seg4 = ((5, 5), (5, 10))
         self.assertFalse(self.env.segments_intersect(seg3, seg4))
 
+    def test_collision(self):
+        """Teste la détection de collision."""
+        # Pas de collision initialement
+        self.vehicule.p_centre = [200, 400]
+        self.assertFalse(self.env.collision())
+
+        # Collision avec un objet
+        self.vehicule.p_centre = [500, 500]
+        self.assertTrue(self.env.collision())
+
 if __name__ == '__main__':
     unittest.main()
