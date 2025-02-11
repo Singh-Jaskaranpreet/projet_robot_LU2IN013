@@ -38,11 +38,10 @@ class TournerAngleStrategy(StrategyAsync):
         vehicule.vit_Rg = -vitesse_rotation
         vehicule.vit_Rd = vitesse_rotation
 
-        self.angle_parcouru += m.degrees((vehicule.vit_Rd - vehicule.vit_Rg) / vehicule.essieux * vehicule.environnement.temps.get_temps_ecoule())
+        self.angle_parcouru += m.degrees((vehicule.vit_Rd - vehicule.vit_Rg) / vehicule.essieux * vehicule.temps.get_temps_ecoule())
         
         # Simulation d'un pas de rotation
-        print(f"Angle parcouru : {self.angle_parcouru}")
-
+        
     def stop(self, vehicule):
         if self.angle_parcouru >= self.angle_cible:
             vehicule.vit_Rg = 0

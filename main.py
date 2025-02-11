@@ -21,7 +21,7 @@ controleur.gerer_affichage()
 
 # Boucle principale de la simulation
 clock = pygame.time.Clock()
-environnement.temps.demarrer()
+environnement.vehicule.temps.demarrer()
 
 while True:
 
@@ -31,12 +31,12 @@ while True:
     controleur.gerer_evenements()
 
 
-    environnement.bouger(environnement.temps.get_temps_ecoule())
-    environnement.temps.demarrer()
+    environnement.bouger()
+    environnement.vehicule.temps.demarrer()
     environnement.rester_dans_limites()
 
     # Affichage
     afficher(screen, ROUGE, NOIR, environnement.objects, environnement)
     clock.tick(60)
 
-temps.arreter()
+environnement.vehicule.temps.arreter()

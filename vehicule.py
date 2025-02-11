@@ -1,8 +1,10 @@
 import math as m
+import horloge
+
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, p_centre,empattement,essieux,environnement, angle = 0):
+    def __init__(self, nom, p_centre,empattement,essieux, angle = 0):
         self.nom = nom
         self.long=empattement
         self.essieux = essieux
@@ -13,8 +15,7 @@ class Vehicule:
         self.starting_point_x=p_centre[0]
         self.starting_point_y=p_centre[1]
         self.nb_roues = 3
-        self.environnement = environnement
-
+        self.temps = horloge.Horloge()
     
     def accelerer(self, val):
         self.vit_Rg = min(150,self.vit_Rg+val)
