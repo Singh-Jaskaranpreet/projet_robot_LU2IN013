@@ -25,11 +25,10 @@ environnement.vehicule.temps.demarrer()
 while True:
 
     controleur.executer_strategie()
-
-    # Gestion des contrôles utilisateur
+    # Gestion des contrôles par l'utilisateur
     controleur.gerer_evenements()
 
-
+    print(environnement.vehicule.p_centre)
     environnement.bouger()
     environnement.vehicule.temps.demarrer()
     environnement.rester_dans_limites()

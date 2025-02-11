@@ -19,8 +19,8 @@ class Vehicule:
         self.infrarouge = infrarouge.Infrarouge()
     
     def accelerer(self, val):
-        self.vit_Rg = max(0,min(150,self.vit_Rg+val))
-        self.vit_Rd = max(min(150,self.vit_Rd+val))
+        self.vit_Rg = max(0, min(150, self.vit_Rg+val))
+        self.vit_Rd = max(0, min(150, self.vit_Rd+val))
     
     def freiner(self, val):
         if self.vit_Rg > 0:
