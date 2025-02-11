@@ -1,4 +1,4 @@
-import math
+import math as m
 from vehicule import *
 import horloge
 
