@@ -48,5 +48,13 @@ class TestEnvironnement(unittest.TestCase):
         self.env.correction_apres_collision(collision)
         self.assertNotEqual(self.vehicule.p_centre, [500, 500])
 
+    def test_rester_dans_limites(self):
+        """Teste que le véhicule reste dans les limites de l'environnement."""
+        # Simuler le véhicule hors des limites
+        self.vehicule.p_centre = [1201, 400]
+        self.env.rester_dans_limites()
+        self.assertEqual(self.vehicule.vit_Rd, 0)
+        self.assertEqual(self.vehicule.vit_Rg, 0)
+
 if __name__ == '__main__':
     unittest.main()
