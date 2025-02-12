@@ -1,7 +1,7 @@
 import pygame
 import sys
-from environnement import *
-from affichage import *
+import environnement
+import affichage
 import time
 import controleur
 
@@ -10,11 +10,11 @@ import controleur
 pygame.init()
 
 #temps Création de l'environnement et d'un véhicule
-environnement = Environnement()
+environnement = environnement.Environnement()
 controleur = controleur.Controleur(environnement.vehicule, environnement)
 
 # Affiche l'écran d'instructions avant de commencer
-afficher_instructions()
+affichage.afficher_instructions()
 # Attendre que l'utilisateur appuie sur une touche pour commencer
 controleur.gerer_affichage()
 
@@ -23,18 +23,17 @@ clock = pygame.time.Clock()
 environnement.temps.demarrer()
 
 while True:
-
+    environnement.temps.set_time_scale(1)#à corriger
     controleur.executer_strategie()
     # Gestion des contrôles par l'utilisateur
     controleur.gerer_evenements()
 
-    print(environnement.vehicule.p_centre)
     environnement.bouger()
     environnement.temps.demarrer()
     environnement.rester_dans_limites()
 
     # Affichage
-    afficher(screen, ROUGE, NOIR, environnement.objects, environnement)
+    affichage.afficher(affichage.screen, affichage.ROUGE, affichage.NOIR, environnement.objects, environnement)
     clock.tick(60)
 
 environnement.vehicule.temps.arreter()

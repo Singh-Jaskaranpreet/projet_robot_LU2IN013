@@ -6,7 +6,7 @@ class Horloge:
     def __init__(self):
         self.start_time = None
         self.running = False
-        self.time_scale = 1.0  # Facteur de vitesse (1.0 = temps normal)
+        self.time_scale = 1  # Facteur de vitesse (1 = temps normal)
 
     def demarrer(self):
         """Démarre l'horloge."""
@@ -17,7 +17,7 @@ class Horloge:
     def _afficher_temps(self):
         """Affiche le temps écoulé en temps réel."""
         while self.running:
-            elapsed_time = time.time() - self.start_time
+            elapsed_time = time.time() - self.start_time*self.time_scale
             formatted_time = timedelta(seconds=elapsed_time)
             time.sleep(1)
 
@@ -32,7 +32,7 @@ class Horloge:
         """Retourne le temps écoulé sous forme de chaîne formatée."""
         if self.start_time is None:
             return "00:00:00"
-        elapsed_time = time.time() - self.start_time
+        elapsed_time = time.time() - self.start_time*self.time_scale
         return timedelta(seconds=elapsed_time).total_seconds()
     
     def set_time_scale(self, scale):

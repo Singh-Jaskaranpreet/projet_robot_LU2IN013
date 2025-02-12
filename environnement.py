@@ -11,8 +11,8 @@ class Environnement:
         self.largeur = 1200
         self.hauteur = 800
         self.vehicule = Vehicule("Robot",[200, 400] , 50, 50,self)
-        self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
-        #self.objects = [] #pour pas avoir d'obstacle
+        #self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
+        self.objects = [] #pour pas avoir d'obstacle
         self.temps = horloge.Horloge()
 
     def segments_intersect(self, seg1, seg2):
@@ -160,7 +160,7 @@ class Environnement:
         """Déplace le véhicule selon le modèle cinématique différentiel pendant un pas de temps."""
         collision = self.collision()
         dt = self.temps.get_temps_ecoule()
-    
+        
         if not collision:
             # Calcul de la vitesse linéaire moyenne et de la vitesse angulaire
             v = (self.vehicule.vit_Rg + self.vehicule.vit_Rd) / 2.0
@@ -183,7 +183,6 @@ class Environnement:
             self.vehicule.vit_Rd = 0
             self.vehicule.vit_Rg = 0
             self.correction_apres_collision(collision)
-
 
     #Place les trois roues de la voiture
     def position_des_roues(self, point):
