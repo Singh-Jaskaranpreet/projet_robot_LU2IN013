@@ -36,7 +36,7 @@ class TournerAngleStrategy(StrategyAsync):
         self.angle_parcouru = 0
 
     def step(self, vehicule):
-        dt = vehicule.temps.get_temps_ecoule()
+        dt = vehicule.environnement.temps.get_temps_ecoule()
         
         if self.angle_cible > 0:
             # Virage à gauche : faire pivoter autour de la roue gauche (pivot = vit_Rg)
