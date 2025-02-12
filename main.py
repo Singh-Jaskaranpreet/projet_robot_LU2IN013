@@ -23,7 +23,7 @@ clock = pygame.time.Clock()
 environnement.temps.demarrer()
 
 while True:
-    environnement.temps.set_time_scale(1)#à corriger
+    environnement.temps.set_time_scale(10)
     controleur.executer_strategie()
     # Gestion des contrôles par l'utilisateur
     controleur.gerer_evenements()

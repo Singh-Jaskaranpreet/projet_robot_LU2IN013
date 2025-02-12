@@ -3,7 +3,7 @@ import infrarouge
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, p_centre,empattement,essieux, environnement, angle = 0):
+    def __init__(self, nom, p_centre,empattement,essieux, environnement, angle = 0,):
         self.nom = nom
         self.long=empattement
         self.essieux = essieux
@@ -40,13 +40,13 @@ class Vehicule:
         return self.infrarouge.mesurer_distance_obstacle(environnement)
     
     def set_vrd(self, x):
-        self.vit_Rd = max(-100, min(x, 150))
+        self.vit_Rd = max(-150, min(x, 150))
 
     def set_vrg(self, x):
-        self.vit_Rg = max(-100, min(x, 150))
+        self.vit_Rg = max(-150, min(x, 150))
 
     def acr_Rg(self, val):
-        self.vit_Rg = max(-100,min(150,self.vit_Rg+val))
+        self.vit_Rg = max(-150,min(150,self.vit_Rg+val))
 
     def acr_Rd(self, val):
-        self.vit_Rd = max(-100,min(150,self.vit_Rd+val))
+        self.vit_Rd = max(-150,min(150,self.vit_Rd+val))

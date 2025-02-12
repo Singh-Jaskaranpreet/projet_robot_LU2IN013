@@ -15,7 +15,7 @@ class TestEnvironnement(unittest.TestCase):
         """Teste l'initialisation de l'environnement."""
         self.assertEqual(self.env.largeur, 1200)
         self.assertEqual(self.env.hauteur, 800)
-        self.assertIsInstance(self.env.vehicule, Vehicule)
+        self.assertIsInstance(self.env.vehicule, Vehicule())
         self.assertEqual(len(self.env.objects), 1)  # Vérifie qu'il y a un objet par défaut
 
     def test_segments_intersect(self):
@@ -33,7 +33,7 @@ class TestEnvironnement(unittest.TestCase):
     def test_collision(self):
         """Teste la détection de collision."""
         # Pas de collision initialement
-        self.vehicule.p_centre = [200, 400]
+        self.env.vehicule.p_centre = [200, 400]
         self.assertFalse(self.env.collision())
 
         # Collision avec un objet
@@ -63,7 +63,7 @@ class TestEnvironnement(unittest.TestCase):
         self.vehicule.vit_Rg = 10
 
         # Simuler un temps écoulé
-        self.vehicule.temps.get_temps_ecoule = lambda: 0.1  # Simuler 0.1 seconde
+        self.env.temps.get_temps_ecoule = lambda: 0.1  # Simuler 0.1 seconde
 
         self.env.bouger()
         self.assertNotEqual(self.vehicule.p_centre, initial_position)

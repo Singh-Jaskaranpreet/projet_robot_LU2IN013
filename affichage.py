@@ -51,7 +51,7 @@ def afficher(screen, couleur_vehicule, couleur_texte, objects, environnement):
 
         # Afficher la vitesse du véhicule à l'écran
         font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {round(abs((environnement.vehicule.vit_Rd+environnement.vehicule.vit_Rg)/2), 3)} pixel/s", True, couleur_texte)
+        vitesse_text = font.render(f"Vitesse: {round(abs((abs(environnement.vehicule.vit_Rd)+abs(environnement.vehicule.vit_Rg))/2), 3)} pixel/s", True, couleur_texte)
         screen.blit(vitesse_text, (10, 10))
         distance = font.render(f"Distance:{environnement.vehicule.get_distance(environnement)} pixel", True, couleur_texte)
         screen.blit(distance, (10, 40))
