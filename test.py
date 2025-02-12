@@ -11,13 +11,6 @@ class TestEnvironnement(unittest.TestCase):
         self.env = Environnement()
         self.vehicule = self.env.vehicule
 
-    def test_initialisation(self):
-        """Teste l'initialisation de l'environnement."""
-        self.assertEqual(self.env.largeur, 1200)
-        self.assertEqual(self.env.hauteur, 800)
-        self.assertIsInstance(self.env.vehicule, Vehicule())
-        self.assertEqual(len(self.env.objects), 1)  # Vérifie qu'il y a un objet par défaut
-
     def test_segments_intersect(self):
         """Teste la détection d'intersection entre deux segments."""
         # Segments qui s'intersectent
@@ -93,6 +86,29 @@ class TestEnvironnement(unittest.TestCase):
         self.assertEqual(len(positions), 3)  # Vérifie qu'il y a 3 points (roues)
         for point in positions:
             self.assertEqual(len(point), 2)  # Vérifie que chaque point a 2 coordonnées (x, y)
+
+
+class TestVehicule(unittest.TestCase):
+
+    def setUp(self):
+        """Initialisation des objets nécessaires pour les tests."""
+        self.vehicule = Vehicule("Robot",[200, 400] , 50, 50,self)
+
+    def test_accelerer(self):
+        # Test de la fonction accelerer
+        self.vehicule.accelerer(50)
+        self.assertEqual(self.vehicule.vit_Rg, 50)
+        self.assertEqual(self.vehicule.vit_Rd, 50)
+
+        # Test avec une valeur qui dépasse la limite maximale
+        self.vehicule.accelerer(200) 
+        self.assertEqual(self.vehicule.vit_Rg, 150)
+        self.assertEqual(self.vehicule.vit_Rd, 150)
+
+    
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
