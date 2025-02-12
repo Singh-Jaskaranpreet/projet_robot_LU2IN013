@@ -36,4 +36,6 @@ class Infrarouge():
                     distance_objet = m.sqrt((point_x - obj[0][0]) ** 2 + (point_y - obj[0][1]) ** 2)
                     if distance_objet <= obj[1]:
                         return d  # Distance au premier obstacle détecté
+            if point_x >= environnement.largeur or point_y >= environnement.hauteur or point_x <= 0 or point_y <= 0 :
+                return d
         return max_distance  # Aucune collision détectée

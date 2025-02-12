@@ -10,7 +10,7 @@ class Environnement:
         """
         self.largeur = 1200
         self.hauteur = 800
-        self.vehicule = Vehicule("Robot",[200, 400] , 50, 50,self)
+        self.vehicule = Vehicule("Robot",[200, 400] , 50, 40,self)
         self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
         #self.objects = [] #pour pas avoir d'obstacle
         self.temps = horloge.Horloge()
@@ -164,7 +164,12 @@ class Environnement:
             # Calcul de la vitesse linéaire moyenne et de la vitesse angulaire
             v = (self.vehicule.vit_Rg + self.vehicule.vit_Rd) / 2.0
             omega = (self.vehicule.vit_Rd - self.vehicule.vit_Rg) / self.vehicule.essieux
-        
+
+            # Mise à jour de l'angle (attention : angle en degrés)
+            # omega est en rad/s, on le convertit en degrés
+            dtheta_deg = m.degrees(omega * dt)
+            self.vehicule.angle = (self.vehicule.angle + dtheta_deg) % 360
+            
             # Mise à jour de la position
             # La position est mise à jour en fonction de l'orientation actuelle du véhicule
             theta_rad = m.radians(self.vehicule.angle)
@@ -173,10 +178,6 @@ class Environnement:
             self.vehicule.p_centre[0] += dx
             self.vehicule.p_centre[1] += dy
         
-            # Mise à jour de l'angle (attention : angle en degrés)
-            # omega est en rad/s, on le convertit en degrés
-            dtheta_deg = m.degrees(omega * dt)
-            self.vehicule.angle = (self.vehicule.angle + dtheta_deg) % 360
         else:
             # En cas de collision, on arrête le véhicule et on corrige sa position
             self.vehicule.vit_Rd = 0

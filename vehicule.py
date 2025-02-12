@@ -54,8 +54,7 @@ class Vehicule:
 
     #Place les trois roues de la voiture
     def position_des_roues(self, point):
-        hyp = self.long / m.cos(m.radians(20))
-        r_Ar = [point[0] - (self.long//2) * m.cos(m.radians(self.angle)), point[1] - (self.long//2) * m.sin(m.radians(self.angle))]
-        r_Avg = [r_Ar[0] + hyp * m.cos(m.radians(self.angle + 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle + 20))]
-        r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.angle - 20))]
+        r_Ar = [point[0] - self.long * m.cos(m.radians(self.angle)), point[1] - self.long * m.sin(m.radians(self.angle))]
+        r_Avg = [point[0] + (self.essieux // 2) * m.cos(m.radians(self.angle + 90)), point[1] + (self.essieux // 2) * m.sin(m.radians(self.angle + 90))]
+        r_Avd = [point[0] + (self.essieux // 2) * m.cos(m.radians(self.angle - 90)), point[1] + (self.essieux // 2) * m.sin(m.radians(self.angle - 90))]
         return [r_Ar, r_Avg, r_Avd]
