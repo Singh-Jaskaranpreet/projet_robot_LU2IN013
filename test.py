@@ -105,9 +105,22 @@ class TestVehicule(unittest.TestCase):
         self.assertEqual(self.vehicule.vit_Rg, 150)
         self.assertEqual(self.vehicule.vit_Rd, 150)
 
+    def test_freiner(self):
+        # Initialisation des vitesses
+        self.vehicule.vit_Rg = 100
+        self.vehicule.vit_Rd = 100
+
+        # Test de la fonction freiner
+        self.vehicule.freiner(50)
+        self.assertEqual(self.vehicule.vit_Rg, 50)
+        self.assertEqual(self.vehicule.vit_Rd, 50)
+
+        # Test avec une valeur qui dépasse la limite minimale
+        self.vehicule.freiner(200)
+        self.assertEqual(self.vehicule.vit_Rg, 0)
+        self.assertEqual(self.vehicule.vit_Rd, 0)
+
     
-
-
 
 
 if __name__ == '__main__':
