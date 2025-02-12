@@ -36,4 +36,4 @@ while True:
     affichage.afficher(affichage.screen, affichage.ROUGE, affichage.NOIR, environnement.objects, environnement)
     clock.tick(60)
 
-environnement.vehicule.temps.arreter()
+environnement.temps.arreter()

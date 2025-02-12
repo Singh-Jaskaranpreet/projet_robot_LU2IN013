@@ -13,7 +13,7 @@ environnement = Environnement()
 controleur_instance = controleur.Controleur(environnement.vehicule, environnement)
 
 # Démarrer l'horloge du véhicule une seule fois
-environnement.vehicule.temps.demarrer()
+environnement.temps.demarrer()
 
 # Lancer la lecture des commandes dans un thread séparé
 threading.Thread(target=lcm.lire_commandes, args=(environnement,), daemon=True).start()
@@ -47,6 +47,6 @@ except KeyboardInterrupt:
     print("\nSimulation arrêtée par l'utilisateur.")
 
 finally:
-    temps_total = environnement.vehicule.temps.arreter()
+    temps_total = environnement.temps.arreter()
     print(f"\nTemps total de simulation: {temps_total} secondes")
     sys.exit(0)
