@@ -67,7 +67,7 @@ class Environnement:
         Retourne True si une collision est détectée, sinon False.
         """
         # Points actuels du véhicule
-        points_triangle = self.position_des_roues(self.vehicule.p_centre)
+        points_triangle = self.vehicule.position_des_roues(self.vehicule.p_centre)
 
         # Partie du vehicule qui sont en collision
         point_collision =set()
@@ -84,8 +84,7 @@ class Environnement:
                         break
                 indice = indice + 1
             if len(point_collision) > 0 :
-                break
-            indice = 0            
+                break           
             for t_edge in [
                     (points_triangle[0], points_triangle[1]),
                     (points_triangle[1], points_triangle[2]),
@@ -116,16 +115,16 @@ class Environnement:
         angle = self.vehicule.angle
 
         if self.vehicule.vit_Rd > self.vehicule.vit_Rg :
-            if segment == {1}:
+            if segment == {1} or segment == {3} :
                 angle = angle + 90
             else :
                 angle = angle - 90
         if self.vehicule.vit_Rd < self.vehicule.vit_Rg :
-            if segment == {2}:
+            if segment == {2} or segment == {5} :
                 angle = angle - 90
             else :
                 angle = angle + 90
-        if segment == {0,2} or segment == {0} :
+        if segment == {3,5} or segment == {0} :
             pos = [
                 self.vehicule.p_centre[0] + 0.01 * m.cos(m.radians(angle)),
                 self.vehicule.p_centre[1] + 0.01 * m.sin(m.radians(angle))
@@ -139,7 +138,7 @@ class Environnement:
 
     def rester_dans_limites(self):
         """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
-        for point in self.position_des_roues(self.vehicule.p_centre):
+        for point in self.vehicule.position_des_roues(self.vehicule.p_centre):
             if point[0] < 0 or point[0] > self.largeur   or point[1] < 0 or point[1] > self.hauteur :
                 self.vehicule.vit_Rd = 0
                 self.vehicule.vit_Rg = 0
@@ -183,14 +182,6 @@ class Environnement:
             self.vehicule.vit_Rd = 0
             self.vehicule.vit_Rg = 0
             self.correction_apres_collision(collision)
-
-    #Place les trois roues de la voiture
-    def position_des_roues(self, point):
-        hyp = self.vehicule.long / m.cos(m.radians(20))
-        r_Ar = [point[0] - (self.vehicule.long//2) * m.cos(m.radians(self.vehicule.angle)), point[1] - (self.vehicule.long//2) * m.sin(m.radians(self.vehicule.angle))]
-        r_Avg = [r_Ar[0] + hyp * m.cos(m.radians(self.vehicule.angle + 20)), r_Ar[1] + hyp * m.sin(m.radians(self.vehicule.angle + 20))]
-        r_Avd = [r_Ar[0] + hyp * m.cos(m.radians(self.vehicule.angle - 20)), r_Ar[1] + hyp * m.sin(m.radians(self.vehicule.angle - 20))]
-        return [r_Ar, r_Avg, r_Avd]
     
 
     def restart(self):

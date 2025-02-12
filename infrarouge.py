@@ -9,7 +9,7 @@ class Infrarouge():
         """ Simule un capteur infrarouge détectant la distance jusqu'au premier obstacle en face du véhicule. """
     
         # 🔹 Position du capteur (au centre des roues avant)
-        roues = environnement.position_des_roues(environnement.vehicule.p_centre)
+        roues = environnement.vehicule.position_des_roues(environnement.vehicule.p_centre)
         capteur_x = (roues[1][0] + roues[2][0]) / 2
         capteur_y = (roues[1][1] + roues[2][1]) / 2
 

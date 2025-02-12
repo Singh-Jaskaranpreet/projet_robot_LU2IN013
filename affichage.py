@@ -20,7 +20,7 @@ def afficher(screen, couleur_vehicule, couleur_texte, objects, environnement):
         screen.fill(BLANC) # Remplir l'écran en blanc
 
         # Afficher le véhicule sous forme de triangle
-        points_triangle = environnement.position_des_roues(environnement.vehicule.p_centre)
+        points_triangle = environnement.vehicule.position_des_roues(environnement.vehicule.p_centre)
         pygame.draw.polygon(screen, couleur_vehicule, points_triangle)
 
         # Dessiner la roue arrière
