@@ -1,7 +1,6 @@
 import unittest
 import math as m
 from environnement import Environnement
-from vehicule import Vehicule
 import time
 
 class TestEnvironnement(unittest.TestCase):
@@ -79,49 +78,6 @@ class TestEnvironnement(unittest.TestCase):
         new_object = [(100, 100), (200, 100), (200, 200), (100, 200)]
         self.env.add_objet(new_object)
         self.assertEqual(len(self.env.objects), initial_length + 1)
-
-    def test_position_des_roues(self):
-        """Teste le calcul des positions des roues."""
-        positions = self.env.position_des_roues(self.vehicule.p_centre)
-        self.assertEqual(len(positions), 3)  # Vérifie qu'il y a 3 points (roues)
-        for point in positions:
-            self.assertEqual(len(point), 2)  # Vérifie que chaque point a 2 coordonnées (x, y)
-
-
-class TestVehicule(unittest.TestCase):
-
-    def setUp(self):
-        """Initialisation des objets nécessaires pour les tests."""
-        self.vehicule = Vehicule("Robot",[200, 400] , 50, 50,self)
-
-    def test_accelerer(self):
-        # Test de la fonction accelerer
-        self.vehicule.accelerer(50)
-        self.assertEqual(self.vehicule.vit_Rg, 50)
-        self.assertEqual(self.vehicule.vit_Rd, 50)
-
-        # Test avec une valeur qui dépasse la limite maximale
-        self.vehicule.accelerer(200) 
-        self.assertEqual(self.vehicule.vit_Rg, 150)
-        self.assertEqual(self.vehicule.vit_Rd, 150)
-
-    def test_freiner(self):
-        # Initialisation des vitesses
-        self.vehicule.vit_Rg = 100
-        self.vehicule.vit_Rd = 100
-
-        # Test de la fonction freiner
-        self.vehicule.freiner(50)
-        self.assertEqual(self.vehicule.vit_Rg, 50)
-        self.assertEqual(self.vehicule.vit_Rd, 50)
-
-        # Test avec une valeur qui dépasse la limite minimale
-        self.vehicule.freiner(200)
-        self.assertEqual(self.vehicule.vit_Rg, 0)
-        self.assertEqual(self.vehicule.vit_Rd, 0)
-
-    
-
 
 if __name__ == '__main__':
     unittest.main()

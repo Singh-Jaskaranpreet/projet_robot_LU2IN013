@@ -35,6 +35,6 @@ while True:
 
     # Affichage
     affichage.afficher(environnement.objects, environnement)
-    clock.tick(60)
+    clock.tick(60)*environnement.temps.time_scale
 
 environnement.temps.arreter()
