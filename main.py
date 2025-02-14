@@ -12,6 +12,7 @@ pygame.init()
 #temps Création de l'environnement et d'un véhicule
 environnement = environnement.Environnement()
 controleur = controleur.Controleur(environnement.vehicule, environnement)
+affichage = affichage.Affichage(1200,800)
 
 # Affiche l'écran d'instructions avant de commencer
 affichage.afficher_instructions()
@@ -33,7 +34,7 @@ while True:
     environnement.rester_dans_limites()
 
     # Affichage
-    affichage.afficher(affichage.screen, affichage.ROUGE, affichage.NOIR, environnement.objects, environnement)
+    affichage.afficher(environnement.objects, environnement)
     clock.tick(60)
 
 environnement.temps.arreter()
