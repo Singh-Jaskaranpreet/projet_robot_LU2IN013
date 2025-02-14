@@ -2,6 +2,9 @@ import pygame
 from environnement import *
 #LARGEUR, HAUTEUR = 1200, 800
 
+def echelle(x):
+     return  round(0.003*x,3)
+
 class Affichage:
     # Dimensions de la fenêtre
     def __init__(self,largeur,hauteur):
@@ -53,11 +56,11 @@ class Affichage:
 
             # Afficher la vitesse du véhicule à l'écran
             font = pygame.font.SysFont(None, 36)
-            vitesse_text = font.render(f"Vitesse: {round(abs((abs(environnement.vehicule.vit_Rd)+abs(environnement.vehicule.vit_Rg))/2), 3)} pixel/s", True, self.couleurs[1])
+            vitesse_text = font.render(f"Vitesse: {echelle(abs((abs(environnement.vehicule.vit_Rd)+abs(environnement.vehicule.vit_Rg))/2))} m/s", True, self.couleurs[1])
             self.screen.blit(vitesse_text, (10, 10))
-            distance = font.render(f"Distance:{environnement.vehicule.get_distance(environnement)} pixel", True, self.couleurs[1])
+            distance = font.render(f"Distance:{echelle(environnement.vehicule.get_distance(environnement))} m", True, self.couleurs[1])
             self.screen.blit(distance, (10, 40))
-            vitesse = font.render(f"vitesse droite = {environnement.vehicule.vit_Rd}, vitesse gauche {environnement.vehicule.vit_Rg}", True, self.couleurs[1])
+            vitesse = font.render(f"vitesse droite = {echelle(environnement.vehicule.vit_Rd)}, vitesse gauche {echelle(environnement.vehicule.vit_Rg)}", True, self.couleurs[1])
             self.screen.blit(vitesse, (10, 770))
             pygame.display.flip() # Met à jour l'écran
 
@@ -86,3 +89,4 @@ class Affichage:
             y_offset += 100  # Espacement entre les lignes
         
         pygame.display.flip()  # Met à jour l'écran
+    
