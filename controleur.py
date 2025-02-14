@@ -41,33 +41,23 @@ class Controleur:
             print("le vehicule freine, Pschhh", end ="\r")
 
         if keys[pygame.K_r]:
-            if self.sequence :
-                self.sequence = None
             self.environnement.restart()
             print("                                                       ", end ="\r")
             print("oh la la on retourne à zero", end ="\r")
 
         if keys[pygame.K_s]:  # Définir une séquence de stratégies
-            if self.sequence is None:  # Si aucune séquence n'est en cours
-                # Créer une séquence de stratégies et la démarrer
-                self.sequence = StrategieSequence([AvancerDroitStrategy(150), TournerAngleStrategy(90)] * 4)
-                self.sequence.start(self.vehicule)
-                print("                                                            ", end = "\r")
-                print("Stratégie séquentielle activée")
-            else:
-                print("                                           ", end = "\r")
-                print("Une séquence est déjà en cours. Attendez qu'elle se termine.", end = "\r")
+            # Créer une séquence de stratégies et la démarrer
+            self.sequence = StrategieSequence([AvancerDroitStrategy(150), TournerAngleStrategy(90)] * 4)
+            self.sequence.start(self.vehicule)
+            print("                                                            ", end = "\r")
+            print("Stratégie séquentielle activée")
 
         if keys[pygame.K_m]:  # Définir une séquence de stratégies
-            if self.sequence is None:  # Si aucune séquence n'est en cours
-                # Créer une séquence de stratégies et la démarrer
-                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
-                self.sequence.start(self.vehicule)
-                print("                                                            ", end = "\r")
-                print("Stratégie séquentielle activée")
-            else:
-                print("                                           ", end = "\r")
-                print("Une séquence est déjà en cours. Attendez qu'elle se termine.", end = "\r")
+            # Créer une séquence de stratégies et la démarrer
+            self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
+            self.sequence.start(self.vehicule)
+            print("                                                            ", end = "\r")
+            print("Stratégie séquentielle activée")
 
     def gerer_affichage(self):
         attente = True
