@@ -34,6 +34,6 @@ while True:
 
     # Affichage
     affichage.afficher(affichage.screen, affichage.ROUGE, affichage.NOIR, environnement.objects, environnement)
-    clock.tick(60)
+    clock.tick(60)*environnement.temps.time_scale
 
 environnement.temps.arreter()
