@@ -1,0 +1,65 @@
+🛠 Comment fonctionne le projet ?
+Ce projet est une simulation du mouvement d'une voiture. Il repose sur plusieurs fichiers qui travaillent ensemble :
+
+voiture.py : Définit la voiture (position, roues, mouvement).
+strategie.py : Définit différentes façons dont la voiture peut se déplacer.
+horloge.py : Gère le temps et la simulation.
+main.py : Le fichier principal qui fait tourner tout le programme.
+🔄 Comment les fichiers interagissent ?
+Voici le rôle de chaque fichier et comment ils communiquent entre eux :
+
+1️⃣ voiture.py (Classe Voiture)
+
+Contient la classe Voiture, qui représente une voiture avec sa position, son orientation et ses roues.
+Elle a des méthodes pour se déplacer, tourner et calculer la position des roues.
+Interagit avec :
+strategie.py pour suivre une stratégie de mouvement.
+horloge.py pour gérer le temps.
+2️⃣ strategie.py (Stratégies de mouvement)
+
+Définit des stratégies comme "aller tout droit", "tourner", etc.
+Interagit avec :
+voiture.py pour modifier les mouvements de la voiture.
+main.py qui choisit quelle stratégie appliquer.
+3️⃣ horloge.py (Gestion du temps)
+
+Permet de simuler le passage du temps et de synchroniser les mouvements.
+Interagit avec :
+voiture.py pour avancer la voiture de façon fluide.
+main.py pour exécuter le programme à un rythme correct.
+4️⃣ main.py (Lance le programme)
+
+Crée une voiture et applique une stratégie de mouvement.
+Coordonne tous les autres fichiers pour faire fonctionner la simulation.
+Interagit avec :
+voiture.py pour manipuler la voiture.
+strategie.py pour choisir comment la voiture doit se déplacer.
+horloge.py pour gérer le temps de la simulation.
+⚙ Exemple de fonctionnement
+Voici un exemple simple de ce qui se passe quand on exécute main.py :
+
+1️⃣ Création de la voiture
+
+python
+Copier
+Modifier
+voiture = Voiture(x=0, y=0, angle=0)
+➡ La voiture est initialisée à la position (0,0) avec un angle de 0°.
+
+2️⃣ Choix d'une stratégie de mouvement
+
+python
+Copier
+Modifier
+strategie = StrategieLigneDroite()
+strategie.appliquer(voiture)
+➡ On applique une stratégie qui fait avancer la voiture en ligne droite.
+
+3️⃣ Lancement de la simulation avec horloge.py
+
+python
+Copier
+Modifier
+horloge = Horloge()
+horloge.demarrer()
+➡ La simulation commence et le temps est géré correctement.
