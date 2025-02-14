@@ -41,6 +41,8 @@ class Controleur:
             print("le vehicule freine, Pschhh", end ="\r")
 
         if keys[pygame.K_r]:
+            if self.sequence :
+                self.sequence = None
             self.environnement.restart()
             print("                                                       ", end ="\r")
             print("oh la la on retourne à zero", end ="\r")
