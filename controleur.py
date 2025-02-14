@@ -56,6 +56,17 @@ class Controleur:
                 print("                                           ", end = "\r")
                 print("Une séquence est déjà en cours. Attendez qu'elle se termine.", end = "\r")
 
+        if keys[pygame.K_m]:  # Définir une séquence de stratégies
+            if self.sequence is None:  # Si aucune séquence n'est en cours
+                # Créer une séquence de stratégies et la démarrer
+                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
+                self.sequence.start(self.vehicule)
+                print("                                                            ", end = "\r")
+                print("Stratégie séquentielle activée")
+            else:
+                print("                                           ", end = "\r")
+                print("Une séquence est déjà en cours. Attendez qu'elle se termine.", end = "\r")
+
     def gerer_affichage(self):
         attente = True
         while attente:
