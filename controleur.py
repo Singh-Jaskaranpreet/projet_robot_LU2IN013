@@ -61,7 +61,7 @@ class Controleur:
         if keys[pygame.K_m]:  # Définir une séquence de stratégies
             if self.sequence is None:  # Si aucune séquence n'est en cours
                 # Créer une séquence de stratégies et la démarrer
-                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
+                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
                 self.sequence.start(self.vehicule)
                 print("                                                            ", end = "\r")
                 print("Stratégie séquentielle activée")

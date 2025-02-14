@@ -120,11 +120,14 @@ class AccelererStrategy(StrategyAsync):
         return self.distance < 200
     
 class DoucementStrategy(StrategyAsync):
-    def __init__(self):
+    def __init__(self, vehicule):
         self.vitesse = 20
+        self.angle = vehicule.angle % 90
 
     def start(self, vehicule):
         self.distance = vehicule.infrarouge.mesurer_distance_obstacle(vehicule.environnement)
+        if self.angle != 45 :
+            self.angle = self.angle % 45
     
     def step(self, vehicule):
         
@@ -134,7 +137,7 @@ class DoucementStrategy(StrategyAsync):
         self.distance = vehicule.infrarouge.mesurer_distance_obstacle(vehicule.environnement)
 
     def stop(self, vehicule):
-        if self.distance < 20 :
+        if self.distance < 20 + self.angle // 2  :
             vehicule.vit_Rg = 0
             vehicule.vit_Rd= 0
             return True
