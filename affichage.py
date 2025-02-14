@@ -8,7 +8,7 @@ class Affichage:
          self.largeur=largeur
          self.hauteur=hauteur
          self.screen = pygame.display.set_mode((largeur,hauteur))
-         self.couleurs = [(255,255,255),(0,0,0),(255,0,0)] #Blanc,Noir,Rouge
+         self.couleurs = [(255,255,255),(0,0,0),(255,0,0), (0,0,0)] #Blanc,Noir,Rouge
         #pygame.display.set_caption("Simulation de Véhicule")
 
 
@@ -23,7 +23,7 @@ class Affichage:
 
             # Afficher le véhicule sous forme de triangle
             points_triangle = environnement.vehicule.position_des_roues(environnement.vehicule.p_centre)
-            pygame.draw.polygon(self.screen, self.couleurs[2], points_triangle)
+            pygame.draw.polygon(self.screen, self.couleurs[3], points_triangle)
 
             # Dessiner la roue arrière
             pygame.draw.circle(self.screen, (0, 0, 0), (int(points_triangle[0][0]), int(points_triangle[0][1])), 3)

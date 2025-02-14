@@ -4,7 +4,7 @@ import environnement
 import affichage
 import time
 import controleur
-
+import random as r
 
 # Initialisation de Pygame
 pygame.init()
@@ -22,8 +22,12 @@ controleur.gerer_affichage()
 # Boucle principale de la simulation
 clock = pygame.time.Clock()
 environnement.temps.demarrer()
-
+x=0
 while True:
+    while x > 8 :
+        affichage.couleurs[3]=r.randint(0, 255), r.randint(0, 255), r.randint(0, 255)
+        x=0
+    x+=1
     environnement.temps.set_time_scale(10)
     controleur.executer_strategie()
     # Gestion des contrôles par l'utilisateur
