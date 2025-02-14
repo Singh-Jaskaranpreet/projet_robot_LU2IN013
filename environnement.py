@@ -100,11 +100,7 @@ class Environnement:
                 break
         if len(point_collision)>0:
             return point_collision
-        return False
-
-    def arrete(self):
-        self.vehicule.vit_Rd = 0
-        self.vehicule.vit_Rg = 0        
+        return False       
 
     def correction_apres_collision(self,segment):
         """
