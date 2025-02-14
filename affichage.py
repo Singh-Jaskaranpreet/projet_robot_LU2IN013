@@ -53,11 +53,11 @@ class Affichage:
 
             # Afficher la vitesse du véhicule à l'écran
             font = pygame.font.SysFont(None, 36)
-            vitesse_text = font.render(f"Vitesse: {round(abs((abs(environnement.vehicule.vit_Rd)+abs(environnement.vehicule.vit_Rg))/2), 3)} pixel/s", True, self.couleurs[2])
+            vitesse_text = font.render(f"Vitesse: {round(abs((abs(environnement.vehicule.vit_Rd)+abs(environnement.vehicule.vit_Rg))/2), 3)} pixel/s", True, self.couleurs[1])
             self.screen.blit(vitesse_text, (10, 10))
-            distance = font.render(f"Distance:{environnement.vehicule.get_distance(environnement)} pixel", True, self.couleurs[2])
+            distance = font.render(f"Distance:{environnement.vehicule.get_distance(environnement)} pixel", True, self.couleurs[1])
             self.screen.blit(distance, (10, 40))
-            vitesse = font.render(f"vitesse droite = {environnement.vehicule.vit_Rd}, vitesse gauche {environnement.vehicule.vit_Rg}", True, self.couleurs[2])
+            vitesse = font.render(f"vitesse droite = {environnement.vehicule.vit_Rd}, vitesse gauche {environnement.vehicule.vit_Rg}", True, self.couleurs[1])
             self.screen.blit(vitesse, (10, 770))
             pygame.display.flip() # Met à jour l'écran
 
@@ -81,7 +81,7 @@ class Affichage:
         y_offset = 20 # Position de départ pour l'affichage des instructions
         
         for line in instructions:
-            text = font.render(line, True, self.couleurs[2])
+            text = font.render(line, True, self.couleurs[1])
             self.screen.blit(text, (self.largeur // 4, y_offset))  # Affiche chaque ligne de texte
             y_offset += 100  # Espacement entre les lignes
         
