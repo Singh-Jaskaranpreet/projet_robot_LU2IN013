@@ -100,15 +100,20 @@ class StrategieSequence(StrategyAsync):
     
 class AccelererStrategy(StrategyAsync):
     def __init__(self):
-        self.vitesse_max = 150
+        self.distance = 0
 
     def start(self, vehicule):
         self.distance = vehicule.infrarouge.mesurer_distance_obstacle(vehicule.environnement)
     
     def step(self, vehicule):
-        if vehicule.vit_Rg < self.vitesse_max or vehicule.vit_Rd < self.vitesse_max :
-            vehicule.vit_Rg = self.vitesse_max
-            vehicule.vit_Rd= self.vitesse_max
+        if vehicule.vit_Rg != vehicule.vit_Rd :
+            if vehicule.vit_Rg > vehicule.vit_Rd :
+                vehicule.vit_Rd = vehicule.vit_Rg
+            else :
+                vehicule.vit_Rg = vehicule.vit_Rd
+
+        vehicule.accelerer(30)
+
         self.distance = vehicule.infrarouge.mesurer_distance_obstacle(vehicule.environnement)
 
     def stop(self,vehicule):
@@ -122,9 +127,9 @@ class DoucementStrategy(StrategyAsync):
         self.distance = vehicule.infrarouge.mesurer_distance_obstacle(vehicule.environnement)
     
     def step(self, vehicule):
-        if vehicule.vit_Rg > self.vitesse or vehicule.vit_Rd > self.vitesse :
-            vehicule.vit_Rg = self.vitesse
-            vehicule.vit_Rd= self.vitesse
+        
+        if vehicule.vit_Rg > 29 :
+            vehicule.freiner(20)
 
         self.distance = vehicule.infrarouge.mesurer_distance_obstacle(vehicule.environnement)
 
