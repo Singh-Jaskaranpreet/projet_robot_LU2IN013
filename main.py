@@ -1,18 +1,18 @@
 import pygame
 import sys
-import environnement
-import affichage
+from src.modele import Environnement,Vehicule
+from src.affichage import Affichage
+from src.controleur import Controleur
 import time
-import controleur
 import random as r
 
 # Initialisation de Pygame
 pygame.init()
 
 #temps Création de l'environnement et d'un véhicule
-environnement = environnement.Environnement()
-controleur = controleur.Controleur(environnement.vehicule, environnement)
-affichage = affichage.Affichage(1200,800)
+environnement = Environnement()
+controleur = Controleur(environnement.vehicule, environnement)
+affichage = Affichage(1200,800)
 
 # Affiche l'écran d'instructions avant de commencer
 affichage.afficher_instructions()

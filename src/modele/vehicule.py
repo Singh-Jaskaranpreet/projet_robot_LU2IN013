@@ -1,4 +1,4 @@
-import infrarouge
+from .outils import Infrarouge
 import math as m
 
 # Classe Véhicule
@@ -16,7 +16,7 @@ class Vehicule:
         self.starting_point_y=p_centre[1]
         self.nb_roues = 3
         self.environnement = environnement
-        self.infrarouge = infrarouge.Infrarouge()
+        self.infrarouge = Infrarouge()
     
     def accelerer(self, val):
         self.vit_Rg = max(0, min(150, self.vit_Rg+val))

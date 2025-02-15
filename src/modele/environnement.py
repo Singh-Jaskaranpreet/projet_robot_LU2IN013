@@ -1,6 +1,6 @@
 import math as m
-from vehicule import *
-import horloge
+from .vehicule import Vehicule
+from .horloge import Horloge
 
 class Environnement:
 
@@ -13,7 +13,7 @@ class Environnement:
         self.vehicule = Vehicule("Robot",[200, 400] , 50, 40,self)
         self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
         #self.objects = [] #pour pas avoir d'obstacle
-        self.temps = horloge.Horloge()
+        self.temps = Horloge()
 
     def segments_intersect(self, seg1, seg2):
         """

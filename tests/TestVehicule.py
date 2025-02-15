@@ -1,6 +1,6 @@
 import unittest
 import math as m
-from vehicule import Vehicule
+from src.modele.vehicule import Vehicule
 import time
 
 

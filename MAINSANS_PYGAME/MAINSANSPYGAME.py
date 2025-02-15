@@ -1,8 +1,8 @@
 import sys
 import time
 import threading
-from environnement import Environnement
-import controleur
+from src.modele.environnement import Environnement
+import src.controleur.controleur as controleur
 import lcm  # Module contenant lire_commandes et input_active
 
 # Initialiser last_print avant la boucle

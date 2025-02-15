@@ -1,5 +1,5 @@
 import pygame
-from environnement import *
+from ..modele.environnement import Environnement
 #LARGEUR, HAUTEUR = 1200, 800
 
 def echelle(x):
@@ -12,8 +12,7 @@ class Affichage:
          self.hauteur=hauteur
          self.screen = pygame.display.set_mode((largeur,hauteur))
          self.couleurs = [(255,255,255),(0,0,0),(255,0,0), (0,0,0)] #Blanc,Noir,Rouge
-        #pygame.display.set_caption("Simulation de Véhicule")
-
+        
 
 
     def afficher(self, objects, environnement):
@@ -21,6 +20,8 @@ class Affichage:
             Affiche l'environnement, y compris le véhicule, les objets (obstacles),
             et la vitesse du véhicule.
             """
+            pygame.display.set_caption("Simulation de Véhicule")
+
 
             self.screen.fill(self.couleurs[0]) # Remplir l'écran en blanc
 

@@ -1,7 +1,7 @@
 import pygame
-import environnement
+from ..modele.environnement import Environnement
 import sys
-from strategy import *
+from ..strategy import *
 
 class Controleur:
     def __init__(self, vehicule, environnement):

@@ -1,0 +1,1 @@
+from .infrarouge import Infrarouge
