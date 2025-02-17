@@ -32,7 +32,7 @@ while True:
         affichage.couleurs[3]=r.randint(0, 255), r.randint(0, 255), r.randint(0, 255)
         x=0
     x+=1
-    environnement.temps.set_time_scale(10)
+    environnement.temps.set_time_scale(1)
     controleur.executer_strategie()
     # Gestion des contrôles par l'utilisateur
     controleur.gerer_evenements()

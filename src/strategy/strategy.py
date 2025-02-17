@@ -59,22 +59,13 @@ class TournerAngleStrategy(StrategyAsync):
 
     def stop(self, vehicule):
         # Arrêter le virage lorsque l'angle accumulé atteint (ou dépasse) l'angle cible.
-        if self.angle_cible > 0:
-            if self.angle_parcouru >= self.angle_cible:
-                vehicule.vit_Rg = 0
-                vehicule.vit_Rd = 0
-                return True
-            else:
-                return False
-        elif self.angle_cible < 0:
-            if self.angle_parcouru <= self.angle_cible:
-                vehicule.vit_Rg = 0
-                vehicule.vit_Rd = 0
-                return True
-            else:
-                return False
-        else:
+
+        if abs(self.angle_parcouru) >= self.angle_cible:
+            vehicule.vit_Rg = 0
+            vehicule.vit_Rd = 0
             return True
+        else:
+            return False
 
 class StrategieSequence(StrategyAsync):
     def __init__(self, strategies):
