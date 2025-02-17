@@ -13,7 +13,7 @@ def lire_commandes(environnement):
         # Indique qu'on va saisir une commande
         input_active.set()
         try:
-            cmd = input("\nCommande (accelerer, freiner, reculer, set_vRg, set_vRd, acr_Rg, acr_Rd, get_distance, info, quitter) : ").strip()
+            cmd = input("\nCommande (accelerer, freiner, reculer, set_vRg, set_vRd, acr_Rg, acr_Rd, get_distance, quitter) : ").strip()
         except EOFError:
             continue  # ou break selon votre besoin
 
@@ -50,15 +50,18 @@ def lire_commandes(environnement):
                 print(f"[COMMANDE] Vitesse roue droite définie à {val}")
             except (IndexError, ValueError):
                 print("Utilisation : set_vRd <valeur>")
-        if cmd == "info":
-            v = environnement.vehicule
-            print("[INFO] Position       :", v.p_centre)
-            print("[INFO] Vitesse roue G :", v.vit_Rg)
-            print("[INFO] Vitesse roue D :", v.vit_Rd)
-            print("[INFO] Angle          :", v.angle)
-            print("[INFO] Distance obstacle :", v.get_distance(environnement))
         if cmd == "quitter":
             print("[COMMANDE] Arrêt de la simulation.")
             sys.exit(0)
         else:
             print("Commande inconnue.")
+
+def info(environnement) :
+    print(
+        f"\nPosition: {environnement.vehicule.p_centre}, "
+        f"Vitesse G: {environnement.vehicule.vit_Rg}, "
+        f"Vitesse D: {environnement.vehicule.vit_Rd}, "
+        f"Angle: {environnement.vehicule.angle}, "
+        f"Distance obstacle: {environnement.vehicule.get_distance()}",
+        end="\r"
+    )
