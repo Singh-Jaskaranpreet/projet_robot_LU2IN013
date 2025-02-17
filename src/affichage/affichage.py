@@ -62,7 +62,7 @@ class Affichage:
             font = pygame.font.SysFont(None, 36)
             vitesse_text = font.render(f"Vitesse: {echelle(abs((abs(environnement.vehicule.vit_Rd)+abs(environnement.vehicule.vit_Rg))/2))} m/s", True, self.couleurs[1])
             self.screen.blit(vitesse_text, (10, 10))
-            distance = font.render(f"Distance:{echelle(environnement.vehicule.get_distance(environnement))} m", True, self.couleurs[1])
+            distance = font.render(f"Distance:{echelle(environnement.vehicule.get_distance())} m", True, self.couleurs[1])
             self.screen.blit(distance, (10, 40))
             vitesse = font.render(f"vitesse droite = {echelle(environnement.vehicule.vit_Rd)}, vitesse gauche {echelle(environnement.vehicule.vit_Rg)}", True, self.couleurs[1])
             self.screen.blit(vitesse, (10, 770))
