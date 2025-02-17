@@ -32,6 +32,7 @@ if k==2:
         affichage.afficher_instructions()
         # Attendre que l'utilisateur appuie sur une touche pour commencer
         controleur.gerer_affichage()
+x=0
 while True :
     if k==1 :
         # Exécuter la stratégie en cours (si applicable)
@@ -49,10 +50,11 @@ while True :
 
 
     if k==2:
-        x=0
+        
         while x > 8 :
             affichage.couleurs[3]=r.randint(0, 255), r.randint(0, 255), r.randint(0, 255)
-            x+=1
+            x=0
+        x+=1
         environnement.temps.set_time_scale(1)
         controleur.executer_strategie()
         # Gestion des contrôles par l'utilisateur
