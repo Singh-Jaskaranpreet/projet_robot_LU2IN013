@@ -2,6 +2,9 @@ import pygame
 from ..modele.environnement import Environnement
 #LARGEUR, HAUTEUR = 1200, 800
 
+# Initialisation de Pygame
+pygame.init()
+
 def echelle(x):
      return  round(0.003*x,3)
 

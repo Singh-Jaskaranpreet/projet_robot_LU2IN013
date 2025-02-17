@@ -8,8 +8,7 @@ import random as r
 #import threading
 #import lcm 
 
-# Initialisation de Pygame
-pygame.init()
+
 
 #temps Création de l'environnement et d'un véhicule
 environnement = Environnement()

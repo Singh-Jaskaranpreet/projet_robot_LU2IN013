@@ -1,6 +1,6 @@
 import unittest
 import math as m
-from src.modele.environnement import Environnement
+from src.modele import Environnement
 import time
 
 class TestEnvironnement(unittest.TestCase):
