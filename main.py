@@ -5,6 +5,8 @@ from src.affichage import Affichage
 from src.controleur import Controleur
 import time
 import random as r
+#import threading
+#import lcm 
 
 # Initialisation de Pygame
 pygame.init()
@@ -18,6 +20,8 @@ affichage = Affichage(1200,800)
 affichage.afficher_instructions()
 # Attendre que l'utilisateur appuie sur une touche pour commencer
 controleur.gerer_affichage()
+
+#threading.Thread(target=lcm.lire_commandes, args=(environnement,), daemon=True).start()
 
 # Boucle principale de la simulation
 clock = pygame.time.Clock()
