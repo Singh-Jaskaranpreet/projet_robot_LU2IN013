@@ -38,7 +38,7 @@ class Vehicule:
 
         
     def get_distance(self, environnement):
-        return self.infrarouge.mesurer_distance_obstacle(environnement)
+        return self.infrarouge.mesurer_distance_obstacle(self)
     
     def set_vrd(self, x):
         self.vit_Rd = max(-150, min(x, 150))

@@ -5,17 +5,17 @@ class Infrarouge():
     def __init__(self):
         pass
 
-    def mesurer_distance_obstacle(self, environnement):
+    def mesurer_distance_obstacle(self, vehicule):
         """ Simule un capteur infrarouge détectant la distance jusqu'au premier obstacle en face du véhicule. """
     
         # 🔹 Position du capteur (au centre des roues avant)
-        capteur_x = environnement.vehicule.p_centre[0]
-        capteur_y = environnement.vehicule.p_centre[1]
+        capteur_x = vehicule.p_centre[0]
+        capteur_y = vehicule.p_centre[1]
 
         # 🔹 Paramètres du capteur
         max_distance = 1000  # Distance maximale du capteur (en pixels)
         pas = 5  # Précision du scan (plus petit = plus précis)
-        direction_angle = m.radians(environnement.vehicule.angle)  # Convertir l'angle en radians
+        direction_angle = m.radians(vehicule.angle)  # Convertir l'angle en radians
 
         # 🔹 Scanner point par point en ligne droite
         for d in range(0, max_distance, pas):
@@ -23,7 +23,7 @@ class Infrarouge():
             point_y = capteur_y + d * m.sin(direction_angle)
 
             # Vérifier si ce point touche un obstacle
-            for obj in environnement.objects:
+            for obj in vehicule.environnement.objects:
                 # 🔴 Cas 1 : L'obstacle est un `pygame.Rect`
                 if len(obj) == 4:
                     #print(f"obstacle rectangulaire de coordonée : {obj}", end = "\r")
@@ -35,6 +35,6 @@ class Infrarouge():
                     distance_objet = m.sqrt((point_x - obj[0][0]) ** 2 + (point_y - obj[0][1]) ** 2)
                     if distance_objet <= obj[1]:
                         return d  # Distance au premier obstacle détecté
-            if point_x >= environnement.largeur or point_y >= environnement.hauteur or point_x <= 0 or point_y <= 0 :
+            if point_x >= vehicule.environnement.largeur or point_y >= vehicule.environnement.hauteur or point_x <= 0 or point_y <= 0 :
                 return d
         return max_distance  # Aucune collision détectée
