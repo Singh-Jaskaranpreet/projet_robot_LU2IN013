@@ -1,0 +1,10 @@
+
+Cette semaine, plusieurs tâches ont été réalisées pour améliorer l’organisation et la fonctionnalité du projet. D’abord, le code du fichier main` a été simplifié en y ajoutant seulement 2-3 lignes, au lieu de créer un fichier main2. Ensuite, un README a été commencé pour expliquer le fonctionnement du projet, mais il reste à le finaliser.
+
+Une fiche de formation sur l’utilisation de unittest a été rédigée pour permettre à toute l’équipe de se former à l’écriture de tests unitaires. Du côté de la structure du projet, un travail de refactorisation a été effectué pour que l’objet Environnement connaisse le robot, et non l’inverse. Cela a permis d’améliorer la logique et la gestion des dépendances dans le code.
+
+Un facteur d’échelle a été ajouté à l’horloge, ce qui permet de mieux contrôler le temps dans la simulation. L’utilisation de l’infrarouge a également été revue, pour que la demande du véhicule passe correctement par l’environnement. De plus, une logique a été mise en place pour permettre l’utilisation de plusieurs contrôleurs dans le fichier main.
+
+Des optimisations ont été apportées aux stratégies, en factorisant certaines conditions pour éviter la duplication de code et en mettant en place une stratégie pour accélérer le plus rapidement possible vers un mur. Concernant l’organisation du code, des fonctions ont été déplacées du fichier main vers le module Environnement afin de mieux structurer le code.
+
+Enfin, une réorganisation du projet a eu lieu, avec la création de packages et de modules, y compris une section spécifique pour les compte-rendus. La gestion des initialisations a également été améliorée, en déplaçant certaines initialisations dans les sous-modules, afin de réduire la charge dans le fichier main.
