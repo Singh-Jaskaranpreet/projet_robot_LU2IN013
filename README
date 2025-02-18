@@ -35,31 +35,3 @@ Interagit avec :
 voiture.py pour manipuler la voiture.
 strategie.py pour choisir comment la voiture doit se déplacer.
 horloge.py pour gérer le temps de la simulation.
-⚙ Exemple de fonctionnement
-Voici un exemple simple de ce qui se passe quand on exécute main.py :
-
-1️⃣ Création de la voiture
-
-python
-Copier
-Modifier
-voiture = Voiture(x=0, y=0, angle=0)
-➡ La voiture est initialisée à la position (0,0) avec un angle de 0°.
-
-2️⃣ Choix d'une stratégie de mouvement
-
-python
-Copier
-Modifier
-strategie = StrategieLigneDroite()
-strategie.appliquer(voiture)
-➡ On applique une stratégie qui fait avancer la voiture en ligne droite.
-
-3️⃣ Lancement de la simulation avec horloge.py
-
-python
-Copier
-Modifier
-horloge = Horloge()
-horloge.demarrer()
-➡ La simulation commence et le temps est géré correctement.
