@@ -1,12 +1,11 @@
 import pygame
-from ..modele.environnement import Environnement
+from ..modele.vehicule import Vehicule
 import sys
 from ..strategy import *
 
 class Controleur:
-    def __init__(self, vehicule, environnement):
+    def __init__(self, vehicule):
         self.vehicule = vehicule
-        self.environnement = environnement
         self.sequence = None
 
     def gerer_evenements(self):
@@ -41,7 +40,7 @@ class Controleur:
             print("le vehicule freine, Pschhh", end ="\r")
 
         if keys[pygame.K_r]:
-            self.environnement.restart()
+            self.vehicule.environnement.restart()
             print("                                                       ", end ="\r")
             print("oh la la on retourne à zero", end ="\r")
 
@@ -71,7 +70,7 @@ class Controleur:
 
     def executer_strategie(self):
         if self.sequence:  # Si une séquence est définie
-            if self.environnement.collision():  # Vérifier s'il y a une collision
+            if self.vehicule.environnement.collision():  # Vérifier s'il y a une collision
                 print("                                                            ", end = "\r")
                 print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
                 self.sequence = None  # Arrêter la stratégie

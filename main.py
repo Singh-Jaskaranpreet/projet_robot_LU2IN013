@@ -11,7 +11,7 @@ import threading
 
 #temps Création de l'environnement et d'un véhicule
 environnement = Environnement()
-controleur = Controleur(environnement.vehicule, environnement)
+controleur = Controleur(environnement.vehicule)
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
 k = int(input("Votre choix :"))
