@@ -18,7 +18,8 @@ class Environnement:
     def segments_intersect(self, seg1, seg2):
         """
         Vérifie si deux segments (seg1 et seg2) s'intersectent.
-        Chaque segment est défini par deux points : ((x1, y1), (x2, y2))
+        :param seg1: Est un segment
+        :param seg2: Est un segment
         """
         def orientation(p, q, r):
             """
@@ -65,6 +66,7 @@ class Environnement:
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
         Retourne True si une collision est détectée, sinon False.
+        :return: Les points en collision sinon False
         """
         # Points actuels du véhicule
         points_triangle = self.vehicule.position_des_roues(self.vehicule.p_centre)
@@ -182,6 +184,9 @@ class Environnement:
     
 
     def restart(self):
+        """
+        Reinitiallise la position du vehicule et ses attributs 
+        """
         self.vehicule.p_centre=[self.vehicule.starting_point_x,self.vehicule.starting_point_y]
         self.vehicule.angle = 0
         self.vehicule.vit_Rd=0
