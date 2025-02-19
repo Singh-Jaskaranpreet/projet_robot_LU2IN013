@@ -1,0 +1,14 @@
+Tracer une ligne la ou le robot passe pour par exemple le carré 
+
+"Se coordonner" à mettre dans le trello
+
+Essayer de faire des commit plus claires 
+
+Pouvoir accéder a l'environnement par le véhicule dans le contrôleur
+
+Main trop compliqué mettre les infos dans un autre fichier
+
+Strategie :
+- self.parcouru +=1 : on ne calcule pas bien la distance parcourue doit avoir accès à l'horloge, pas le droit d'avoir environnement mais a le droit a des objets de environnement
+- C'est quoi l'angle d'une stratégie ?
+- self.angle pas clair
