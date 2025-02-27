@@ -1,4 +1,4 @@
-
+import math
 
 class VehiculeF:
     """ 
@@ -9,11 +9,12 @@ class VehiculeF:
     et les constantes ci-dessous qui definissent les elements physiques du robot
 
     """
-
+    
     WHEEL_BASE_WIDTH = 117  # distance (mm) de la roue gauche a la roue droite.
     WHEEL_DIAMETER = 66.5 #  diametre de la roue (mm)
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE  = WHEEL_DIAMETER   * math.pi # perimetre de la roue (mm)
+    
     
     def __init__(self,nb_img=10,fps=25,resolution=None,servoPort = "SERVO1",motionPort="AD1"):
         """ 
@@ -22,7 +23,6 @@ class VehiculeF:
             :servoPort: port du servo (SERVO1 ou SERVO2)
             :motionPort: port pour l'accelerometre (AD1 ou AD2)
         """
-
         self._gpg= 0
         print("initialisation du gpg")
         self.fps=fps
@@ -34,17 +34,17 @@ class VehiculeF:
             if resolution:
                 self.camera.resolution = resolution
         except Exception as e:
-            print("Camera not found",e)
+            print("La camera n'a pas été trouvé",e)
         try:
             self.servo = 0
             print("Initialisation du servo")
         except Exception as e:
-            print("Servo not found",e)
+            print("Servo n'a pas été trouvé",e)
         try:
             self.distanceSensor = 0
             print("Initialisation du distanceSensor")
         except Exception as e:
-            print("Distance Sensor not found",e)
+            print("Distance Sensor n'a pas été trouvé",e)
         try:
             self.imu = 0
             print("Initialisation de l'imu")
@@ -54,6 +54,8 @@ class VehiculeF:
         self._recording = False
         self._thread = None
         self.start_recording()
+
+        
   
     def stop(self):
         """ Arrete le robot """
@@ -62,10 +64,10 @@ class VehiculeF:
         #self._gpg.set_led(self.LED_LEFT_BLINKER+self.LED_LEFT_EYE+self.LED_LEFT_BLINKER+self.LED_RIGHT_EYE+self.LED_WIFI,0,0,0)
 
     def get_image(self):
-        print("On a une image")
+        print("On obtient une image")
 
     def get_images(self):
-        print("On a les images")
+        print("On obtient les images")
   
     def set_motor_dps(self, port, dps):
         """
@@ -74,6 +76,7 @@ class VehiculeF:
         :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
         :dps: la vitesse cible en nombre de degres par seconde
         """
+        if port == self.MOTOR
         self._gpg.set_motor_dps(port,dps)
         self._gpg.set_motor_limits(port,dps)
 
@@ -94,7 +97,10 @@ class VehiculeF:
 
         Zero the encoder by offsetting it by the current position
         """
+        """
         self._gpg.offset_motor_encoder(port,offset)
+        """
+        pass
 
     def get_distance(self):
         """
@@ -103,41 +109,28 @@ class VehiculeF:
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
+        """
         return self.distanceSensor.read_range_single(False)
+        """
+        pass
 
     def servo_rotate(self,position):
         """
         Tourne le servo a l'angle en parametre.
         :param int position: Angle de rotation, de **0** a **180** degres, 90 pour le milieu.
         """
+        """
         self.servo.rotate_servo(position)
+        """
+        pass
 
     def start_recording(self):
-        if self._recording or self._thread is not None:
-            self._stop_recording()
-        self._recording = True
-        self._thread = threading.Thread(target=self._start_recording)
-        self._thread.start()
-
+        print("On commence à filmer")
     def _stop_recording(self):
-        self._recording = False
-        self._thread.join()
-        self._thread = None
-        
+        pass
+
     def _start_recording(self):
-        try:
-            self._img_queue = deque(maxlen=self.nb_img)
-            with  picamera.PiCamera() as camera:
-                camera.resolution = self.resolution
-                camera.framerate = 24
-                camera.start_preview()
-                while self._recording:
-                    time.sleep(1/self.fps_camera)
-                    out = np.zeros((self.resolution[1],self.resolution[0],3),dtype=np.uint8)
-                    camera.capture(out,'rgb',use_video_port=True)
-                    self._img_queue.append((out,time.time()))
-        except Exception as e:
-            print("Camera not found",e)
+        pass
 
     def __getattr__(self,attr):
         """ Méthodes héritées de GPG : 
