@@ -1,7 +1,7 @@
 import random
-from .vehicule import Vehicule
-from .horloge import Horloge
-from .obstacle import Obstacle
+from src.modele.vehicule import Vehicule
+from src.modele.horloge import Horloge
+from src.modele.obstacle import Obstacle
 
 from direct.interval.IntervalGlobal import Sequence, Func
 from direct.task import Task
