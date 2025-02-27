@@ -1,6 +1,7 @@
 import random
 from .vehicule import Vehicule
 from .horloge import Horloge
+from .obstacle import Obstacle
 
 from direct.interval.IntervalGlobal import Sequence, Func
 from direct.task import Task
@@ -20,3 +21,12 @@ class Environnement3D:
         
         self.vehicules = []
         self.obstacles = []
+
+        # On crée un obstacle unique
+        # Exemple : 10 cm x 40 cm x 50 cm -> 0.1 x 0.4 x 0.5 en Panda3D (selon l'echelle)
+        # Positionné (0,0,0) => le coin bas/centre
+        obstacle = Obstacle(pos=Point3(0, 0, 0),
+                            width=0.1, 
+                            length=0.4, 
+                            height=0.5)
+        self.obstacles.append(obstacle)
