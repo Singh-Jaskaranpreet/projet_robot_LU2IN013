@@ -7,6 +7,7 @@ from direct.interval.IntervalGlobal import Sequence, Func
 from direct.task import Task
 from panda3d.core import Point3
 
+
 class Environnement3D:
     """
     Gère la logique globale de l'environnement : 

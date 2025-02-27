@@ -6,6 +6,7 @@ from panda3d.core import (
     NodePath, LineSegs, 
     Point3, Vec4
 )
+from panda3d.core import CardMaker, NodePath
 
 # On importe l'environnement et la classe Vehicule
 from ..modele import Vehicule
@@ -30,7 +31,12 @@ class Affichage3D(ShowBase):
         self.environnement = Environnement3D(self)
 
         # 1/ Création du sol (blanc)
-        floor = self.loader.loadModel("models/plane")  # Plane par défaut
+        cm = CardMaker('floor')
+        cm.setFrame(-50, 50, -50, 50)  # définit la taille du plan
+        floor = NodePath(cm.generate())
+        floor.reparentTo(self.render)
+        floor.setP(-90)  # orienter le plan horizontalement
+        floor.setColor(1, 1, 1, 1)  # couleur blanche  # Plane par défaut
         floor.setScale(100, 100, 1)       # Un grand sol
         floor.setPos(0, 0, 0)
         floor.setColor(1, 1, 1, 1)        # Blanc
@@ -49,13 +55,7 @@ class Affichage3D(ShowBase):
 
         # 3/ Création du véhicule
         # Exemple d'instance de la classe Véhicule
-        self.vehicule = Vehicule(
-            nom="RobotTest", 
-            p_centre=[0, -20], 
-            empattement=30, 
-            essieux=[10, 20], 
-            angle=0
-        )
+        self.vehicule = Vehicule(nom="RobotTest", p_centre=[0, -20], empattement=30, essieux=[10, 20], environnement=self.environnement)
 
         # On crée un NodePath (3D) pour représenter visuellement le véhicule
         self.vehiculeNP = self.loader.loadModel("models/box")
@@ -68,26 +68,26 @@ class Affichage3D(ShowBase):
         # On le place un peu en arrière sur la scène
         self.vehiculeNP.setPos(0, 0, 0.1)
 
-        # On stocke une "vitesse" pour le NodePath (utilisée par newDestinations)
-        self.vehiculeNP.speed = 5.0
+
+
 
         # 4/ Ajout des roues visibles
         # Pour simplifier, on utilise un cylindre (models/cylinder) pour chaque roue.
         # Deux roues devant :
-        wheel1 = self.loader.loadModel("models/cylinder")
+        wheel1 = self.loader.loadModel("models/misc/rgbCube")
         wheel1.setScale(0.05, 0.05, 0.02)  # Diamètre ~5cm, épaisseur 2cm
         wheel1.setColor(0, 0, 1, 1)       # Bleu
         wheel1.setPos(0.1, 0.1, -0.05)    # Sous le châssis
         wheel1.reparentTo(self.vehiculeNP)
 
-        wheel2 = self.loader.loadModel("models/cylinder")
+        wheel2 = self.loader.loadModel("models/misc/rgbCube")
         wheel2.setScale(0.05, 0.05, 0.02)
         wheel2.setColor(0, 0, 1, 1)
         wheel2.setPos(-0.1, 0.1, -0.05)
         wheel2.reparentTo(self.vehiculeNP)
 
         # Stabilisateur arrière (petit cube par exemple)
-        stabilisateur = self.loader.loadModel("models/box")
+        stabilisateur = self.loader.loadModel("models/misc/rgbCube")
         stabilisateur.setScale(0.02, 0.02, 0.02)
         stabilisateur.setColor(0, 1, 0, 1)  # Vert
         stabilisateur.setPos(0, -0.1, -0.05)
