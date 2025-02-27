@@ -76,16 +76,19 @@ class VehiculeF:
         :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
         :dps: la vitesse cible en nombre de degres par seconde
         """
-        if port == self.MOTOR
-        self._gpg.set_motor_dps(port,dps)
-        self._gpg.set_motor_limits(port,dps)
+        if port == "gauche":
+            print(f"On donne une vitesse de {dps} à la roue gauche")
+        if port == "droite":
+            print(f"On donne une vitesse de {dps} à la roue gauche")
+        if port =="gauche_droite":
+            print(f"On donne une vitesse de {dps} à la roue gauche et à la roue droite")
 
     def get_motor_position(self):
         """
         Lit les etats des moteurs en degre.
         :return: couple du  degre de rotation des moteurs
         """
-        return self._gpg.read_encoders()
+        print("On retourne l'etat des moteurs ")
    
     def offset_motor_encoder(self, port, offset):
         """
@@ -109,10 +112,7 @@ class VehiculeF:
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
-        """
-        return self.distanceSensor.read_range_single(False)
-        """
-        pass
+        print("distance ")
 
     def servo_rotate(self,position):
         """
@@ -142,4 +142,4 @@ class VehiculeF:
             :green:  composante verte (0-255)
             :blue: composante bleu (0-255)
         """
-        return self._gpg.__getattribute__(attr)
+        print("On allume une led")
