@@ -18,17 +18,17 @@ k = int(input("Votre choix :"))
 
 # Démarrer l'horloge du véhicule une seule fois
 environnement.temps.demarrer()
-if k==3:
+while k == 3:
         print("pas implémenter, veuillez choisir autre chose")
         k=0
         print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
         k = int(input("Votre choix :"))
-if k > 3:
+while k > 3:
     print("lacommande n'est pas reconue veuillez choiisr un nombre entre 1, 2 et 3")
     k=0
     print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
     k = int(input("Votre choix :"))
-    
+
 if k==1 :
         # Initialiser last_print avant la boucle
         last_print = time.time()
