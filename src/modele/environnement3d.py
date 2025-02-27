@@ -46,7 +46,9 @@ class Environnement3D:
 
         # Calcul de la durée d'animation
         distance = (s.getPos() - target).length()
-        dt = distance / s.speed if hasattr(s, 'speed') and s.speed != 0 else 1.0
+        speed = s.getPythonTag("speed")
+        dt = distance / speed if speed > 0 else 1.0
+
 
         # Création de la séquence d'animation vers la nouvelle cible
         sequence = Sequence(

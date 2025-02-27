@@ -93,6 +93,9 @@ class Affichage3D(ShowBase):
         stabilisateur.setPos(0, -0.1, -0.05)
         stabilisateur.reparentTo(self.vehiculeNP)
 
+        self.vehiculeNP.setPythonTag("speed", 5.0)  # Vitesse en unités/sec
+
+
         # 5/ Lancement du mouvement aléatoire
         self.environnement.newDestinations(self.vehiculeNP)
 
