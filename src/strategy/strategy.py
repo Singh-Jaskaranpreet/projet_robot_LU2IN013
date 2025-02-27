@@ -1,4 +1,5 @@
 import math as m
+import time
 class StrategyAsync:
     def start(self, vehicule):
         pass
@@ -16,12 +17,22 @@ class AvancerDroitStrategy(StrategyAsync):
     
     def start(self, vehicule):
         self.parcouru = 0
+        self.start_time = time.time()
+        self.last_time = self.start_time  # Initialiser le temps de la dernière itération
 
     def step(self, vehicule):
-        vehicule.vit_Rg = 50
-        vehicule.vit_Rd = 50
-        self.parcouru += 1
-    
+        vehicule.set_vrd(50)
+        vehicule.set_vrg(50)
+        
+        # Calculer le temps écoulé depuis la dernière itération
+        current_time = time.time()
+        elapsed_time = current_time - self.last_time
+        self.last_time = current_time  # Mettre à jour le temps de la dernière itération
+        
+        # Mettre à jour la distance parcourue
+        self.parcouru += round(0.003*(abs((abs(vehicule.vit_Rd)+abs(vehicule.vit_Rg))/2)),3) * elapsed_time
+        print(self.parcouru, elapsed_time)
+
     def stop(self, vehicule):
         return self.parcouru >= self.distance
 
