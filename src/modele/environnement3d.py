@@ -31,3 +31,44 @@ class Environnement3D:
                             length=0.4, 
                             height=0.5)
         self.obstacles.append(obstacle)
+
+    def randomPoint(self):
+        """ Génère un point aléatoire dans la scène """
+        x = random.uniform(-40, 40)  # Adaptez selon la taille de votre sol
+        y = random.uniform(-40, 40)
+        z = 0  # On reste au sol
+        return Point3(x, y, z)
+
+    def newDestinations(self, s):
+        # Définir une nouvelle destination aléatoire
+        target = self.randomPoint()
+        s.setPythonTag("target", target)
+
+        # Calcul de la durée d'animation
+        distance = (s.getPos() - target).length()
+        dt = distance / s.speed if hasattr(s, 'speed') and s.speed != 0 else 1.0
+
+        # Création de la séquence d'animation vers la nouvelle cible
+        sequence = Sequence(
+            s.posInterval(dt, target),
+            Func(self.sequenceDone, s)
+        )
+        s.setPythonTag("sequence", sequence)
+
+        s.lookAt(target)
+        sequence.start()
+
+    def sequenceDone(self, s):
+        """
+        Une fois la séquence terminée, programme une nouvelle destination
+        en utilisant doMethodLater pour laisser le temps aux séquences de se terminer.
+        """
+        self.showbase.taskMgr.doMethodLater(0, self.newDestinations, "nextDestination", extraArgs=[s])
+
+    def update(self, task):
+        """
+        Méthode d'update appelée par le taskMgr de Panda3D.
+        On peut y ajouter la gestion de collisions ou autres mises à jour de la simulation.
+        """
+        # Par exemple : vérification de collisions, mise à jour des états, etc.
+        return Task.cont

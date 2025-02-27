@@ -93,6 +93,52 @@ class Affichage3D(ShowBase):
         stabilisateur.setPos(0, -0.1, -0.05)
         stabilisateur.reparentTo(self.vehiculeNP)
 
+        # 5/ Lancement du mouvement aléatoire
+        self.environnement.newDestinations(self.vehiculeNP)
+
+        # 6/ Gestion des tâches
+        # On ajoute la tâche d'update de l'environnement
+        self.taskMgr.add(self.environnement.update, "UpdateTask")
+
+        # 7/ Position de la caméra
+        self.cam.setPos(0, -60, 30)
+        self.cam.lookAt(0, 0, 0)
+
+        # 8/ Système de collisions
+        self.cTrav = CollisionTraverser()
+        self.pusher = CollisionHandlerPusher()
+
+        # --- Collision pour le véhicule ---
+        vehiculeColliderNode = CollisionNode('vehicule_cnode')
+        # On crée une "box" centrée sur (0,0,0.1) avec demi-dimensions (0.15, 0.1, 0.1)
+        vehiculeColliderNode.addSolid(CollisionBox(Point3(0, 0, 0.1), 0.15, 0.1, 0.1))
+        vehiculeCollider = self.vehiculeNP.attachNewNode(vehiculeColliderNode)
+        # Le pusher va repousser le véhicule s'il touche un obstacle
+        self.pusher.addCollider(vehiculeCollider, self.vehiculeNP)
+        self.cTrav.addCollider(vehiculeCollider, self.pusher)
+
+        # --- Collision pour l'obstacle ---
+        obstacleColliderNode = CollisionNode('obstacle_cnode')
+        # Boîte centrée sur (0,0,0.25) avec demi-dimensions (0.05, 0.2, 0.25)
+        obstacleColliderNode.addSolid(CollisionBox(Point3(0, 0, 0.25), 0.05, 0.2, 0.25))
+        obstacleCollider = obstacleModel.attachNewNode(obstacleColliderNode)
+        # On "repousse" l'obstacle s'il y a collision (ou on peut le laisser fixe)
+        # En général, pour un obstacle fixe, on ne l'associe pas au pusher, 
+        # mais on peut le faire si on veut qu'il soit statique.
+        self.pusher.addCollider(obstacleCollider, obstacleModel)
+        self.cTrav.addCollider(obstacleCollider, self.pusher)
+
+        # 9/ Visualisation du vecteur de direction
+        # Pour l'exemple, on dessine une ligne depuis le centre du véhicule
+        # vers l'avant (Z positif dans ce setup).
+        ls = LineSegs()
+        ls.setColor(1, 0, 0, 1)
+        ls.moveTo(0, 0, 0)
+        ls.drawTo(0, 0, 1.0)  # 1 mètre vers l'avant
+        directionNP = self.vehiculeNP.attachNewNode(ls.create())
+
+        # 10/ Lancement de l'application
+        # (dans un script Panda3D, on termine par run() )
 
 
 # Point d'entrée si on exécute ce fichier directement
