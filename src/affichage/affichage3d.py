@@ -47,7 +47,7 @@ class Affichage3D(ShowBase):
         obstacleModel = self.loader.loadModel("models/box")
         # L'obstacle de l'environnement fait 0.1 × 0.4 × 0.5 (largeur, longueur, hauteur)
         # Pour le visuel, on applique un setScale(x, y, z)
-        obstacleModel.setScale(0.1, 0.4, 0.5)
+        obstacleModel.setScale(1, 4, 5)
         # On le met au sol, la hauteur 0.5 => la moitié doit être au-dessus du sol
         obstacleModel.setPos(0, 0, 0.25)
         obstacleModel.setColor(0, 0, 0, 1)  # Noir
@@ -60,7 +60,7 @@ class Affichage3D(ShowBase):
         # On crée un NodePath (3D) pour représenter visuellement le véhicule
         self.vehiculeNP = self.loader.loadModel("models/box")
         # Échelle 0.3 × 0.2 × 0.2 => ~30cm × 20cm × 20cm
-        self.vehiculeNP.setScale(0.3, 0.2, 0.2)
+        self.vehiculeNP.setScale(3, 2, 2)
         # Couleur (rouge ici, mais vous pouvez la faire varier)
         self.vehiculeNP.setColor(1, 0, 0, 1)
         # On attache le NodePath à la scène
