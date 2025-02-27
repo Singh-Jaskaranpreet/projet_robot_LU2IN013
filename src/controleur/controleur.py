@@ -46,7 +46,7 @@ class Controleur:
 
         if keys[pygame.K_s]:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
-            self.sequence = StrategieSequence([AvancerDroitStrategy(1,50), TournerAngleStrategy(90)] * 4)
+            self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
             self.sequence.start(self.vehicule)
             print("                                                            ", end = "\r")
             print("Stratégie séquentielle activée")

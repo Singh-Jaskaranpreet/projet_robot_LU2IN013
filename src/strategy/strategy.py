@@ -31,7 +31,6 @@ class AvancerDroitStrategy(StrategyAsync):
         
         # Mettre à jour la distance parcourue
         self.parcouru += round(0.003*(abs((abs(vehicule.vit_Rd)+abs(vehicule.vit_Rg))/2)),3) * elapsed_time
-        print(self.parcouru, elapsed_time)
 
     def stop(self, vehicule):
         return self.parcouru >= self.distance
@@ -45,9 +44,13 @@ class TournerAngleStrategy(StrategyAsync):
 
     def start(self, vehicule):
         self.angle_parcouru = 0
+        self.start_time = time.time()
+        self.last_time = self.start_time
 
     def step(self, vehicule):
-        dt = vehicule.environnement.temps.get_temps_ecoule()
+        current_time = time.time()
+        dt = current_time - self.last_time
+        self.last_time = current_time
         
         if self.angle_cible > 0:
             # Virage à gauche : faire pivoter autour de la roue gauche (pivot = vit_Rg)
@@ -71,7 +74,8 @@ class TournerAngleStrategy(StrategyAsync):
     def stop(self, vehicule):
         # Arrêter le virage lorsque l'angle accumulé atteint (ou dépasse) l'angle cible.
 
-        if abs(self.angle_parcouru) >= self.angle_cible:
+        if abs(self.angle_parcouru) >= self.angle_cible -0.1:
+            print(self.angle_parcouru)
             vehicule.vit_Rg = 0
             vehicule.vit_Rd = 0
             return True
