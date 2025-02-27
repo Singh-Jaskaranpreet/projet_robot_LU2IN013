@@ -1,7 +1,7 @@
 import pygame
 import sys
-from src.modele import Environnement,Vehicule, Environnement3D
-from src.affichage import Affichage, Affichage3D
+from src.modele import Environnement,Vehicule
+from src.affichage import Affichage
 from src.controleur import Controleur
 import src.controleur.lcm as lcm
 import time
@@ -18,6 +18,17 @@ k = int(input("Votre choix :"))
 
 # Démarrer l'horloge du véhicule une seule fois
 environnement.temps.demarrer()
+if k==3:
+        print("pas implémenter, veuillez choisir autre chose")
+        k=0
+        print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
+        k = int(input("Votre choix :"))
+if k > 3:
+    print("lacommande n'est pas reconue veuillez choiisr un nombre entre 1, 2 et 3")
+    k=0
+    print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
+    k = int(input("Votre choix :"))
+    
 if k==1 :
         # Initialiser last_print avant la boucle
         last_print = time.time()
@@ -32,23 +43,7 @@ if k==2:
         affichage.afficher_instructions()
         # Attendre que l'utilisateur appuie sur une touche pour commencer
         controleur.gerer_affichage()
-
-if k == 3:
-    # Crée une seule instance de ShowBase via Affichage3D
-    affichage3d = Affichage3D()       
-    # Passe cette instance à l'environnement 3D
-    environnement3d = Environnement3D(affichage3d)
-    # On suppose ici que l'environnement3d gère déjà la création de ses véhicules
-    controleur = Controleur(environnement3d.vehicules)
-
-    # Définition d'une tâche pour mettre à jour la simulation dans Panda3D
-    def update_simulation(task):
-        
-        return task.cont
-
-    affichage3d.taskMgr.add(update_simulation, "UpdateSimulation")
-    affichage3d.run()  # Lance la boucle principale de Panda3D
-
+     
 x=0
 while True :
     if k==1 :
