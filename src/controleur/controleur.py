@@ -1,12 +1,13 @@
 import pygame
-from ..modele.vehicule import Vehicule
+
 import sys
 from ..strategy import *
 
 class Controleur:
-    def __init__(self, vehicule):
+    def __init__(self, vehicule, env):
         self.vehicule = vehicule
         self.sequence = None
+        self.env = env
 
     def gerer_evenements(self):
         for event in pygame.event.get():
@@ -46,7 +47,7 @@ class Controleur:
 
         if keys[pygame.K_s]:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
-            self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
+            self.sequence = StrategieSequence([AvancerDroitStrategy(0.75,self.env), TournerAngleStrategy(90,self.env)] * 4)
             self.sequence.start(self.vehicule)
             print("                                                            ", end = "\r")
             print("Stratégie séquentielle activée")

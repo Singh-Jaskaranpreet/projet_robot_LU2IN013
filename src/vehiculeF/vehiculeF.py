@@ -112,7 +112,7 @@ class VehiculeF:
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
-        print("distance ")
+        print("La distance renvoier par le capteur")
 
     def servo_rotate(self,position):
         """

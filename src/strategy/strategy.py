@@ -1,5 +1,6 @@
 import math as m
 import time
+
 class StrategyAsync:
     def start(self, vehicule):
         pass
@@ -11,45 +12,46 @@ class StrategyAsync:
         return True
 
 class AvancerDroitStrategy(StrategyAsync):
-    def __init__(self, distance):
+    def __init__(self, distance, env):
         self.distance = distance
         self.parcouru = 0
+        self.env = env
     
     def start(self, vehicule):
         self.parcouru = 0
-        self.start_time = time.time()
-        self.last_time = self.start_time  # Initialiser le temps de la dernière itération
+        
 
     def step(self, vehicule):
         vehicule.set_vrd(50)
         vehicule.set_vrg(50)
         
         # Calculer le temps écoulé depuis la dernière itération
-        current_time = time.time()
-        elapsed_time = current_time - self.last_time
-        self.last_time = current_time  # Mettre à jour le temps de la dernière itération
+        current_time = self.env.temps.get_temps_ecoule()
+       
+        
         
         # Mettre à jour la distance parcourue
-        self.parcouru += round(0.003*(abs((abs(vehicule.vit_Rd)+abs(vehicule.vit_Rg))/2)),3) * elapsed_time
+        self.parcouru += abs(round(0.003*(abs((abs(vehicule.vit_Rd)+abs(vehicule.vit_Rg))/2)),3) * current_time)
+        print(self.parcouru)
 
     def stop(self, vehicule):
         return self.parcouru >= self.distance
 
 class TournerAngleStrategy(StrategyAsync):
-    def __init__(self, angle):
+    def __init__(self, angle,env):
         # angle cible en degrés (positif pour gauche, négatif pour droite)
         self.angle_cible = angle  
         self.angle_parcouru = 0  
         self.vitesse_rotation = 30  # vitesse utilisée pour la roue active durant le virage
+        self.env = env
 
     def start(self, vehicule):
         self.angle_parcouru = 0
-        self.start_time = time.time()
-        self.last_time = self.start_time
+        
 
     def step(self, vehicule):
-        current_time = time.time()
-        dt = current_time - self.last_time
+        current_time = self.env.temps.get_temps_ecoule()
+        dt = current_time #- self.last_time
         self.last_time = current_time
         
         if self.angle_cible > 0:

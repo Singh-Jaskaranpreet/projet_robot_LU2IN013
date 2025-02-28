@@ -11,23 +11,21 @@ import threading
 
 #temps Création de l'environnement et d'un véhicule
 environnement = Environnement()
-controleur = Controleur(environnement.vehicule)
+controleur = Controleur(environnement.vehicule,environnement)
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
 k = int(input("Votre choix :"))
 
 # Démarrer l'horloge du véhicule une seule fois
 environnement.temps.demarrer()
-while k == 3:
-        print("pas implémenter, veuillez choisir autre chose")
+while k >= 3:
+        if k==3:
+            print("pas implémenter, veuillez choisir autre chose")
+        else:
+            print("la commande n'est pas reconue veuillez choiisr un nombre entre 1, 2 et 3")
         k=0
         print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
         k = int(input("Votre choix :"))
-while k > 3:
-    print("lacommande n'est pas reconue veuillez choiisr un nombre entre 1, 2 et 3")
-    k=0
-    print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
-    k = int(input("Votre choix :"))
 
 if k==1 :
         # Initialiser last_print avant la boucle
@@ -42,7 +40,7 @@ if k==2:
         # Affiche l'écran d'instructions avant de commencer
         affichage.afficher_instructions()
         # Attendre que l'utilisateur appuie sur une touche pour commencer
-        controleur.gerer_affichage()
+        #controleur.gerer_affichage()
      
 x=0
 while True :

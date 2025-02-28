@@ -86,13 +86,13 @@ class Environnement:
                         break
                 indice = indice + 1
             if len(point_collision) > 0 :
-                break           
-            for t_edge in [
-                    (points_triangle[0], points_triangle[1]),
-                    (points_triangle[1], points_triangle[2]),
-                    (points_triangle[2], points_triangle[0]),
-            ]:
-                if (len(obj) > 2):
+                break 
+
+            #On prend chaque coté du vehicule
+            cote = [(points_triangle[0], points_triangle[1]),(points_triangle[1], points_triangle[2]),(points_triangle[2], points_triangle[0])]
+                   
+            for t_edge in cote:
+                if (len(obj) >= 2):
                     t = len(obj)
                     for i in range(0 , t):
                         if self.segments_intersect(t_edge, (obj[i], obj[(i+1)%t])):

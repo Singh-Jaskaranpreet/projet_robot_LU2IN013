@@ -14,7 +14,7 @@ class Affichage:
          self.largeur=largeur
          self.hauteur=hauteur
          self.screen = pygame.display.set_mode((largeur,hauteur))
-         self.couleurs = [(255,255,255),(0,0,0),(255,0,0), (0,0,0)] #Blanc,Noir,Rouge
+         self.couleurs = [(255,255,255),(0,0,0),(255,0,0),(0,0,0)] #Blanc,Noir,Rouge
         
 
 
@@ -30,23 +30,23 @@ class Affichage:
 
             # Afficher le véhicule sous forme de triangle
             points_triangle = environnement.vehicule.position_des_roues(environnement.vehicule.p_centre)
-            pygame.draw.polygon(self.screen, self.couleurs[3], points_triangle)
+            pygame.draw.polygon(self.screen, self.couleurs[2], points_triangle)
 
             # Dessiner la roue arrière
-            pygame.draw.circle(self.screen, (0, 0, 0), (int(points_triangle[0][0]), int(points_triangle[0][1])), 3)
+            pygame.draw.circle(self.screen, self.couleurs[3], (int(points_triangle[0][0]), int(points_triangle[0][1])), 3)
 
-            # Dessiner les roues avant (ovales) avec la rotation du braquage
+            # Dessiner les roues avant (ovales) 
             largeur_roue = 10  # Largeur de l'ellipse
             hauteur_roue = 5  # Hauteur de l'ellipse
         
             for roue in [points_triangle[1],points_triangle[2]]:
                 x, y = roue
-                rect = pygame.Rect(x - largeur_roue // 2, y - hauteur_roue // 2, largeur_roue, hauteur_roue)
+               # rect = pygame.Rect(x - largeur_roue // 2, y - hauteur_roue // 2, largeur_roue, hauteur_roue)
 
                 # Appliquer l'orientation globale (vehicule.angle) + l'angle des roues (vehicule.angle_braquage)
                 rotation_totale = environnement.vehicule.angle
                 surface_roue = pygame.Surface((largeur_roue, hauteur_roue), pygame.SRCALPHA)
-                pygame.draw.ellipse(surface_roue, (0, 0, 0), (0, 0, largeur_roue, hauteur_roue))
+                pygame.draw.ellipse(surface_roue, self.couleurs[3], (0, 0, largeur_roue, hauteur_roue))
 
                 # Appliquer la rotation
                 surface_roue = pygame.transform.rotate(surface_roue, -rotation_totale)
@@ -55,7 +55,7 @@ class Affichage:
 
             # Afficher les objets (obstacles)
             for obj in objects:
-                pygame.draw.polygon(self.screen, (0, 0, 0), obj)
+                pygame.draw.polygon(self.screen, self.couleurs[1], obj)
 
 
             # Afficher la vitesse du véhicule à l'écran
