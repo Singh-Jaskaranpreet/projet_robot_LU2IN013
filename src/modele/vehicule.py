@@ -36,14 +36,6 @@ class Vehicule:
         elif self.vit_Rd < 0:
             self.vit_Rd = min(0,self.vit_Rd+val)
 
-    def reculer(self, val):
-        """
-        Diminue la vitesse des deux roues du vehicule.
-        :param val: La vitesse diminue de val
-        """
-        self.vit_Rg = max(-50, self.vit_Rg - val)
-        self.vit_Rd = max(-50, self.vit_Rd - val)
-
         
     def get_distance(self):
         """
@@ -64,20 +56,6 @@ class Vehicule:
         :param x: La vitesse de la roue gauche est x
         """
         self.vit_Rg = max(-150, min(x, 150))
-
-    def acr_Rg(self, val):
-        """
-        Augmente la vitesse de la roue gauche.
-        :param val: La vitesse de la roue gauche augmente de val
-        """
-        self.vit_Rg = max(-150,min(150,self.vit_Rg+val))
-
-    def acr_Rd(self, val):
-        """
-        Augmente la vitesse de la roue droite.
-        :param val: La vitesse de la roue droite augmente de val
-        """
-        self.vit_Rd = max(-150,min(150,self.vit_Rd+val))
 
     #Place les trois roues de la voiture
     def position_des_roues(self, point):

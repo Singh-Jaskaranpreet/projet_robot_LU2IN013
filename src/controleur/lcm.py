@@ -24,7 +24,8 @@ def lire_commandes(environnement):
         if cmd.startswith("accelerer"):
             try:
                 val = int(cmd.split()[1])
-                environnement.vehicule.accelerer(val)
+                environnement.vehicule.set_vrg(environnement.vehicule.vit_Rg + val)
+                environnement.vehicule.set_vrd(environnement.vehicule.vit_Rd + val)
                 print(f"[COMMANDE] accelerer de {val}")
                 #bug actuellement à corriger
             except (IndexError, ValueError):

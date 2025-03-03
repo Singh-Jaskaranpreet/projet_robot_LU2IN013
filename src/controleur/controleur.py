@@ -16,22 +16,22 @@ class Controleur:
                 sys.exit()
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT]:  # Augmenter la vitesse de la roue droite
-            self.vehicule.acr_Rd(1)
+            self.vehicule.set_vrd(self.vehicule.vit_Rd +1)
             print("                                                       ", end ="\r")
             print("on accelere la roues droite, vroum vroum", end ="\r")
 
         elif keys[pygame.K_UP]:  # Ralentir la roue droite
-            self.vehicule.acr_Rd(-1)
+            self.vehicule.set_vrd(self.vehicule.vit_Rd -1)
             print("                                                       ", end ="\r")
             print("on ralentie la roues droite, tic... tic...", end ="\r")
 
         if keys[pygame.K_LEFT]:  # Augmenter la vitesse de la roue gauche
-            self.vehicule.acr_Rg(1)
+            self.vehicule.set_vrg(self.vehicule.vit_Rg +1)
             print("                                                       ", end ="\r")
             print("on accelere la roues gauche, vroum vroum", end ="\r")
 
         elif keys[pygame.K_DOWN]:  # Ralentir la roue gauche
-            self.vehicule.acr_Rg(-1)
+            self.vehicule.set_vrg(self.vehicule.vit_Rg -1)
             print("                                                       ", end ="\r")
             print("on ralentie la roues gauche, tic... tic...", end ="\r")
             
