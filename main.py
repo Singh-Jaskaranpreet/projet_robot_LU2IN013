@@ -1,24 +1,20 @@
 import pygame
 import sys
-from src.modele import Environnement,Vehicule
+from src.modele import Environnement
 from src.affichage import Affichage
 from src.controleur import Controleur
+from src.adaptateurs import AdaptateurVF,AdaptateurVS
 import src.controleur.lcm as lcm
 import time
 import random as r
 import threading
 
 
-
-
-
-
-
-
-
-#temps Création de l'environnement et d'un véhicule
+#temps Création de l'environnement et d'un véhicule et des adaptateurs
 environnement = Environnement()
-controleur = Controleur(environnement.vehicule,environnement)
+adapVS = AdaptateurVS(environnement.vehicule,environnement)
+adapVF = AdaptateurVF()
+controleur = Controleur(adapVS,adapVF)
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
 k = int(input("Votre choix :"))
