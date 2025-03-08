@@ -1,5 +1,3 @@
-import pygame
-import sys
 from src.modele import Environnement
 from src.affichage import Affichage
 from src.controleur import Controleur
@@ -12,7 +10,7 @@ import threading
 
 #temps Création de l'environnement et d'un véhicule et des adaptateurs
 environnement = Environnement()
-adapVS = AdaptateurVS(environnement.vehicule,environnement)
+adapVS = AdaptateurVS(environnement.vehicule)
 adapVF = AdaptateurVF()
 controleur = Controleur(adapVS,adapVF)
 
@@ -49,7 +47,7 @@ x=0
 while True :
     if k==1 :
         # Exécuter la stratégie en cours (si applicable)
-        controleur.executer_strategie()
+        controleur.adapVS.executer_strategie()
 
         # Mettre à jour la simulation
         environnement.bouger()
@@ -69,9 +67,9 @@ while True :
             x=0
         x+=1
         environnement.temps.set_time_scale(1)
-        controleur.executer_strategie()
+        controleur.adapVS.executer_strategie()
         # Gestion des contrôles par l'utilisateur
-        controleur.gerer_evenements()
+        controleur.adapVS.gerer_evenements()
 
         environnement.bouger()
         environnement.temps.demarrer()

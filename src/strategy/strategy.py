@@ -1,5 +1,5 @@
 import math as m
-import time
+
 
 class StrategyAsync:
     def start(self, vehicule):
@@ -12,10 +12,9 @@ class StrategyAsync:
         return True
 
 class AvancerDroitStrategy(StrategyAsync):
-    def __init__(self, distance, env):
+    def __init__(self, distance):
         self.distance = distance
         self.parcouru = 0
-        self.env = env
     
     def start(self, vehicule):
         self.parcouru = 0
@@ -26,7 +25,7 @@ class AvancerDroitStrategy(StrategyAsync):
         vehicule.set_vrg(50)
         
         # Calculer le temps écoulé depuis la dernière itération
-        current_time = self.env.temps.get_temps_ecoule()
+        current_time = vehicule.environnement.temps.get_temps_ecoule()
        
         
         
@@ -38,21 +37,20 @@ class AvancerDroitStrategy(StrategyAsync):
         return self.parcouru >= self.distance
 
 class TournerAngleStrategy(StrategyAsync):
-    def __init__(self, angle,env):
+    def __init__(self, angle):
         # angle cible en degrés (positif pour gauche, négatif pour droite)
         self.angle_cible = angle  
         self.angle_parcouru = 0  
         self.vitesse_rotation = 30  # vitesse utilisée pour la roue active durant le virage
-        self.env = env
 
     def start(self, vehicule):
         self.angle_parcouru = 0
         
 
     def step(self, vehicule):
-        current_time = self.env.temps.get_temps_ecoule()
-        dt = current_time #- self.last_time
-        self.last_time = current_time
+        current_time = vehicule.environnement.temps.get_temps_ecoule()
+
+        dt = current_time 
         
         if self.angle_cible > 0:
             # Virage à gauche : faire pivoter autour de la roue gauche (pivot = vit_Rg)

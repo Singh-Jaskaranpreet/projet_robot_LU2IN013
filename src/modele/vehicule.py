@@ -4,7 +4,7 @@ import math as m
 # Classe Véhicule
 class Vehicule:
 
-    def __init__(self, nom, p_centre,empattement,essieux, environnement, angle = 0,):
+    def __init__(self, nom, p_centre,empattement,essieux,environnement,angle = 0):
         self.nom = nom
         self.long=empattement
         self.essieux = essieux
