@@ -9,6 +9,13 @@ import random as r
 import threading
 
 
+
+
+
+
+
+
+
 #temps Création de l'environnement et d'un véhicule
 environnement = Environnement()
 controleur = Controleur(environnement.vehicule,environnement)
