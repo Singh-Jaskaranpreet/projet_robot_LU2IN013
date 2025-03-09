@@ -1,6 +1,7 @@
 from src.modele import Environnement
 from src.affichage import Affichage
 from src.controleur import Controleur
+from src.vehiculeF import VehiculeF
 from src.adaptateurs import AdaptateurVF,AdaptateurVS
 import src.controleur.lcm as lcm
 import time
@@ -9,9 +10,10 @@ import threading
 
 
 #temps Création de l'environnement et d'un véhicule et des adaptateurs
+robot = VehiculeF(0, 0, 0)
 environnement = Environnement()
 adapVS = AdaptateurVS(environnement.vehicule)
-adapVF = AdaptateurVF(environnement.vehicule)
+adapVF = AdaptateurVF(robot)
 controleur = Controleur(adapVS,adapVF)
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
