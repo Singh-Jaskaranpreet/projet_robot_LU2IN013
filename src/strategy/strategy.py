@@ -48,39 +48,34 @@ class TournerAngleStrategy(StrategyAsync):
         
 
     def step(self, vehicule):
-        current_time = vehicule.environnement.temps.get_temps_ecoule()
+        dt = vehicule.environnement.temps.get_temps_ecoule()
 
-        dt = current_time 
-        
+        # On prend la valeur absolue pour éviter les erreurs de direction
+        angle_cible_abs = abs(self.angle_cible)
+
         if self.angle_cible > 0:
-            # Virage à gauche : faire pivoter autour de la roue gauche (pivot = vit_Rg)
+            # Virage à gauche
             vehicule.vit_Rg = 0
             vehicule.vit_Rd = self.vitesse_rotation
-            # La vitesse angulaire est donnée par omega = vitesse_active / empattement (en rad/s)
             omega = self.vitesse_rotation / vehicule.essieux
-            # Calcul de l'incrément d'angle en degrés
-            dtheta = m.degrees(omega * dt)
-            self.angle_parcouru += dtheta
-            
-        elif self.angle_cible < 0:
-            # Virage à droite : faire pivoter autour de la roue droite (pivot = vit_Rd)
+        else:
+            # Virage à droite
             vehicule.vit_Rd = 0
             vehicule.vit_Rg = self.vitesse_rotation
-            # Dans ce cas, omega sera négatif
             omega = -self.vitesse_rotation / vehicule.essieux
-            dtheta = m.degrees(omega * dt)
-            self.angle_parcouru += dtheta
+
+        # Calcul de l'incrément d'angle en degrés
+        dtheta = m.degrees(omega * dt)
+        self.angle_parcouru += abs(dtheta)  # On accumule en valeur absolue
 
     def stop(self, vehicule):
-        # Arrêter le virage lorsque l'angle accumulé atteint (ou dépasse) l'angle cible.
-
-        if abs(self.angle_parcouru) >= self.angle_cible -0.1:
+        # Arrêter le virage lorsque l'angle accumulé atteint l'angle cible
+        if self.angle_parcouru >= abs(self.angle_cible) -1:
             vehicule.vit_Rg = 0
             vehicule.vit_Rd = 0
             return True
-        else:
-            return False
-
+        return False
+    
 class StrategieSequence(StrategyAsync):
     def __init__(self, strategies):
         self.strategies = strategies
