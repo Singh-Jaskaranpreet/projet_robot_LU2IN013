@@ -65,6 +65,9 @@ class Affichage:
             if len(environnement.traces) > 1:
                 pygame.draw.lines(self.screen, (200, 0, 200), False, environnement.traces, 2)
 
+            if environnement.asuivre_act :
+                environnement.bouger_cible()  # Déplacer la cible aléatoirement
+                pygame.draw.circle(self.screen, self.couleurs[1], (environnement.asuivre[0][0], environnement.asuivre[0][1]), 10)
 
             # Afficher la vitesse du véhicule à l'écran
             font = pygame.font.SysFont(None, 36)

@@ -1,6 +1,7 @@
 import math as m
 from .vehicule import Vehicule
 from .horloge import Horloge
+from random import randint, uniform, random
 
 class Environnement:
 
@@ -16,6 +17,10 @@ class Environnement:
         self.temps = Horloge()
         self.traces = []
         self.trace_active = False
+        self.asuivre = [(randint(100, self.largeur - 100), randint(100, self.hauteur - 100))]  # Position initiale aléatoire
+        self.direction_cible = uniform(0, 360)  # Angle initial aléatoire en degrés
+        self.speed_target = 500  # Vitesse de la cible en pixels/s
+        self.asuivre_act = False
 
     def segments_intersect(self, seg1, seg2):
         """
@@ -206,3 +211,31 @@ class Environnement:
     def basculer_tracage(self):
         """Active ou désactive le traçage."""
         self.trace_active = not self.trace_active  # Bascule entre True et False
+
+    def bouger_cible(self):
+        """Déplace la cible aléatoirement en changeant de direction parfois."""
+        if not self.asuivre:
+            return
+        dt = self.temps.get_temps_ecoule()
+        x, y = self.asuivre[0]
+
+        # Changer la direction de la cible de manière aléatoire (avec faible probabilité)
+        if random() < 0.02:  # 2% de chance par frame de changer de direction
+            self.direction_cible += uniform(-45, 45)  # Variation aléatoire entre -45° et 45°
+
+        # Convertir l'angle en mouvement (vx, vy)
+        vx = self.speed_target * m.cos(m.radians(self.direction_cible)) * dt
+        vy = self.speed_target * m.sin(m.radians(self.direction_cible)) * dt
+
+        # Mise à jour de la position
+        x += vx
+        y += vy
+
+        # Vérifier les bords et rebondir
+        if x <= 50 or x >= self.largeur - 50:
+            self.direction_cible = 180 - self.direction_cible  # Inversion horizontale
+        if y <= 50 or y >= self.hauteur - 50:
+            self.direction_cible = -self.direction_cible  # Inversion verticale
+
+        # Mise à jour de la position de la cible
+        self.asuivre[0] = (x, y)

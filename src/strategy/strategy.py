@@ -144,3 +144,78 @@ class DoucementStrategy(StrategyAsync):
         return False
 
 
+class SuivreObjetStrategy(StrategyAsync):
+    def __init__(self):
+        self.target = None
+        self.current_strategy = None  # Stratégie en cours (tourner ou avancer)
+
+    def start(self, vehicule):
+        # On ne stocke plus une position statique, mais on mettra à jour dynamiquement
+        if vehicule.environnement.asuivre:
+            self.target = vehicule.environnement.asuivre  # Référence directe à la liste
+        else:
+            self.target = None
+        self.current_strategy = None
+
+    def step(self, vehicule):
+        dt = vehicule.environnement.temps.get_temps_ecoule()
+
+        # Vérification si un obstacle est proche
+        obstacle_d = 50  # Distance seuil en pixels
+        if vehicule.get_distance() < obstacle_d:
+            # Activer une stratégie d'évitement
+            avoidance_angle = 30  # Tourner de 30° pour éviter l'obstacle
+            if self.current_strategy is None or not isinstance(self.current_strategy, TournerAngleStrategy):
+                self.current_strategy = TournerAngleStrategy(avoidance_angle)
+                self.current_strategy.start(vehicule)
+            else:
+                self.current_strategy.step(vehicule)
+                if self.current_strategy.stop(vehicule):
+                    self.current_strategy = None
+            return  # Sortir du step() pour cette itération
+
+        # Mise à jour dynamique de la position de la cible
+        if not self.target or not self.target[0]:
+            return  # Si la cible n'existe pas ou a été supprimée
+
+        # Prendre la position actuelle de la cible
+        tx, ty = self.target[0]  
+
+        # Calcul de l'angle entre le véhicule et la cible
+        vx, vy = vehicule.p_centre
+        angle_target = m.degrees(m.atan2(ty - vy, tx - vx))
+        angle_diff = (angle_target - vehicule.angle + 180) % 360 - 180
+
+        # Vérifier si l'angle est aligné avec la cible
+        if abs(angle_diff) > 5:
+            if self.current_strategy is None or not isinstance(self.current_strategy, TournerAngleStrategy):
+                self.current_strategy = TournerAngleStrategy(angle_diff)
+                self.current_strategy.start(vehicule)
+            else:
+                self.current_strategy.step(vehicule)
+                if self.current_strategy.stop(vehicule):
+                    self.current_strategy = None
+        else:
+            # Une fois aligné, avancer vers la cible
+            distance = m.sqrt((tx - vx)**2 + (ty - vy)**2)
+            if self.current_strategy is None or not isinstance(self.current_strategy, AvancerDroitStrategy):
+                self.current_strategy = AvancerDroitStrategy(distance)
+                self.current_strategy.start(vehicule)
+            else:
+                self.current_strategy.step(vehicule)
+                if self.current_strategy.stop(vehicule):
+                    self.current_strategy = None
+
+    def stop(self, vehicule):
+        # Arrêter la stratégie si la cible est atteinte
+        if not self.target or not self.target[0]:
+            return True
+        vx, vy = vehicule.p_centre
+        tx, ty = self.target[0]
+        distance = m.sqrt((tx - vx)**2 + (ty - vy)**2)
+        if distance < 20: # Seuil ajustable
+            vehicule.vit_Rg = 0
+            vehicule.vit_Rd= 0
+            vehicule.environnement.asuivre_act = False
+            return True  
+        return distance < 20
