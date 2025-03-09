@@ -1,5 +1,5 @@
 import pygame
-
+import time
 import sys
 from ..strategy import *
 
@@ -7,29 +7,10 @@ class AdaptateurVS:
     def __init__(self, vehicule):
         self.vehicule = vehicule
         self.sequence = None
-        
-    def gerer_mouvements(self,mouv):
-        if isinstance(mouv,tuple):
-            self.vehicule.set_vrg(mouv[0])
-            self.vehicule.set_vrd(mouv[1])
+        self.last_t_press = 0  # Temps du dernier appui sur "T"
+        self.debounce_delay = 0.5  # Délai minimal en secondes (0.5s ici)
 
-
-        if isinstance(mouv,str):
-            if mouv == "rest":
-                self.vehicule.environnement.restart()
-
-            if mouv == "carr":
-                # Créer une séquence de stratégies et la démarrer
-                self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
-                self.sequence.start(self.vehicule)
-
-
-            if mouv == "acc":
-                # Créer une séquence de stratégies et la démarrer
-                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
-                self.sequence.start(self.vehicule)
-
-    """def gerer_evenements(self):
+    def gerer_evenements(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -77,18 +58,4 @@ class AdaptateurVS:
             self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
             self.sequence.start(self.vehicule)
             print("                                                            ", end = "\r")
-            print("Stratégie séquentielle activée")"
-        """
-        
-
-    def gerer_affichage(self):
-        #attente = True
-        #while attente:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                #if event.type == pygame.KEYDOWN:  # Une touche a été pressée
-                #    attente = False  # On sort de la boucle et commence la simulation
-
-    
+            print("Stratégie séquentielle activée")

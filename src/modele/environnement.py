@@ -14,6 +14,8 @@ class Environnement:
         #self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
         self.objects = [] #pour pas avoir d'obstacle
         self.temps = Horloge()
+        self.traces = []
+        self.trace_active = False
 
     def segments_intersect(self, seg1, seg2):
         """
@@ -191,3 +193,16 @@ class Environnement:
         self.vehicule.angle = 0
         self.vehicule.vit_Rd=0
         self.vehicule.vit_Rg=0
+
+    def tracer_ligne(self):
+        """Ajoute la position actuelle du véhicule à la liste des traces."""
+        if self.trace_active:
+            self.traces.append(tuple(self.vehicule.p_centre))
+
+    def effacer_ligne(self):
+        """Efface toutes les traces du véhicule."""
+        self.traces = []
+
+    def basculer_tracage(self):
+        """Active ou désactive le traçage."""
+        self.trace_active = not self.trace_active  # Bascule entre True et False

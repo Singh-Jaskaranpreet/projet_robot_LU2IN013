@@ -30,10 +30,10 @@ class Affichage:
 
             # Afficher le véhicule sous forme de triangle
             points_triangle = environnement.vehicule.position_des_roues(environnement.vehicule.p_centre)
-            pygame.draw.polygon(self.screen, self.couleurs[2], points_triangle)
+            pygame.draw.polygon(self.screen, self.couleurs[3], points_triangle)
 
             # Dessiner la roue arrière
-            pygame.draw.circle(self.screen, self.couleurs[3], (int(points_triangle[0][0]), int(points_triangle[0][1])), 3)
+            pygame.draw.circle(self.screen, self.couleurs[1], (int(points_triangle[0][0]), int(points_triangle[0][1])), 3)
 
             # Dessiner les roues avant (ovales) 
             largeur_roue = 10  # Largeur de l'ellipse
@@ -46,7 +46,7 @@ class Affichage:
                 # Appliquer l'orientation globale (vehicule.angle) + l'angle des roues (vehicule.angle_braquage)
                 rotation_totale = environnement.vehicule.angle
                 surface_roue = pygame.Surface((largeur_roue, hauteur_roue), pygame.SRCALPHA)
-                pygame.draw.ellipse(surface_roue, self.couleurs[3], (0, 0, largeur_roue, hauteur_roue))
+                pygame.draw.ellipse(surface_roue, self.couleurs[1], (0, 0, largeur_roue, hauteur_roue))
 
                 # Appliquer la rotation
                 surface_roue = pygame.transform.rotate(surface_roue, -rotation_totale)
@@ -56,6 +56,14 @@ class Affichage:
             # Afficher les objets (obstacles)
             for obj in objects:
                 pygame.draw.polygon(self.screen, self.couleurs[1], obj)
+
+            # Si le traçage est activé, on ajoute un point à la trace
+            if environnement.trace_active:
+                environnement.tracer_ligne()
+            
+            # Dessiner la ligne seulement s'il y a au moins deux points
+            if len(environnement.traces) > 1:
+                pygame.draw.lines(self.screen, (200, 0, 200), False, environnement.traces, 2)
 
 
             # Afficher la vitesse du véhicule à l'écran

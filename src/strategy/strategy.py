@@ -31,7 +31,7 @@ class AvancerDroitStrategy(StrategyAsync):
         
         # Mettre à jour la distance parcourue
         self.parcouru += abs(round(0.003*(abs((abs(vehicule.vit_Rd)+abs(vehicule.vit_Rg))/2)),3) * current_time)
-        print(self.parcouru)
+        #print(self.parcouru)
 
     def stop(self, vehicule):
         return self.parcouru >= self.distance
