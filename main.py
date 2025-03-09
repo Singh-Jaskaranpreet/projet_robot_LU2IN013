@@ -15,18 +15,17 @@ adapVF = AdaptateurVF()
 controleur = Controleur(adapVS,adapVF)
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
-k = int(input("Votre choix :"))
 
 # Démarrer l'horloge du véhicule une seule fois
 environnement.temps.demarrer()
-while k >= 3:
-        if k==3:
-            print("pas implémenter, veuillez choisir autre chose")
-        else:
-            print("la commande n'est pas reconue veuillez choiisr un nombre entre 1, 2 et 3")
-        k=0
-        print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
-        k = int(input("Votre choix :"))
+while True:
+    try:
+        k = int(input("Votre choix : "))
+        if k in [1, 2]:
+            break
+        print("Mode non implémenté, veuillez choisir 1 ou 2.")
+    except ValueError:
+        print("Entrée invalide, veuillez saisir un nombre.")
 
 if k==1 :
         # Initialiser last_print avant la boucle
