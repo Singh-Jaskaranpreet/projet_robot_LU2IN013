@@ -11,7 +11,7 @@ import threading
 #temps Création de l'environnement et d'un véhicule et des adaptateurs
 environnement = Environnement()
 adapVS = AdaptateurVS(environnement.vehicule)
-adapVF = AdaptateurVF()
+adapVF = AdaptateurVF(environnement.vehicule)
 controleur = Controleur(adapVS,adapVF)
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
