@@ -8,8 +8,28 @@ class AdaptateurVS:
         self.vehicule = vehicule
         self.sequence = None
         
+    def gerer_mouvements(self,mouv):
+        if isinstance(mouv,tuple):
+            self.vehicule.set_vrg(mouv[0])
+            self.vehicule.set_vrd(mouv[1])
 
-    def gerer_evenements(self):
+
+        if isinstance(mouv,str):
+            if mouv == "rest":
+                self.vehicule.environnement.restart()
+
+            if mouv == "carr":
+                # Créer une séquence de stratégies et la démarrer
+                self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
+                self.sequence.start(self.vehicule)
+
+
+            if mouv == "acc":
+                # Créer une séquence de stratégies et la démarrer
+                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
+                self.sequence.start(self.vehicule)
+
+    """def gerer_evenements(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -57,27 +77,18 @@ class AdaptateurVS:
             self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
             self.sequence.start(self.vehicule)
             print("                                                            ", end = "\r")
-            print("Stratégie séquentielle activée")
+            print("Stratégie séquentielle activée")"
+        """
+        
 
     def gerer_affichage(self):
-        attente = True
-        while attente:
+        #attente = True
+        #while attente:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.KEYDOWN:  # Une touche a été pressée
-                    attente = False  # On sort de la boucle et commence la simulation
+                #if event.type == pygame.KEYDOWN:  # Une touche a été pressée
+                #    attente = False  # On sort de la boucle et commence la simulation
 
-    def executer_strategie(self):
-        if self.sequence:  # Si une séquence est définie
-            if self.vehicule.environnement.collision():  # Vérifier s'il y a une collision
-                print("                                                            ", end = "\r")
-                print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
-                self.sequence = None  # Arrêter la stratégie
-                self.vehicule.vit_Rd = 0
-                self.vehicule.vit_Rg = 0
-            elif not self.sequence.stop(self.vehicule):  # Si la séquence n'est pas terminée
-                self.sequence.step(self.vehicule)  # Passer à l'étape suivante
-            else:  # Si la séquence est terminée
-                self.sequence = None  # Réinitialiser la séquence
+    

@@ -92,5 +92,5 @@ class Affichage:
             self.screen.blit(text, (self.largeur // 4, y_offset))  # Affiche chaque ligne de texte
             y_offset += 100  # Espacement entre les lignes
         
-        pygame.display.flip()  # Met à jour l'écran
+        pygame.display.flip()  # Met à jour l'écran"""
     

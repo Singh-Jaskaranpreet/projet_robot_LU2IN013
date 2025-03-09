@@ -50,7 +50,7 @@ class VehiculeF:
             print("Initialisation de l'imu")
         except Exception as e:
             print("IMU sensor not found",e)
-        self._gpg.set_motor_limits(self._gpg.MOTOR_LEFT+self._gpg.MOTOR_RIGHT,0)
+        #self._gpg.set_motor_limits(self._gpg.MOTOR_LEFT+self._gpg.MOTOR_RIGHT,0)
         self._recording = False
         self._thread = None
         self.start_recording()
@@ -112,7 +112,7 @@ class VehiculeF:
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
-        print("La distance renvoier par le capteur")
+        print("La distance renvoyée par le capteur")
 
     def servo_rotate(self,position):
         """
