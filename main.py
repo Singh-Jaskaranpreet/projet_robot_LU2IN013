@@ -3,7 +3,7 @@ from src.affichage import Affichage
 from src.controleur import Controleur
 from src.vehiculeF import VehiculeF
 from src.adaptateurs import AdaptateurVF,AdaptateurVS
-import src.controleur.lcm as lcm
+import src.controleur.controleur as controleur
 import time
 import random as r
 import threading
@@ -34,21 +34,24 @@ if k==1 :
         last_print = time.time()
 
         # Lancer la lecture des commandes dans un thread séparé
-        threading.Thread(target=lcm.lire_commandes, args=(environnement,), daemon=True).start()
+        threading.Thread(target=controleur.lire_commandes, daemon=True).start()
 
 if k==2:
         affichage = Affichage(1200,800)
 
         # Affiche l'écran d'instructions avant de commencer
-        affichage.afficher_instructions()
+        #affichage.afficher_instructions()
         # Attendre que l'utilisateur appuie sur une touche pour commencer
         #controleur.gerer_affichage()
+        controleur.choix = False
+        threading.Thread(target=controleur.lire_commandes, daemon=True).start()
+
      
 x=0
 while True :
     if k==1 :
         # Exécuter la stratégie en cours (si applicable)
-        controleur.adapVS.executer_strategie()
+        controleur.executer_strategie()
 
         # Mettre à jour la simulation
         environnement.bouger()
@@ -58,7 +61,7 @@ while True :
         # seulement si l'utilisateur n'est pas en train de taper une commande
         if  time.time() - last_print > 2:
             last_print = time.time()
-            lcm.info(environnement)
+            
 
 
     if k==2:
@@ -68,7 +71,7 @@ while True :
             x=0
         x+=1
         environnement.temps.set_time_scale(1)
-        controleur.adapVS.executer_strategie()
+        controleur.executer_strategie()
         # Gestion des contrôles par l'utilisateur
         controleur.adapVS.gerer_evenements()
 
