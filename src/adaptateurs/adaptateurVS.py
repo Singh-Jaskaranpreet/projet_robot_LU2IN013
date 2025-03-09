@@ -89,12 +89,19 @@ class AdaptateurVS:
                 now = time.time()
                 if now - self.last_t_press >= self.debounce_delay:
                     self.vehicule.environnement.basculer_tracage()
+                    print("                                                            ", end = "\r")
                     print("Tracé activé" if self.vehicule.environnement.trace_active else "Tracé désactivé")
                     self.last_t_press = now
 
         if keys[pygame.K_y]:
             self.vehicule.environnement.effacer_ligne()
+            print("                                                            ", end = "\r")
             print("Ligne effacée.")
+
+        if keys[pygame.K_b]:
+            self.vehicule.environnement.asuivre_act = True
+            self.sequence = StrategieSequence([SuivreObjetStrategy()])
+            self.sequence.start(self.vehicule)
 
     def gerer_affichage(self):
         attente = True
@@ -113,15 +120,3 @@ class AdaptateurVS:
     def get_distance(self):
         return self.vehicule.infrarouge.mesurer_distance_obstacle(self.vehicule)
     
-    """def executer_strategie(self):
-        if self.sequence:  # Si une séquence est définie
-            if self.vehicule.environnement.collision():  # Vérifier s'il y a une collision
-                print("                                                            ", end = "\r")
-                print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
-                self.sequence = None  # Arrêter la stratégie
-                self.vehicule.vit_Rd = 0
-                self.vehicule.vit_Rg = 0
-            elif not self.sequence.stop(self.vehicule):  # Si la séquence n'est pas terminée
-                self.sequence.step(self.vehicule)  # Passer à l'étape suivante
-            else:  # Si la séquence est terminée
-                self.sequence = None  # Réinitialiser la séquence"""
