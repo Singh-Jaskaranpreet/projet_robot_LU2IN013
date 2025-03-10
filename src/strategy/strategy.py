@@ -1,4 +1,5 @@
 import math as m
+from src.vehiculeF.config import *
 
 
 class StrategyAsync:
@@ -21,8 +22,7 @@ class AvancerDroitStrategy(StrategyAsync):
         
 
     def step(self, vehicule):
-        vehicule.set_vrd(50)
-        vehicule.set_vrg(50)
+        vehicule.set_motor_dps(3,360)
         
         # Calculer le temps écoulé depuis la dernière itération
         current_time = vehicule.environnement.temps.get_temps_ecoule()
@@ -30,7 +30,7 @@ class AvancerDroitStrategy(StrategyAsync):
         
         
         # Mettre à jour la distance parcourue
-        self.parcouru += abs(round(0.003*(abs((abs(vehicule.vit_Rd)+abs(vehicule.vit_Rg))/2)),3) * current_time)
+        self.parcouru += abs(round(0.003*(abs((abs(vehicule.get_motor_position()[0])+abs(vehicule.get_motor_position()[1]))/2)),3) * current_time)
         #print(self.parcouru)
 
     def stop(self, vehicule):

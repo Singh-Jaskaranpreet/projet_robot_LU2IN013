@@ -76,12 +76,9 @@ class VehiculeF:
         :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
         :dps: la vitesse cible en nombre de degres par seconde
         """
-        if port == "gauche":
-            print(f"On donne une vitesse de {dps} à la roue gauche")
-        if port == "droite":
-            print(f"On donne une vitesse de {dps} à la roue gauche")
-        if port =="gauche_droite":
-            print(f"On donne une vitesse de {dps} à la roue gauche et à la roue droite")
+        
+        print(f"On donne une vitesse de {dps} à la roue ({port})")
+   
 
     def get_motor_position(self):
         """
@@ -89,6 +86,7 @@ class VehiculeF:
         :return: couple du  degre de rotation des moteurs
         """
         print("On retourne l'etat des moteurs ")
+        return (50,50)
    
     def offset_motor_encoder(self, port, offset):
         """

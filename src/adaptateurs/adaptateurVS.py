@@ -112,3 +112,7 @@ class AdaptateurVS:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:  # Une touche a été pressée
                     attente = False  # On sort de la boucle et commence la simulation
+
+    
+    def distance_parcouru(self):
+        pass
