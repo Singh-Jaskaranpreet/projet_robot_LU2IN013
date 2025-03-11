@@ -18,13 +18,6 @@ class Vehicule:
         self.environnement = environnement
         self.infrarouge = Infrarouge()
     
-    def accelerer(self, val):
-        """
-        Augmente la vitesse des deux roues du vehicule.
-        :param val: La vitesse augmente de val
-        """
-        self.vit_Rg = max(0, min(150, self.vit_Rg+val))
-        self.vit_Rd = max(0, min(150, self.vit_Rd+val))
     
     def freiner(self, val):
         if self.vit_Rg > 0:
