@@ -42,7 +42,7 @@ class Controleur:
                 if cmd.startswith("accelerer"):
                     try:
                         val = int(cmd.split()[1])
-                        self.adapVS.vehicule.set_vrg(self.adapVS.vehicule + val)
+                        self.adapVS.vehicule.set_vrg(self.adapVS.vehicule.vit_Rg + val)
                         self.adapVS.vehicule.set_vrd(self.adapVS.vehicule.vit_Rd + val)
                         print(f"[COMMANDE] accelerer de {val}")
                         #bug actuellement à corriger
