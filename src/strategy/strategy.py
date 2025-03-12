@@ -21,15 +21,11 @@ class AvancerDroitStrategy(StrategyAsync):
         
 
     def step(self, vehicule):
-        vehicule.gerer_mouvements((self.vitesse,self.vitesse))
+        vehicule.avancer(self.vitesse)
         
         # Calculer le temps écoulé depuis la dernière itération
-        if isinstance(vehicule,AdaptateurVS):
-            current_time = vehicule.vehicule.environnement.temps.get_temps_ecoule()
-        else :
-            current_time = 0
+        current_time = vehicule.get_temps(self.vitesse)
        
-        
         # Mettre à jour la distance parcourue
         self.parcouru += vehicule.distance_parcouru(self.vitesse,current_time)
         #print(self.parcouru)
@@ -52,17 +48,14 @@ class TournerAngleStrategy(StrategyAsync):
         
         if self.angle_cible > 0:
             # Virage à gauche
-            vehicule.gerer_mouvements((0,self.vitesse_rotation))
+            vehicule.v_roue_droite(self.vitesse_rotation)
             omega = self.vitesse_rotation /  vehicule.get_essieux()
         else:
             # Virage à droite
-            vehicule.gerer_mouvements((self.vitesse_rotation,0))
+            vehicule.v_roue_gauche(self.vitesse_rotation)
             omega = -self.vitesse_rotation /  vehicule.get_essieux()
 
-        if isinstance(vehicule,AdaptateurVS):
-            dt = vehicule.vehicule.environnement.temps.get_temps_ecoule()
-        else :
-            dt = vehicule.distance_parcouru(self.vitesse_rotation,0) / self.vitesse_rotation
+        dt = vehicule.get_temps(self.vitesse_rotation)
 
         # On prend la valeur absolue pour éviter les erreurs de direction
         angle_cible_abs = abs(self.angle_cible)
@@ -74,7 +67,7 @@ class TournerAngleStrategy(StrategyAsync):
     def stop(self, vehicule):
         # Arrêter le virage lorsque l'angle accumulé atteint l'angle cible
         if self.angle_parcouru >= abs(self.angle_cible) -1:
-            vehicule.gerer_mouvements((0,0))
+            vehicule.arreter()
             return True
         return False
     
@@ -110,7 +103,7 @@ class AccelererStrategy(StrategyAsync):
     
     def step(self, vehicule):
 
-        vehicule.gerer_mouvements((self.vitesse_max,self.vitesse_max))
+        vehicule.avancer(self.vitesse_max)
         self.distance_obstacle = vehicule.get_distance()
 
     def stop(self,vehicule):
@@ -125,13 +118,13 @@ class DoucementStrategy(StrategyAsync):
     
     def step(self, vehicule):
         
-        vehicule.gerer_mouvements((self.vitesse_min,self.vitesse_min))
+        vehicule.avancer(self.vitesse_min)
 
         self.distance_obstacle = vehicule.get_distance()
 
     def stop(self, vehicule):
         if self.distance_obstacle < 50  :
-            vehicule.gerer_mouvements((0,0))
+            vehicule.arreter()
             return True
         return False
 
