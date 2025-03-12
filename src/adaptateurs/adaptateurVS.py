@@ -12,29 +12,6 @@ class AdaptateurVS:
         self.last_t_press = 0  # Temps du dernier appui sur "T"
         self.debounce_delay = 0.5  # Délai minimal en secondes (0.5s ici)
 
-    def gerer_mouvements(self,mouv):
-        if isinstance(mouv,tuple):
-            #on convertit les degres par seconde en m/s
-            mouv = (math.radians(mouv[0])*(WHEEL_DIAMETER/2),math.radians(mouv[1])*(WHEEL_DIAMETER/2))
-            self.vehicule.set_vrg(mouv[0])
-            self.vehicule.set_vrd(mouv[1])
-
-
-        if isinstance(mouv,str):
-            if mouv == "rest":
-                self.vehicule.environnement.restart()
-
-            if mouv == "carr":
-                # Créer une séquence de stratégies et la démarrer
-                self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
-                self.sequence.start(self.vehicule)
-
-
-            if mouv == "acc":
-                # Créer une séquence de stratégies et la démarrer
-                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
-                self.sequence.start(self.vehicule)
-
     def gerer_evenements(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
