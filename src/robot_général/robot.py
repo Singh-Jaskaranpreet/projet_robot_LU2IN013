@@ -23,3 +23,6 @@ class Robot:
     def get_temps():
         pass
 
+    def get_essieux():
+        pass
+

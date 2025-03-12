@@ -28,3 +28,6 @@ class AdaptateurRR(Robot):
 
     def get_temps(vitesse):
         return distance_parcouru(vitesse,0) / vitesse
+
+    def get_essieux():
+        return vehicule.WHEEL_BASE_WIDTH

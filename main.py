@@ -1,9 +1,6 @@
-from src.modele import Environnement
-from src.affichage import Affichage
-from src.controleur import Controleur
-from src.vehiculeF import VehiculeF
-from src.adaptateurs import AdaptateurVF,AdaptateurVS
-import src.controleur.controleur as controleur
+from src.robot_réel import VehiculeF
+from src.robot_simulé import *
+from src.adaptateurs import AdaptateurRR,AdaptateurRS
 import time
 import random as r
 import threading

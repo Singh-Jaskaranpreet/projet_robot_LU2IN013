@@ -112,4 +112,7 @@ class AdaptateurRS(Robot):
 
     def get_temps(vitesse):
         return vehicule.environnement.temps.get_temps_ecoule()
+
+    def get_essieux():
+        return vehicule.essieux
     

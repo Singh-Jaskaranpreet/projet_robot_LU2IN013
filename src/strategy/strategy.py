@@ -1,5 +1,4 @@
 import math as m
-from src.vehiculeF.config import WHEEL_BASE_WIDTH
 
 class StrategyAsync:
     def start(self, vehicule):
@@ -54,11 +53,11 @@ class TournerAngleStrategy(StrategyAsync):
         if self.angle_cible > 0:
             # Virage à gauche
             vehicule.gerer_mouvements((0,self.vitesse_rotation))
-            omega = self.vitesse_rotation /  WHEEL_BASE_WIDTH 
+            omega = self.vitesse_rotation /  vehicule.get_essieux()
         else:
             # Virage à droite
             vehicule.gerer_mouvements((self.vitesse_rotation,0))
-            omega = -self.vitesse_rotation /  WHEEL_BASE_WIDTH
+            omega = -self.vitesse_rotation /  vehicule.get_essieux()
 
         if isinstance(vehicule,AdaptateurVS):
             dt = vehicule.vehicule.environnement.temps.get_temps_ecoule()
