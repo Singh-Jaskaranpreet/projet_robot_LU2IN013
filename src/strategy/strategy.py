@@ -1,6 +1,5 @@
 import math as m
-from ..adaptateurs import *
-from src.vehiculeF.config import *
+from src.vehiculeF.config import WHEEL_BASE_WIDTH
 
 class StrategyAsync:
     def start(self, vehicule):

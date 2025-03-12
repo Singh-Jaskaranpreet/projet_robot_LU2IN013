@@ -14,13 +14,6 @@ class Horloge:
         self.running = True
         threading.Thread(target=self._afficher_temps, daemon=True).start()
 
-    def _afficher_temps(self):
-        """Affiche le temps écoulé en temps réel."""
-        while self.running:
-            elapsed_time = (time.time() - self.start_time)*self.time_scale
-            formatted_time = timedelta(seconds=elapsed_time)
-            time.sleep(1)
-
     def arreter(self):
         """Arrête l'horloge et retourne le temps total écoulé."""
         self.running = False
