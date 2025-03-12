@@ -13,7 +13,8 @@ class Environnement:
         self.hauteur = 800
         self.vehicule = Vehicule("Robot",[200, 400] , 50, 40,self)
         #self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
-        self.objects = [] #pour pas avoir d'obstacle
+        #self.objects = [((600, 400), 30)] #pour pas avoir d'obstacle
+        self.objects = []
         self.temps = Horloge()
         self.traces = []
         self.trace_active = False
@@ -92,9 +93,15 @@ class Environnement:
                         point_collision.add(indice)
                         break
                 indice = indice + 1
+                if len(obj)==2:
+                    vx, vy = obj[0]
+                    rayon = obj[1]
+                    distance = (m.sqrt((point[0] - vx) ** 2 + (point[1] - vy) ** 2))-rayon*2
+                    if distance <= rayon:
+                        return True
+                    else: return False
             if len(point_collision) > 0 :
                 break 
-
             #On prend chaque coté du vehicule
             cote = [(points_triangle[0], points_triangle[1]),(points_triangle[1], points_triangle[2]),(points_triangle[2], points_triangle[0])]
                    
@@ -159,6 +166,8 @@ class Environnement:
         """
         self.objects.append(objet)
 
+    def add_r(self, obj, r):
+        self.objects.append(((obj), r))
 
     def bouger(self):
         """Déplace le véhicule selon le modèle cinématique différentiel pendant un pas de temps."""

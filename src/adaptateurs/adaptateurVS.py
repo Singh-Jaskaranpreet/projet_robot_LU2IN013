@@ -78,6 +78,12 @@ class AdaptateurVS:
         #    print("                                                            ", end = "\r")
         #    print("Stratégie séquentielle activée")
 
+
+        if keys[pygame.K_p]:  # Définir une séquence de stratégies
+            # Créer une séquence de stratégies et la démarrer
+            self.sequence = StrategieSequence([TournerAngleStrategy(360), TournerAngleStrategy(-360), AvancerDroitStrategy(0.12)])
+            self.sequence.start(self.vehicule)
+
         if keys[pygame.K_m]:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
@@ -95,6 +101,11 @@ class AdaptateurVS:
         if keys[pygame.K_y]:
             self.vehicule.environnement.effacer_ligne()
             print("Ligne effacée.")
+
+        if keys[pygame.K_b]:
+            self.vehicule.environnement.asuivre_act = True
+            self.sequence = StrategieSequence([SuivreObjetStrategy()])
+            self.sequence.start(self.vehicule)
 
     def gerer_affichage(self):
         attente = True

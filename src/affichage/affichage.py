@@ -55,8 +55,17 @@ class Affichage:
 
             # Afficher les objets (obstacles)
             for obj in objects:
-                pygame.draw.polygon(self.screen, self.couleurs[1], obj)
+                if len(obj) == 4:
+                    pygame.draw.polygon(self.screen, self.couleurs[1], obj)
+                if len (obj) == 2:
+                    objt = obj[0]
+                    r = obj[1]
+                    pygame.draw.circle(self.screen, (160, 90, 220), objt, r)
 
+            if environnement.asuivre_act :
+                environnement.bouger_cible()
+                pygame.draw.circle(self.screen, (255, 0, 255), environnement.asuivre[0], 10)
+                
             # Si le traçage est activé, on ajoute un point à la trace
             if environnement.trace_active:
                 environnement.tracer_ligne()
@@ -65,9 +74,6 @@ class Affichage:
             if len(environnement.traces) > 1:
                 pygame.draw.lines(self.screen, (200, 0, 200), False, environnement.traces, 2)
 
-            if environnement.asuivre_act :
-                environnement.bouger_cible()  # Déplacer la cible aléatoirement
-                pygame.draw.circle(self.screen, self.couleurs[1], (environnement.asuivre[0][0], environnement.asuivre[0][1]), 10)
 
             # Afficher la vitesse du véhicule à l'écran
             font = pygame.font.SysFont(None, 36)

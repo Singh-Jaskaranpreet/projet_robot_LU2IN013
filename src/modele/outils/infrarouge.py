@@ -31,9 +31,11 @@ class Infrarouge():
                         return d  # Distance au premier obstacle détecté
                 # 🔵 Cas 2 : L'obstacle est un objet avec `x`, `y` et un `rayon` (cercle)
                 elif len(obj) == 2:
+                    objt = obj[0]
+                    r = obj[1]
                     #print(f"obstacle circulaire de coordonée : {obj}", end = "\r")
-                    distance_objet = m.sqrt((point_x - obj[0][0]) ** 2 + (point_y - obj[0][1]) ** 2)
-                    if distance_objet <= obj[1]:
+                    distance_objet = m.sqrt((point_x - objt[0]) ** 2 + (point_y - objt[1]) ** 2)-r
+                    if distance_objet <= r:
                         return d  # Distance au premier obstacle détecté
             if point_x >= vehicule.environnement.largeur or point_y >= vehicule.environnement.hauteur or point_x <= 0 or point_y <= 0 :
                 return d
