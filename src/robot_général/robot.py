@@ -2,27 +2,27 @@ class Robot:
     def __init__(self):
         pass
 
-    def avancer(valeur):
+    def avancer(self,valeur):
         pass
 
-    def arreter():
+    def arreter(self):
         pass
 
-    def v_roue_gauche(valeur):
+    def v_roue_gauche(self,valeur):
         pass
 
-    def v_roue_droite(valeur):
+    def v_roue_droite(self,valeur):
         pass
 
-    def distance_parcouru(vit,temps):
+    def distance_parcouru(self,vit,temps):
         pass
 
-    def get_distance():
+    def get_distance(self):
         pass
 
-    def get_temps():
+    def get_temps(self):
         pass
 
-    def get_essieux():
+    def get_essieux(self):
         pass
 

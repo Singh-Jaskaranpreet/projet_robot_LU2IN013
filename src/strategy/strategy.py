@@ -48,11 +48,13 @@ class TournerAngleStrategy(StrategyAsync):
         
         if self.angle_cible > 0:
             # Virage à gauche
+            vehicule.v_roue_gauche(0)
             vehicule.v_roue_droite(self.vitesse_rotation)
             omega = self.vitesse_rotation /  vehicule.get_essieux()
         else:
             # Virage à droite
             vehicule.v_roue_gauche(self.vitesse_rotation)
+            vehicule.v_roue_droite(0)
             omega = -self.vitesse_rotation /  vehicule.get_essieux()
 
         dt = vehicule.get_temps(self.vitesse_rotation)

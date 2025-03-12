@@ -83,7 +83,7 @@ class Controleur:
                 self.adapVS.sequence = None  # Arrêter la stratégie
                 self.adapVS.vehicule.vit_Rd = 0
                 self.adapVS.vehicule.vit_Rg = 0
-            elif not self.adapVS.sequence.stop(self.adapVS.vehicule):  # Si la séquence n'est pas terminée
-                self.adapVS.sequence.step(self.adapVS.vehicule)  # Passer à l'étape suivante
+            elif not self.adapVS.sequence.stop(self.adapVS):  # Si la séquence n'est pas terminée
+                self.adapVS.sequence.step(self.adapVS)  # Passer à l'étape suivante
             else:  # Si la séquence est terminée
                 self.adapVS.sequence = None  # Réinitialiser la séquence

@@ -90,19 +90,19 @@ class AdaptateurRS(Robot):
                 if event.type == pygame.KEYDOWN:  # Une touche a été pressée
                     attente = False  # On sort de la boucle et commence la simulation
 
-    def avancer(valeur):
-        vehicule.set_vrd(valeur)
-        vehicule.set_vrg(valeur)
+    def avancer(self,valeur):
+        self.vehicule.set_vrd(valeur)
+        self.vehicule.set_vrg(valeur)
 
-    def arreter():
-        vehicule.set_vrd(0)
-        vehicule.set_vrg(0)
+    def arreter(self):
+        self.vehicule.set_vrd(0)
+        self.vehicule.set_vrg(0)
 
-    def v_roue_gauche(valeur):
-        vehicule.set_vrg(valeur)
+    def v_roue_gauche(self,valeur):
+        self.vehicule.set_vrg(valeur)
 
-    def v_roue_droite(valeur):
-        vehicule.set_vrd(valeur)
+    def v_roue_droite(self,valeur):
+        self.vehicule.set_vrd(valeur)
 
     def distance_parcouru(self,vit,temps):
         return abs(round(0.003*(abs((abs(vit)+abs(vit))/2)),3) * temps)
@@ -110,9 +110,9 @@ class AdaptateurRS(Robot):
     def get_distance(self):
         return self.vehicule.infrarouge.mesurer_distance_obstacle(self.vehicule)
 
-    def get_temps(vitesse):
-        return vehicule.environnement.temps.get_temps_ecoule()
+    def get_temps(self,vitesse):
+        return self.vehicule.environnement.temps.get_temps_ecoule()
 
-    def get_essieux():
-        return vehicule.essieux
+    def get_essieux(self):
+        return self.vehicule.essieux
     
