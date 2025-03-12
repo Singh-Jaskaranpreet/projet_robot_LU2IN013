@@ -106,6 +106,10 @@ class AdaptateurVS:
                 if event.type == pygame.KEYDOWN:  # Une touche a été pressée
                     attente = False  # On sort de la boucle et commence la simulation
 
+
+    def distance_parcouru(self,vit,temps):
+        return abs(round(0.003*(abs((abs(vit)+abs(vit))/2)),3) * temps)
+    
     """def executer_strategie(self):
         if self.sequence:  # Si une séquence est définie
             if self.vehicule.environnement.collision():  # Vérifier s'il y a une collision

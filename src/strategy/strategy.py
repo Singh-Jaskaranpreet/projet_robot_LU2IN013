@@ -1,5 +1,6 @@
 import math as m
-
+from ..adaptateurs import *
+from src.vehiculeF.config import *
 
 class StrategyAsync:
     def start(self, vehicule):
@@ -15,22 +16,24 @@ class AvancerDroitStrategy(StrategyAsync):
     def __init__(self, distance):
         self.distance = distance
         self.parcouru = 0
+        self.vitesse = 50
     
     def start(self, vehicule):
         self.parcouru = 0
         
 
     def step(self, vehicule):
-        vehicule.set_vrd(50)
-        vehicule.set_vrg(50)
+        vehicule.gerer_mouvements((self.vitesse,self.vitesse))
         
         # Calculer le temps écoulé depuis la dernière itération
-        current_time = vehicule.environnement.temps.get_temps_ecoule()
+        if isinstance(vehicule,AdaptateurVS):
+            current_time = vehicule.vehicule.environnement.temps.get_temps_ecoule()
+        else :
+            current_time = 0
        
         
-        
         # Mettre à jour la distance parcourue
-        self.parcouru += abs(round(0.003*(abs((abs(vehicule.vit_Rd)+abs(vehicule.vit_Rg))/2)),3) * current_time)
+        self.parcouru += vehicule.distance_parcouru(self.vitesse,current_time)
         #print(self.parcouru)
 
     def stop(self, vehicule):
@@ -48,21 +51,23 @@ class TournerAngleStrategy(StrategyAsync):
         
 
     def step(self, vehicule):
-        dt = vehicule.environnement.temps.get_temps_ecoule()
+        
+        if self.angle_cible > 0:
+            # Virage à gauche
+            vehicule.gerer_mouvements((0,self.vitesse_rotation))
+            omega = self.vitesse_rotation /  WHEEL_BASE_WIDTH 
+        else:
+            # Virage à droite
+            vehicule.gerer_mouvements((self.vitesse_rotation,0))
+            omega = -self.vitesse_rotation /  WHEEL_BASE_WIDTH
+
+        if isinstance(vehicule,AdaptateurVS):
+            dt = vehicule.vehicule.environnement.temps.get_temps_ecoule()
+        else :
+            dt = vehicule.distance_parcouru(self.vitesse_rotation,0) / self.vitesse_rotation
 
         # On prend la valeur absolue pour éviter les erreurs de direction
         angle_cible_abs = abs(self.angle_cible)
-
-        if self.angle_cible > 0:
-            # Virage à gauche
-            vehicule.vit_Rg = 0
-            vehicule.vit_Rd = self.vitesse_rotation
-            omega = self.vitesse_rotation / vehicule.essieux
-        else:
-            # Virage à droite
-            vehicule.vit_Rd = 0
-            vehicule.vit_Rg = self.vitesse_rotation
-            omega = -self.vitesse_rotation / vehicule.essieux
 
         # Calcul de l'incrément d'angle en degrés
         dtheta = m.degrees(omega * dt)
@@ -71,8 +76,7 @@ class TournerAngleStrategy(StrategyAsync):
     def stop(self, vehicule):
         # Arrêter le virage lorsque l'angle accumulé atteint l'angle cible
         if self.angle_parcouru >= abs(self.angle_cible) -1:
-            vehicule.vit_Rg = 0
-            vehicule.vit_Rd = 0
+            vehicule.gerer_mouvements((0,0))
             return True
         return False
     
