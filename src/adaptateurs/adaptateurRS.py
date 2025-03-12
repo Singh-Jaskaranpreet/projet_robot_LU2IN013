@@ -2,7 +2,7 @@ import pygame
 import time
 import sys
 from src.strategy import *
-from src.vehiculeF.config import *
+from src.robot_réel.config import *
 import math
 from src.robot_général import Robot
 class AdaptateurRS(Robot):

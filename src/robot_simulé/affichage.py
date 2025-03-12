@@ -1,5 +1,5 @@
 import pygame
-from ..modele.environnement import Environnement
+from .environnement import Environnement
 #LARGEUR, HAUTEUR = 1200, 800
 
 # Initialisation de Pygame

@@ -12,7 +12,6 @@ class Horloge:
         """Démarre l'horloge."""
         self.start_time = time.time()
         self.running = True
-        threading.Thread(target=self._afficher_temps, daemon=True).start()
 
     def arreter(self):
         """Arrête l'horloge et retourne le temps total écoulé."""

@@ -1,6 +1,7 @@
 from src.robot_réel import VehiculeF
 from src.robot_simulé import *
 from src.adaptateurs import AdaptateurRR,AdaptateurRS
+from src.controleur import Controleur
 import time
 import random as r
 import threading
@@ -9,8 +10,8 @@ import threading
 #temps Création de l'environnement et d'un véhicule et des adaptateurs
 robot = VehiculeF(0, 0, 0)
 environnement = Environnement()
-adapVS = AdaptateurVS(environnement.vehicule)
-adapVF = AdaptateurVF(robot)
+adapVS = AdaptateurRS(environnement.vehicule)
+adapVF = AdaptateurRR(robot)
 controleur = Controleur(adapVS,adapVF)
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
