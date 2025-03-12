@@ -4,8 +4,8 @@ import sys
 from src.strategy import *
 from src.vehiculeF.config import *
 import math
-
-class AdaptateurVS:
+from src.robot_général import Robot
+class AdaptateurRS(Robot):
     def __init__(self, vehicule):
         self.vehicule = vehicule
         self.sequence = None
@@ -90,10 +90,26 @@ class AdaptateurVS:
                 if event.type == pygame.KEYDOWN:  # Une touche a été pressée
                     attente = False  # On sort de la boucle et commence la simulation
 
+    def avancer(valeur):
+        vehicule.set_vrd(valeur)
+        vehicule.set_vrg(valeur)
+
+    def arreter():
+        vehicule.set_vrd(0)
+        vehicule.set_vrg(0)
+
+    def v_roue_gauche(valeur):
+        vehicule.set_vrg(valeur)
+
+    def v_roue_droite(valeur):
+        vehicule.set_vrd(valeur)
 
     def distance_parcouru(self,vit,temps):
         return abs(round(0.003*(abs((abs(vit)+abs(vit))/2)),3) * temps)
     
     def get_distance(self):
         return self.vehicule.infrarouge.mesurer_distance_obstacle(self.vehicule)
+
+    def get_temps(vitesse):
+        return vehicule.environnement.temps.get_temps_ecoule()
     
