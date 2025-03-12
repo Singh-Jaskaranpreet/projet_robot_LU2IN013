@@ -105,45 +105,35 @@ class StrategieSequence(StrategyAsync):
 class AccelererStrategy(StrategyAsync):
     def __init__(self):
         self.distance_obstacle = 0
+        self.vitesse_max = 1000
 
     def start(self, vehicule):
-        self.distance_obstacle = vehicule.infrarouge.mesurer_distance_obstacle(vehicule)
+        self.distance_obstacle = vehicule.get_distance()
     
     def step(self, vehicule):
-        if vehicule.vit_Rg != vehicule.vit_Rd :
-            if vehicule.vit_Rg > vehicule.vit_Rd :
-                vehicule.vit_Rd = vehicule.vit_Rg
-            else :
-                vehicule.vit_Rg = vehicule.vit_Rd
 
-        vehicule.accelerer(30)
-
-        self.distance_obstacle = vehicule.infrarouge.mesurer_distance_obstacle(vehicule)
+        vehicule.gerer_mouvements((self.vitesse_max,self.vitesse_max))
+        self.distance_obstacle = vehicule.get_distance()
 
     def stop(self,vehicule):
-        return self.distance_obstacle < 50
+        return self.distance_obstacle < 100
     
 class DoucementStrategy(StrategyAsync):
-    def __init__(self, vehicule):
-        self.vitesse = 20
-        self.angle = vehicule.angle % 90
+    def __init__(self):
+        self.vitesse_min = 20
 
     def start(self, vehicule):
-        self.distance_obstacle = vehicule.infrarouge.mesurer_distance_obstacle(vehicule)
-        if self.angle != 45 :
-            self.angle = self.angle % 45
+        self.distance_obstacle = vehicule.get_distance()
     
     def step(self, vehicule):
         
-        if vehicule.vit_Rg > 29 :
-            vehicule.freiner(20)
+        vehicule.gerer_mouvements((self.vitesse_min,self.vitesse_min))
 
-        self.distance_obstacle = vehicule.infrarouge.mesurer_distance_obstacle(vehicule)
+        self.distance_obstacle = vehicule.get_distance()
 
     def stop(self, vehicule):
-        if self.distance_obstacle < 20 + self.angle // 2  :
-            vehicule.vit_Rg = 0
-            vehicule.vit_Rd= 0
+        if self.distance_obstacle < 50  :
+            vehicule.gerer_mouvements((0,0))
             return True
         return False
 

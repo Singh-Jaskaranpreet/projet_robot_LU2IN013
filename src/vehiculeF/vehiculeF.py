@@ -114,6 +114,7 @@ class VehiculeF:
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
         print("La distance renvoyée par le capteur")
+        return 1000
 
     def servo_rotate(self,position):
         """

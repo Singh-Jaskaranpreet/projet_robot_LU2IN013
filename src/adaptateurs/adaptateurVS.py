@@ -32,7 +32,7 @@ class AdaptateurVS:
 
             if mouv == "acc":
                 # Créer une séquence de stratégies et la démarrer
-                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
+                self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
                 self.sequence.start(self.vehicule)
 
     def gerer_evenements(self):
@@ -80,7 +80,7 @@ class AdaptateurVS:
 
         if keys[pygame.K_m]:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
-            self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy(self.vehicule)])
+            self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
             self.sequence.start(self.vehicule)
             print("                                                            ", end = "\r")
             print("Stratégie séquentielle activée")
@@ -109,6 +109,9 @@ class AdaptateurVS:
 
     def distance_parcouru(self,vit,temps):
         return abs(round(0.003*(abs((abs(vit)+abs(vit))/2)),3) * temps)
+    
+    def get_distance(self):
+        return self.vehicule.infrarouge.mesurer_distance_obstacle(self.vehicule)
     
     """def executer_strategie(self):
         if self.sequence:  # Si une séquence est définie

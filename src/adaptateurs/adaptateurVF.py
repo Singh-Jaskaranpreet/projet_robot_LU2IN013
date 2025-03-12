@@ -39,3 +39,6 @@ class AdaptateurVF:
         distance_droite = ( position[1] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
         self.vehicule.offset_motor_encode(3,self.read_encoders())
         return (distance_droite + distance_gauche) / 2
+    
+    def get_distance(self):
+        return self.vehicule.get_distance() / 1000
