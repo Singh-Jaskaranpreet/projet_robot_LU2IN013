@@ -197,7 +197,7 @@ class SuivreObjetStrategy(StrategyAsync):
         # Arrêter la stratégie si la cible est atteinte
         if not self.target or not self.target[0]:
             return True
-        vx, vy = vehicule.p_centre
+        vx, vy = vehicule.get_centre()
         tx, ty = self.target[0]
         distance = m.sqrt((tx - vx)**2 + (ty - vy)**2)
         if distance < 20: # Seuil ajustable

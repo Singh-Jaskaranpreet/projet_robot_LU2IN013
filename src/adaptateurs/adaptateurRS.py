@@ -80,16 +80,7 @@ class AdaptateurRS(Robot):
             self.sequence = StrategieSequence([SuivreObjetStrategy()])
             self.sequence.start(self.vehicule)
 
-    def gerer_affichage(self):
-        attente = True
-        while attente:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.KEYDOWN:  # Une touche a été pressée
-                    attente = False  # On sort de la boucle et commence la simulation
-
+   
     def avancer(self,valeur):
         self.vehicule.set_vrd(valeur)
         self.vehicule.set_vrg(valeur)
@@ -116,3 +107,5 @@ class AdaptateurRS(Robot):
     def get_essieux(self):
         return self.vehicule.essieux
     
+    def get_centre(self):
+        return self.vehicule.p_centre

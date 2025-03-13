@@ -79,29 +79,5 @@ class Affichage:
             self.screen.blit(vitesse, (10, 770))
             pygame.display.flip() # Met à jour l'écran
 
-    # Fonction pour afficher les instructions
-    def afficher_instructions(self):
-        font = pygame.font.SysFont(None, 36)
-    
-        # Créer le texte des instructions
-        instructions = [
-            "Instructions :",
-            "Flèche haut  : Accélérer et se deplacer suivant la direction",
-            "Flèche bas  : Deccélérer et se deplacer suivant la direction",
-            "Flèche droite  : Tourner a droite",
-            "Flèche gauche  : Tourner a gauche",
-            "Barre d'espace : Arrêter le véhicule",
-            "Touche R : Réinitialiser la position",
-            "Appuyez sur une touche pour commencer"
-        ]
-    
-        self.screen.fill(self.couleurs[0])  # Remplir l'écran en blanc
-        y_offset = 20 # Position de départ pour l'affichage des instructions
-        
-        for line in instructions:
-            text = font.render(line, True, self.couleurs[1])
-            self.screen.blit(text, (self.largeur // 4, y_offset))  # Affiche chaque ligne de texte
-            y_offset += 100  # Espacement entre les lignes
-        
-        pygame.display.flip()  # Met à jour l'écran"""
+   
     
