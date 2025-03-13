@@ -26,3 +26,8 @@ class Robot:
     def get_essieux(self):
         pass
 
+    def get_vitesse_Rg(self):
+        pass
+
+    def get_vitesse_Rd(self):
+        pass

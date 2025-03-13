@@ -1,4 +1,4 @@
-from src.robot_réel import VehiculeF
+from src.robot_réel import VehiculeR
 from src.robot_simulé import *
 from src.adaptateurs import AdaptateurRR,AdaptateurRS
 from src.controleur import Controleur
@@ -8,7 +8,7 @@ import threading
 
 
 #temps Création de l'environnement et d'un véhicule et des adaptateurs
-robot = VehiculeF(0, 0, 0)
+robot = VehiculeR(0, 0, 0)
 environnement = Environnement()
 adapVS = AdaptateurRS(environnement.vehicule)
 adapVF = AdaptateurRR(robot)

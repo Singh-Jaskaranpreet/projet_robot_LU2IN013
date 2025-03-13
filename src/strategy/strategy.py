@@ -99,13 +99,16 @@ class AccelererStrategy(StrategyAsync):
     def __init__(self):
         self.distance_obstacle = 0
         self.vitesse_max = 1000
+        self.vitesse_depart = 10
 
     def start(self, vehicule):
         self.distance_obstacle = vehicule.get_distance()
-    
-    def step(self, vehicule):
 
-        vehicule.avancer(self.vitesse_max)
+    def step(self, vehicule):
+        if 0 < vehicule.get_vitesse_Rg() < self.vitesse_max:
+            vehicule.avancer(vehicule.get_vitesse_Rg()+50)
+        elif vehicule.get_vitesse_Rg() == 0:
+            vehicule.avancer(self.vitesse_depart)
         self.distance_obstacle = vehicule.get_distance()
 
     def stop(self,vehicule):

@@ -2,7 +2,6 @@ import pygame
 import time
 import sys
 from src.strategy import *
-from src.robot_réel.config import *
 import math
 from src.robot_général import Robot
 class AdaptateurRS(Robot):
@@ -109,3 +108,9 @@ class AdaptateurRS(Robot):
     
     def get_centre(self):
         return self.vehicule.p_centre
+
+    def get_vitesse_Rg(self):
+        return self.vehicule.vit_Rg
+
+    def get_vitesse_Rd(self):
+        return self.vehicule.vit_Rd

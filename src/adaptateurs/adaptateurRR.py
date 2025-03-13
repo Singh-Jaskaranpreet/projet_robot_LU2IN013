@@ -3,7 +3,8 @@ from src.robot_général import Robot
 class AdaptateurRR(Robot):
     def __init__(self,vehicule):
         self.vehicule=vehicule
-    
+        self.vitesse_RG = 0
+        self.vitesse_RD = 0
     def avancer(self,valeur):
         self.vehicule.set_motor_dps(3, valeur)
 
@@ -12,9 +13,11 @@ class AdaptateurRR(Robot):
 
     def v_roue_gauche(self,valeur):
         self.vehicule.set_motor_dps(1, valeur)
+        self.vitesse_RG = valeur
 
     def v_roue_droite(self,valeur):
         self.vehicule.set_motor_dps(2, valeur)
+        self.vitesse_RD = valeur
 
     def distance_parcouru(self,vit,temps):
         position = self.vehicule.get_motor_position()
@@ -31,3 +34,9 @@ class AdaptateurRR(Robot):
 
     def get_essieux(self):
         return self.vehicule.WHEEL_BASE_WIDTH
+
+    def get_vitesse_Rg(self):
+        return self.vitesse_RG
+
+    def get_vitesse_Rd(self):
+        return self.vitesse_RD

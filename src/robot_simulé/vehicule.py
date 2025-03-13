@@ -41,14 +41,14 @@ class Vehicule:
         Met la roue droite a une certaine vitesse.
         :param x: La vitesse de la roue droite est x
         """
-        self.vit_Rd = max(-150, min(x, 150))
+        self.vit_Rd = x
 
     def set_vrg(self, x):
         """
         Met la roue gauche a une certaine vitesse.
         :param x: La vitesse de la roue gauche est x
         """
-        self.vit_Rg = max(-150, min(x, 150))
+        self.vit_Rg = x
 
     #Place les trois roues de la voiture
     def position_des_roues(self, point):

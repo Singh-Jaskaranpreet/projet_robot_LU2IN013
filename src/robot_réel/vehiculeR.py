@@ -1,6 +1,6 @@
 import math
 
-class VehiculeF:
+class VehiculeR:
     """ 
     Classe d'encapsulation du robot et des senseurs.
     Constantes disponibles : 
