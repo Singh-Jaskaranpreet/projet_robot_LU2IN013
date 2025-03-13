@@ -13,7 +13,8 @@ class Environnement:
         self.hauteur = 800
         self.vehicule = Vehicule("Robot",[200, 400] , 50, 40,self)
         #self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
-        self.objects = [] #pour pas avoir d'obstacle
+        self.objects = [((400,600),60)] #pour pas avoir d'obstacle
+        #self.objects = [] #pour pas avoir d'obstacle
         self.temps = Horloge()
         self.traces = []
         self.trace_active = False
@@ -91,6 +92,14 @@ class Environnement:
                     if (obj[0][0] <= point[0] <= obj[2][0]) and (obj[0][1] <= point[1] <= obj[2][1]):
                         point_collision.add(indice)
                         break
+                if len(obj) == 2 :
+                    vx, vy = obj[0]
+                    rayon = obj[1]
+                    distance = m.sqrt((point[0] - vx)**2 + (point[1] - vy)**2)
+                    if distance <= rayon:
+                        return True
+                    return False
+                    break
                 indice = indice + 1
             if len(point_collision) > 0 :
                 break 

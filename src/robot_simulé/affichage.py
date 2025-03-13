@@ -55,8 +55,10 @@ class Affichage:
 
             # Afficher les objets (obstacles)
             for obj in objects:
-                pygame.draw.polygon(self.screen, self.couleurs[1], obj)
-
+                if len(obj)==4:
+                    pygame.draw.polygon(self.screen, self.couleurs[1], obj)
+                if len(obj)==2:
+                    pygame.draw.circle(self.screen, (150, 0, 150), obj[0], obj[1])
             # Si le traçage est activé, on ajoute un point à la trace
             if environnement.trace_active:
                 environnement.tracer_ligne()
