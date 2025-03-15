@@ -32,6 +32,7 @@ obstacle = Entity(model='cube', scale=(4, 2, 2), position=(0, 0, 5), color=color
 def check_collisions():
     if prism.intersects(obstacle):  # Vérifier si le prisme touche l'obstacle
         print("Collision détectée !")
+        prism.disable()
 
 # Fonction de mise à jour pour déplacer la caméra et les objets
 def update():
