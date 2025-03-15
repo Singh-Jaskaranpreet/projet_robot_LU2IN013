@@ -43,8 +43,15 @@ def update():
     global simulation_running
     
     if not simulation_running:
-        return  # Arrêter l'exécution de la mise à jour si la simulation est arrêtée
-    
+        print("Le véhicule est en collision, vous devez redémarrer. Pressez R pour redémarrer.")
+        if held_keys['r']:
+            simulation_running = True
+            camera.position = (0, 5, -12)
+            camera.look_at(prism)
+            prism.position = (0, 0.1, -0.5)  # Réinitialisation de la position du prisme
+            prism.rotation_y = 0  # Réinitialisation de la rotation du prisme
+
+
     # Déplacement de la caméra avec les touches
     if held_keys['w']:
         camera.position += camera.forward * time.dt * 5  # Déplacement en avant
