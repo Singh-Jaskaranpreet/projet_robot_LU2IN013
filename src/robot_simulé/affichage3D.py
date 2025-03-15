@@ -1,43 +1,70 @@
 from ursina import *
-from .environnement import Environnement
 
-# Initialisation de Ursina
 app = Ursina()
 
-class Affichage3D:
-    def __init__(self):
-        pass
+# Création du sol
+ground = Entity(model='plane', scale=(20, 1, 20), color=color.white, collider='box')
 
-    def afficher(self, objects, environnement):
-        """
-        Affiche l'environnement, y compris le véhicule, les objets (obstacles),
-        et la vitesse du véhicule.
-        """
-        
-        # Création du sol                    (x,   y,  z)
-        ground = Entity(model='plane', scale=(100, 1, 100), color=color.white, collider='box')
+# Création du prisme triangulaire avec collider ajusté
+prism = Entity(
+    model=Mesh(vertices=[
+        # Base inférieure (triangle isocèle)
+        Vec3(0, 0.1, -0.5),
+        Vec3(-0.5, 0.1, 2),  # Point 1 (gauche de la base)
+        Vec3(0.5, 0.1, 2),   # Point 2 (droite de la base)
+    ], triangles=[
+        # Faces du prisme triangulaire
+        (2, 1, 0),  # Base inférieure
+    ]),
+    color=color.green,  # Remplissage vert
+    collider='box'  # Utilisation du collider  pour correspondre à la forme
+)
 
+# Roues de la voiture (en bas du prisme triangulaire)
+front_left_wheel = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent=prism, collider='sphere')                                                                                                                                                                                                                                                  
+front_right_wheel = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent=prism, collider='sphere')
+back_wheel = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black, parent=prism, collider='sphere')
 
-        # Créer la voiture et les roues
-        # Création d'un robot en forme de triangles isocèles
-       
-        robot = Entity(
-            model=Mesh(vertices=[
+# Obstacle avec collider
+obstacle = Entity(model='cube', scale=(4, 2, 2), position=(0, 0, 5), color=color.black, collider='box')
 
-        # Base(triangle isocèle)
-            Vec3(0, 0.1, -0.5), # Point 0 (roue arrière)
-            Vec3(-0.5, 0.1, 2),  # Point 1 (roue gauche)
-            Vec3(0.5, 0.1, 2),   # Point 2 (roue droite)
-            
-            ], 
-        # Base inférieure(permet de relier les 3 points)
-            triangles=[(2, 1, 0)]),
-            
-        color=color.red,  # Remplissage rouge
-        position=(0, 0.1, 0)
-        )
+# Fonction de vérification des collisions
+def check_collisions():
+    if prism.intersects(obstacle):  # Vérifier si le prisme touche l'obstacle
+        print("Collision détectée !")
 
-        # Roues de la voiture (en bas du prisme triangulaire)
-        front_left_wheel = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent=robot)                                                                                                                                                                                                                                                   
-        front_right_wheel = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent= robot)
-        back_wheel = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black,parent= robot)
+# Fonction de mise à jour pour déplacer la caméra et les objets
+def update():
+    # Déplacement de la caméra avec les touches
+    if held_keys['w']:
+        camera.position += camera.forward * time.dt * 5  # Déplacement en avant
+    if held_keys['s']:
+        camera.position -= camera.forward * time.dt * 5  # Déplacement en arrière
+    if held_keys['a']:
+        camera.position -= camera.right * time.dt * 5  # Déplacement à gauche
+    if held_keys['d']:
+        camera.position += camera.right * time.dt * 5  # Déplacement à droite
+    if held_keys['up arrow']:
+        prism.z += 5 * time.dt  # Déplacement vers l'avant
+    if held_keys['down arrow']:
+        prism.z -= 5 * time.dt  # Déplacement vers l'arrière
+    if held_keys['left arrow']:
+        prism.rotation_y -= 50 * time.dt  # Rotation à gauche
+    if held_keys['right arrow']:
+        prism.rotation_y += 50 * time.dt  # Rotation à droite
+
+    # Rotation de la caméra avec les touches de direction
+    if held_keys['q']:
+        camera.rotation_y -= 50 * time.dt  # Rotation à gauche
+    if held_keys['e']:
+        camera.rotation_y += 50 * time.dt  # Rotation à droite
+
+    # Vérification des collisions à chaque mise à jour
+    check_collisions()
+
+# Position initiale de la caméra
+camera.position = (0, 5, -12)
+camera.look_at(prism)  # Faire en sorte que la caméra regarde le prisme
+
+# Lancer l'application
+app.run()
