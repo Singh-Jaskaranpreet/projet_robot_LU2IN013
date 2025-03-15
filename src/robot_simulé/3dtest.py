@@ -44,6 +44,7 @@ def update():
     
     if not simulation_running:
         print("Le véhicule est en collision, vous devez redémarrer. Pressez R pour redémarrer.")
+        while (held_keys['r'])
         if held_keys['r']:
             simulation_running = True
             camera.position = (0, 5, -12)
@@ -52,7 +53,9 @@ def update():
             prism.rotation_y = 0  # Réinitialisation de la rotation du prisme
 
 
+
     # Déplacement de la caméra avec les touches
+    p = prism.forward
     if held_keys['w']:
         camera.position += camera.forward * time.dt * 5  # Déplacement en avant
     if held_keys['s']:
@@ -62,13 +65,18 @@ def update():
     if held_keys['d']:
         camera.position += camera.right * time.dt * 5  # Déplacement à droite
     if held_keys['up arrow']:
-        prism.z += 5 * time.dt  # Déplacement vers l'avant
+        
+        prism.z += 5 * time.dt * p[2] # Déplacement vers l'avant
+        prism.x += 5 * time.dt * p[0]
     if held_keys['down arrow']:
-        prism.z -= 5 * time.dt  # Déplacement vers l'arrière
+        prism.z -= 5 * time.dt * p[2] # Déplacement vers l'arrière
+        prism.x -= 5 * time.dt * p[0]
     if held_keys['left arrow']:
         prism.rotation_y -= 50 * time.dt  # Rotation à gauche
+        
     if held_keys['right arrow']:
         prism.rotation_y += 50 * time.dt  # Rotation à droite
+
 
     # Rotation de la caméra avec les touches de direction
     if held_keys['q']:
