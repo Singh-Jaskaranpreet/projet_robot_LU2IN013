@@ -1,4 +1,5 @@
 from src.robot_réel import VehiculeR
+import sys
 from src.robot_simulé import *
 from src.adaptateurs import AdaptateurRR,AdaptateurRS
 from src.controleur import Controleur
@@ -6,7 +7,30 @@ import time
 import random as r
 import threading
 
+global param1
+global param2
 
+if len(sys.argv) == 3:
+    try:
+        param1 = float(sys.argv[1])
+        param2 = float(sys.argv[2])
+    except ValueError:
+        print("Les paramètres doivent être des nombres.")
+        sys.exit(1)
+
+elif len(sys.argv) == 2:
+    param1 = sys.argv[1]
+    param2 = None
+
+    assert isinstance(param1, str), "Le paramètre doit être une chaîne de caractères."
+
+else:
+    print("Usage : python3 main.py <number1> <number2> ou python3 main.py <string>")
+    sys.exit(1)
+
+#On récupère les arguments passés en ligne de commande
+param1 = sys.argv[1]
+param2 = sys.argv[2]
 #temps Création de l'environnement et d'un véhicule et des adaptateurs
 robot = VehiculeR(0, 0, 0)
 environnement = Environnement()
