@@ -53,6 +53,7 @@ class Affichage:
                 rect = surface_roue.get_rect(center=(x, y))
                 self.screen.blit(surface_roue, rect.topleft)
 
+            
             # Afficher les objets (obstacles)
             for obj in objects:
                 if len(obj)==4:
