@@ -2,6 +2,9 @@ from ursina import *
 
 app = Ursina()
 
+# Variable pour contrôler l'état de la simulation
+simulation_running = True
+
 # Création du sol
 ground = Entity(model='plane', scale=(20, 1, 20), color=color.white, collider='box')
 
@@ -17,11 +20,11 @@ prism = Entity(
         (2, 1, 0),  # Base inférieure
     ]),
     color=color.green,  # Remplissage vert
-    collider='box'  # Utilisation du collider  pour correspondre à la forme
+    collider='box'  # Utilisation du collider pour correspondre à la forme
 )
 
 # Roues de la voiture (en bas du prisme triangulaire)
-front_left_wheel = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent=prism, collider='sphere')                                                                                                                                                                                                                                                  
+front_left_wheel = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent=prism, collider='sphere')
 front_right_wheel = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent=prism, collider='sphere')
 back_wheel = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black, parent=prism, collider='sphere')
 
@@ -30,14 +33,19 @@ obstacle = Entity(model='cube', scale=(4, 2, 2), position=(0, 0, 5), color=color
 
 # Fonction de vérification des collisions
 def check_collisions():
+    global simulation_running
     if prism.intersects(obstacle):  # Vérifier si le prisme touche l'obstacle
         print("Collision détectée !")
-        prism.disable()
+        simulation_running = False  # Arrêter la simulation en cas de collision
 
 # Fonction de mise à jour pour déplacer la caméra et les objets
 def update():
+    global simulation_running
+    
+    if not simulation_running:
+        return  # Arrêter l'exécution de la mise à jour si la simulation est arrêtée
+    
     # Déplacement de la caméra avec les touches
-    p = prism.forward
     if held_keys['w']:
         camera.position += camera.forward * time.dt * 5  # Déplacement en avant
     if held_keys['s']:
@@ -47,15 +55,11 @@ def update():
     if held_keys['d']:
         camera.position += camera.right * time.dt * 5  # Déplacement à droite
     if held_keys['up arrow']:
-        print(prism.forward)
-        prism.z += 5 * time.dt * p[2] # Déplacement vers l'avant
-        prism.x += 5 * time.dt * p[0]
+        prism.z += 5 * time.dt  # Déplacement vers l'avant
     if held_keys['down arrow']:
-        prism.z -= 5 * time.dt * p[2] # Déplacement vers l'arrière
-        prism.x -= 5 * time.dt * p[0]
+        prism.z -= 5 * time.dt  # Déplacement vers l'arrière
     if held_keys['left arrow']:
         prism.rotation_y -= 50 * time.dt  # Rotation à gauche
-        
     if held_keys['right arrow']:
         prism.rotation_y += 50 * time.dt  # Rotation à droite
 
