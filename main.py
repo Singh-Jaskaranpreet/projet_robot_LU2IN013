@@ -1,7 +1,7 @@
 from src.robot_réel import VehiculeR
 import sys
 from src.robot_simulé import *
-from src.robot_réel import *
+from src.robot_général import Robot
 from src.adaptateurs import AdaptateurRR,AdaptateurRS
 from src.controleur import Controleur
 import time
@@ -36,8 +36,8 @@ else:
 robot = VehiculeR(0, 0, 0)
 environnement = Environnement()
 adapVS = AdaptateurRS(environnement.vehicule)
-adapVF = AdaptateurRR(robot)
-controleur = Controleur(adapVS,adapVF)
+adapVR = AdaptateurRR(robot)
+controleur = Controleur(adapVS,adapVR)
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
 
@@ -94,8 +94,17 @@ while True :
             x=0
         x+=1
         environnement.temps.set_time_scale(1)
-        controleur.executer_strategie()
+        
         # Gestion des contrôles par l'utilisateur
+        if param2 is not None:
+            adapVS.v_roue_gauche(param1)
+            adapVS.v_roue_droite(param2)
+            adapVR.v_roue_gauche(param1)
+            adapVR.v_roue_droite(param2)
+                                                                                                                                                                                                                
+
+
+        controleur.executer_strategie()
         controleur.adapVS.gerer_evenements()
 
         environnement.bouger()
