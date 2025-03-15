@@ -43,15 +43,15 @@ def update():
     global simulation_running
     
     if not simulation_running:
-        print("Le véhicule est en collision, vous devez redémarrer. Pressez R pour redémarrer.")
-        while (held_keys['r'])
-        if held_keys['r']:
+        # Bloquer tout mouvement tant que l'utilisateur ne redémarre pas
+        if held_keys['r']:  # On redémarre seulement quand R est pressé
+            print("Redémarrage du véhicule")
             simulation_running = True
-            camera.position = (0, 5, -12)
-            camera.look_at(prism)
             prism.position = (0, 0.1, -0.5)  # Réinitialisation de la position du prisme
             prism.rotation_y = 0  # Réinitialisation de la rotation du prisme
-
+            camera.position = (0, 5, -12)  # Réinitialisation de la caméra
+            camera.look_at(prism)
+        return
 
 
     # Déplacement de la caméra avec les touches
