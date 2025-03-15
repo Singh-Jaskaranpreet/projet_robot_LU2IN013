@@ -37,6 +37,7 @@ def check_collisions():
 # Fonction de mise à jour pour déplacer la caméra et les objets
 def update():
     # Déplacement de la caméra avec les touches
+    p = prism.forward
     if held_keys['w']:
         camera.position += camera.forward * time.dt * 5  # Déplacement en avant
     if held_keys['s']:
@@ -46,11 +47,15 @@ def update():
     if held_keys['d']:
         camera.position += camera.right * time.dt * 5  # Déplacement à droite
     if held_keys['up arrow']:
-        prism.z += 5 * time.dt  # Déplacement vers l'avant
+        print(prism.forward)
+        prism.z += 5 * time.dt * p[2] # Déplacement vers l'avant
+        prism.x += 5 * time.dt * p[0]
     if held_keys['down arrow']:
-        prism.z -= 5 * time.dt  # Déplacement vers l'arrière
+        prism.z -= 5 * time.dt * p[2] # Déplacement vers l'arrière
+        prism.x -= 5 * time.dt * p[0]
     if held_keys['left arrow']:
         prism.rotation_y -= 50 * time.dt  # Rotation à gauche
+        
     if held_keys['right arrow']:
         prism.rotation_y += 50 * time.dt  # Rotation à droite
 
