@@ -1,7 +1,7 @@
 from src.robot_réel import VehiculeR
 import sys
 from src.robot_simulé import *
-from src.robot_général import Robot
+from src.robot_simulé.affichage3D import Affichage3D
 from src.adaptateurs import AdaptateurRR,AdaptateurRS
 from src.controleur import Controleur
 import time
@@ -46,9 +46,9 @@ environnement.temps.demarrer()
 while True:
     try:
         k = int(input("Votre choix : "))
-        if k in [1, 2]:
+        if k in [1, 2 ,3]:
             break
-        print("Mode non implémenté, veuillez choisir 1 ou 2.")
+        print("Mode non implémenté, veuillez choisir 1 ou 2 ou 3")
     except ValueError:
         print("Entrée invalide, veuillez saisir un nombre.")
 
@@ -68,6 +68,13 @@ if k==2:
         #controleur.gerer_affichage()
         controleur.choix = False
         threading.Thread(target=controleur.lire_commandes, daemon=True).start()
+
+if k==3:
+        
+    aff3d=Affichage3D(environnement.vehicule)
+    
+    aff3d.afficher(environnement.objects,environnement)
+
 
      
 x=0

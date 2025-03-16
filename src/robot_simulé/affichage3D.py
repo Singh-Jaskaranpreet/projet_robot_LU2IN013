@@ -1,12 +1,13 @@
 from ursina import *
-from .environnement import Environnement
 
-# Initialisation de Ursina
-app = Ursina()
+
 
 class Affichage3D:
-    def __init__(self):
-        pass
+    def __init__(self,voiture):
+        self.app = Ursina() # Initialisation de Ursina
+        self.voiture = voiture
+        self.v_G = self.voiture.vit_Rg
+        self.v_D = self.voiture.vit_Rd
 
     def afficher(self, objects, environnement):
         """
@@ -38,6 +39,13 @@ class Affichage3D:
         )
 
         # Roues de la voiture (en bas du prisme triangulaire)
-        front_left_wheel = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent=robot)                                                                                                                                                                                                                                                   
-        front_right_wheel = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent= robot)
-        back_wheel = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black,parent= robot)
+        roue_G = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent=robot)                                                                                                                                                                                                                                                   
+        roue_D = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent= robot)
+        roue_Ar = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black,parent= robot)
+
+        # Position initiale de la caméra
+        camera.position = (0, 5, -12)
+        camera.look_at(robot)  # Faire en sorte que la caméra regarde le robot
+
+
+        self.app.run()
