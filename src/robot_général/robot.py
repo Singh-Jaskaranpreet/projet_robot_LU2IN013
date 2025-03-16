@@ -40,3 +40,10 @@ class Robot(ABC):
     @abstractmethod
     def get_vitesse_Rd(self):
         pass
+
+    @abstractmethod
+    def faire_carre(self):
+        pass
+
+    
+

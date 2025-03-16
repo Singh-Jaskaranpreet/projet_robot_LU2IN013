@@ -21,17 +21,7 @@ class Controleur:
             try:
                 if self.choix:
                     cmd = input("\nCommande (accelerer, freiner, reculer, set_vRg, set_vRd, acr_Rg, acr_Rd, get_distance, quitter) : ").strip()
-                rep=input("Vouler vous faire un mouvement ou une strategie?")
-                if rep == "mouvement":
-                        v_rg=float(input("Donner une vitesse à la roue gauche(degree par seconde):"))
-                        v_rd=float(input("Donner une vitesse à la roue droite(degree par seconde):"))
-                        mouvement = (v_rg,v_rd)
-                        self.adapVF.gerer_mouvements(mouvement)
-                        self.adapVS.gerer_mouvements(mouvement)
-                elif rep == "strategie":
-                    strategie = input("Donner une stratégie:")
-                    self.adapVF.gerer_mouvements(strategie)
-                    self.adapVS.gerer_mouvements(strategie)
+                
             except EOFError:
                 continue  # ou break selon votre besoin
 
@@ -83,7 +73,7 @@ class Controleur:
                 self.adapVS.sequence = None  # Arrêter la stratégie
                 self.adapVS.vehicule.vit_Rd = 0
                 self.adapVS.vehicule.vit_Rg = 0
-            elif not self.adapVS.sequence.stop(self.adapVS):  # Si la séquence n'est pas terminée
+            elif not self.adapVS.sequence.stop(self.adapVS.vehicule):  # Si la séquence n'est pas terminée
                 self.adapVS.sequence.step(self.adapVS)  # Passer à l'étape suivante
             else:  # Si la séquence est terminée
                 self.adapVS.sequence = None  # Réinitialiser la séquence

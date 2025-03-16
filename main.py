@@ -109,10 +109,17 @@ while True :
             adapVR.v_roue_gauche(param1)
             adapVR.v_roue_droite(param2)
                                                                                                                                                                                                                 
+        else :
+            if param1 =="carre":
+                adapVS.faire_carre()
+                controleur.executer_strategie()
+                
+                #adapVR.faire_carre()
+                
+                
 
-
-        controleur.executer_strategie()
         controleur.adapVS.gerer_evenements()
+        controleur.executer_strategie()
 
         environnement.bouger()
         environnement.temps.demarrer()
@@ -126,4 +133,4 @@ while True :
     # Pause pour limiter la fréquence d'itération (environ 60 itérations/s)
     time.sleep(1/60)
 
-environnement.temps.arreter()
+    environnement.temps.arreter()

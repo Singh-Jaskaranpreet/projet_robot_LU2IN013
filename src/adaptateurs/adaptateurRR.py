@@ -1,10 +1,13 @@
 from src.robot_général import Robot
+from src.strategy import *
 
 class AdaptateurRR(Robot):
     def __init__(self,vehicule):
         self.vehicule=vehicule
         self.vitesse_RG = 0
         self.vitesse_RD = 0
+        self.sequence = None
+
     def avancer(self,valeur):
         self.vehicule.set_motor_dps(3, valeur)
 
@@ -40,3 +43,7 @@ class AdaptateurRR(Robot):
 
     def get_vitesse_Rd(self):
         return self.vitesse_RD
+    
+    def faire_carre(self):
+        self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
+        self.sequence.start(self.vehicule)
