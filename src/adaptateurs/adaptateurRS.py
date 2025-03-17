@@ -165,6 +165,9 @@ class AdaptateurRS(Robot):
 
     def get_vitesse_Rd(self):
         return self.vehicule.vit_Rd
+
+    def reset(self):
+        pass
     
     def faire_carre(self):
         self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)

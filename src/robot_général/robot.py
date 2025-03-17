@@ -42,6 +42,14 @@ class Robot(ABC):
         pass
 
     @abstractmethod
+    def get_angle(self):
+        pass
+
+    @abstractmethod
+    def reset(self):
+        pass
+
+    @abstractmethod
     def faire_carre(self):
         pass
 

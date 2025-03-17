@@ -26,7 +26,7 @@ class AdaptateurRR(Robot):
         position = self.vehicule.get_motor_position()
         distance_gauche = ( position[0] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
         distance_droite = ( position[1] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
-        self.vehicule.offset_motor_encode(3,self.read_encoders())
+        self.reset()
         if distance_droite < 0.01 :
             return distance_gauche
         elif distance_gauche < 0.01 :
@@ -47,6 +47,9 @@ class AdaptateurRR(Robot):
 
     def get_vitesse_Rd(self):
         return self.vitesse_RD
+
+    def reset(self):
+        self.vehicule.offset_motor_encode(3,self.read_encoders())
     
     def faire_carre(self):
         self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)

@@ -18,7 +18,7 @@ class AvancerDroitStrategy(StrategyAsync):
     
     def start(self, vehicule):
         self.parcouru = 0
-        
+        vehicule.reset()
 
     def step(self, vehicule):
         vehicule.avancer(self.vitesse)
@@ -41,6 +41,7 @@ class TournerAngleStrategy(StrategyAsync):
         self.vitesse_rotation = 30  # vitesse utilisée pour la roue active durant le virage
 
     def start(self, vehicule):
+        vehicule.reset()
         self.angle_parcouru = 0
         
 
@@ -102,6 +103,7 @@ class AccelererStrategy(StrategyAsync):
         self.vitesse_depart = 10
 
     def start(self, vehicule):
+        vehicule.reset()
         self.distance_obstacle = vehicule.get_distance()
 
     def step(self, vehicule):
@@ -119,6 +121,7 @@ class DoucementStrategy(StrategyAsync):
         self.vitesse_min = 20
 
     def start(self, vehicule):
+        vehicule.reset()
         self.distance_obstacle = vehicule.get_distance()
     
     def step(self, vehicule):
