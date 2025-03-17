@@ -17,7 +17,8 @@ class Vehicule:
         self.nb_roues = 3
         self.environnement = environnement
         self.infrarouge = Infrarouge()
-    
+        self.angle_servo = 0
+
     
     def freiner(self, val):
         if self.vit_Rg > 0:

@@ -1,5 +1,6 @@
 import pygame
 from .environnement import Environnement
+import math as m
 #LARGEUR, HAUTEUR = 1200, 800
 
 # Initialisation de Pygame
@@ -53,7 +54,9 @@ class Affichage:
                 rect = surface_roue.get_rect(center=(x, y))
                 self.screen.blit(surface_roue, rect.topleft)
 
-            
+                self.dessiner_camera(environnement.vehicule)
+
+
             # Afficher les objets (obstacles)
             for obj in objects:
                 if len(obj)==4:
@@ -83,4 +86,33 @@ class Affichage:
             pygame.display.flip() # Met à jour l'écran
 
    
-    
+    def dessiner_camera(self, vehicule):
+        """
+        Affiche un petit rectangle sur le véhicule qui représente la caméra.
+        Ce rectangle est tourné selon vehicule.angle_servo.
+        """
+        # Dimensions du rectangle de la caméra
+        camera_width = 10
+        camera_height = 5
+        camera_color = (150, 60, 150)  # Magenta
+
+        # Créer une surface pour la caméra (avec transparence)
+        camera_surface = pygame.Surface((camera_width, camera_height), pygame.SRCALPHA)
+        camera_surface.fill(camera_color)
+
+        # Calculer l'angle global de la caméra : angle du véhicule + angle du servo
+        global_angle = vehicule.angle + vehicule.angle_servo
+        rotated_camera = pygame.transform.rotate(camera_surface, -global_angle)
+
+        # Positionner la caméra à l'avant du véhicule.
+        # On calcule l'offset en utilisant l'angle global
+        angle_rad = m.radians(global_angle)
+        offset_x = m.cos(angle_rad)
+        offset_y = m.sin(angle_rad)
+
+        # Calcul de la position finale pour centrer le rectangle tourné
+        pos_x = int(vehicule.p_centre[0] + offset_x - rotated_camera.get_width() / 2)
+        pos_y = int(vehicule.p_centre[1] + offset_y - rotated_camera.get_height() / 2)
+
+        self.screen.blit(rotated_camera, (pos_x, pos_y))
+
