@@ -54,6 +54,8 @@ class CameraView:
     
     def render(self):
         distances = self.cast_rays()
+        if self.environnement.asuivre_act:
+                d = self.afficher_balise()
         if self.renderer:
             # Effacer l'écran avec une couleur blanche (inversion des couleurs)
             self.renderer.draw_color = (255, 255, 255, 255)
@@ -77,9 +79,22 @@ class CameraView:
 
                 self.renderer.draw_color = (color_intensity, color_intensity, color_intensity, 255)
                 self.renderer.fill_rect(rect)
-                    # Mettre à jour l'affichage
-            self.renderer.present()
 
+            if self.environnement.asuivre_act:
+                for i, distance in enumerate(d):
+                    column_height = int(5000 / (distance + 1))  # Hauteur relative à la distance
+                    column_height = min(self.height, column_height)
+                    color_intensity = max(0, int(distance / 4))
+                    rect2 = pygame.Rect(i, (self.height - column_height) // 2, 1, column_height)
+                    if distance < self.max_distance and isinstance(distance, tuple):  # Si on a détecté un cercle
+                        center_distance = abs(i - self.width // 2)  # Distance par rapport au centre
+                        attenuation = max(0.5, 1 - center_distance / self.width)  # Effet d'arrondi
+                        color_intensity = int(color_intensity * attenuation)
+                    self.renderer.draw_color = (color_intensity, color_intensity, color_intensity, 255)
+                    self.renderer.fill_rect(rect2)
+
+            # Mettre à jour l'affichage
+            self.renderer.present()
 
     def afficher_balise(self):
         pos = self.environnement.vehicule.p_centre
