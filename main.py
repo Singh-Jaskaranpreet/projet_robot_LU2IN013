@@ -116,8 +116,7 @@ while True :
         else :
             if param1 =="carre":
                 adapVS.faire_carre()
-                controleur.executer_strategie()
-                
+                param1 = None
                 #adapVR.faire_carre()
                 
                 
