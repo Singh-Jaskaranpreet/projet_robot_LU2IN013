@@ -50,6 +50,7 @@ def update():
             prism.position = (0, 0.1, -0.5)  # Réinitialisation de la position du prisme
             prism.rotation_y = 0  # Réinitialisation de la rotation du prisme
             camera.position = (0, 5, -12)  # Réinitialisation de la caméra
+            camera.rotation_y = 0  # Réinitialisation de la rotation de la caméra
             camera.look_at(prism)
         return
 
