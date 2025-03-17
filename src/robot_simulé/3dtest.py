@@ -38,10 +38,17 @@ def check_collisions():
         print("Collision détectée !")
         simulation_running = False  # Arrêter la simulation en cas de collision
 
+# Variables de direction
+steering_angle = 0  # Angle de braquage des roues avant
+max_steering = 30   # Angle max de braquage
+wheelbase = 2.5     # Distance entre les roues avant et arrière
+
 # Fonction de mise à jour pour déplacer la caméra et les objets
 def update():
-    global simulation_running
+    global simulation_running, steering_angle
+
     
+
     if not simulation_running:
         # Bloquer tout mouvement tant que l'utilisateur ne redémarre pas
         if held_keys['r']:  # On redémarre seulement quand R est pressé
@@ -65,18 +72,19 @@ def update():
         camera.position -= camera.right * time.dt * 5  # Déplacement à gauche
     if held_keys['d']:
         camera.position += camera.right * time.dt * 5  # Déplacement à droite
+
     if held_keys['up arrow']:
-        
-        prism.z += 5 * time.dt * p[2] # Déplacement vers l'avant
-        prism.x += 5 * time.dt * p[0]
+        move_vehicle(forward=True)
     if held_keys['down arrow']:
-        prism.z -= 5 * time.dt * p[2] # Déplacement vers l'arrière
-        prism.x -= 5 * time.dt * p[0]
+        move_vehicle(forward=False)
     if held_keys['left arrow']:
-        prism.rotation_y -= 50 * time.dt  # Rotation à gauche
-        
-    if held_keys['right arrow']:
-        prism.rotation_y += 50 * time.dt  # Rotation à droite
+        steering_angle = max(-max_steering, steering_angle - 40 * time.dt)  # Tourner à gauche
+    elif held_keys['right arrow']:
+        steering_angle = min(max_steering, steering_angle + 40 * time.dt)  # Tourner à droite
+
+    # Appliquer l'angle de braquage aux roues avant
+    front_left_wheel.rotation_y = steering_angle
+    front_right_wheel.rotation_y = steering_angle
 
 
     # Rotation de la caméra avec les touches de direction
@@ -87,6 +95,25 @@ def update():
 
     # Vérification des collisions à chaque mise à jour
     check_collisions()
+
+# Fonction pour déplacer le véhicule en fonction de la rotation des roues avant
+def move_vehicle(forward=True):
+    speed = 5 * time.dt
+    direction = 1 if forward else -1
+
+    if abs(steering_angle) > 0.1:  # Si les roues sont tournées
+        turn_radius = wheelbase / math.tan(math.radians(steering_angle))  # Rayon de courbure
+        angular_speed = speed / turn_radius  # Vitesse de rotation
+
+        # Rotation autour du centre du virage
+        prism.rotation_y += math.degrees(angular_speed) * direction
+        prism.x += speed * direction * math.sin(math.radians(prism.rotation_y))
+        prism.z += speed * direction * math.cos(math.radians(prism.rotation_y))
+    else:  # Aller tout droit
+        p = prism.forward
+        prism.x += speed * direction * p[0]
+        prism.z += speed * direction * p[2]
+
 
 # Position initiale de la caméra
 camera.position = (0, 5, -12)
