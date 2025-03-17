@@ -7,7 +7,7 @@ class CameraView:
         self.adaptateur = adaptateur 
         self.width = width
         self.height = height
-        self.fov = math.radians(180)  # Champ de vision de 60°
+        self.fov = math.radians(120)  # Champ de vision de 60°
         self.num_rays = width        # Un rayon par colonne
         self.max_distance = 1000     # Distance maximale
         self.renderer = renderer
@@ -35,11 +35,11 @@ class CameraView:
             test_y = y + d * math.sin(ray_angle)
             
             for obj in self.environnement.objects:
-                if len(obj) == 4:  # 🔴 Cas des rectangles
+                if len(obj) == 4:  # Cas des rectangles
                     if (obj[0][0] <= test_x <= obj[2][0]) and (obj[0][1] <= test_y <= obj[2][1]):
                         return d
 
-                elif len(obj) == 2:  # 🔵 Cas des cercles
+                elif len(obj) == 2:  # Cas des cercles
                     cx, cy = obj[0]  # Centre du cercle
                     rayon = obj[1]   # Rayon du cercle
                     

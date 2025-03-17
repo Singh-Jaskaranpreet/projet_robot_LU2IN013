@@ -19,14 +19,17 @@ class AdaptateurRS(Robot):
         self.camera_renderer = None
         self.camera_view = None
 
-    def gerer_evenements(self):
+    def gerer_evenements(self, param1 = None, param2 = None):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_RIGHT]:  # Augmenter la vitesse de la roue droite
-            self.vehicule.set_vrd(self.vehicule.vit_Rd +1)
+        if keys[pygame.K_RIGHT] or param1 == 'vrd':  # Augmenter la vitesse de la roue droite
+            if param2 != None:
+                self.vehicule.set_vrd(param2)
+            else:
+                self.vehicule.set_vrd(self.vehicule.vit_Rd +1)
         #    print("                                                       ", end ="\r")
         #    print("on accelere la roues droite, vroum vroum", end ="\r")
 
@@ -35,8 +38,11 @@ class AdaptateurRS(Robot):
         #    print("                                                       ", end ="\r")
         #    print("on ralentie la roues droite, tic... tic...", end ="\r")
 
-        if keys[pygame.K_LEFT]:  # Augmenter la vitesse de la roue gauche
-            self.vehicule.set_vrg(self.vehicule.vit_Rg +1)
+        if keys[pygame.K_LEFT] or param1 == 'vrg':  # Augmenter la vitesse de la roue gauche
+            if param2 != None:
+                self.vehicule.set_vrg(param2)
+            else:
+                self.vehicule.set_vrg(self.vehicule.vit_Rg +1)
         #    print("                                                       ", end ="\r")
         #    print("on accelere la roues gauche, vroum vroum", end ="\r")
 
@@ -45,24 +51,27 @@ class AdaptateurRS(Robot):
         #    print("                                                       ", end ="\r")
         #    print("on ralentie la roues gauche, tic... tic...", end ="\r")
             
-        elif keys[pygame.K_f]:
-            self.vehicule.freiner(0.5)
+        elif keys[pygame.K_f] or param1 == 'freiner':
+            if param2 != None:
+                self.vehicule.freiner(param2)
+            else:
+                self.vehicule.freiner(0.5)
         #    print("                                                       ", end ="\r")
         #    print("le vehicule freine, Pschhh", end ="\r")
 
-        if keys[pygame.K_r]:
+        if keys[pygame.K_r] or param1 == 'restart':
             self.vehicule.environnement.restart()
         #    print("                                                       ", end ="\r")
         #    print("oh la la on retourne à zero", end ="\r")
 
-        if keys[pygame.K_s]:  # Définir une séquence de stratégies
+        if keys[pygame.K_s] or param1 == 'carre':  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
             self.sequence.start(self.vehicule)
         #    print("                                                            ", end = "\r")
         #    print("Stratégie séquentielle activée")
 
-        if keys[pygame.K_m]:  # Définir une séquence de stratégies
+        if keys[pygame.K_m] or param1 == 'mur':  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
             self.sequence.start(self.vehicule)
@@ -82,17 +91,17 @@ class AdaptateurRS(Robot):
             print("                                                            ", end = "\r")
             print("Ligne effacée.")
 
-        if keys[pygame.K_b]:
+        if keys[pygame.K_b] or param1 == 'balise':
             now = time.time()
             if now - self.last_t_press >= self.debounce_delay:
                 self.vehicule.environnement.asuivre_act = not self.vehicule.environnement.asuivre_act
                 self.last_t_press = now
                 if self.vehicule.environnement.asuivre_act:
-                    print("📡 Activation du suivi de balise")
+                    print("Activation du suivi de balise")
                     self.sequence = SuivreObjetStrategy()  # Utilisation correcte de `self`
                     self.sequence.start(self.vehicule)
                 else:
-                    print("🛑 Désactivation du suivi de balise")
+                    print("Désactivation du suivi de balise")
                     self.sequence = None  # Arrêt de la stratégie
 
         # Activer la caméra en appuyant sur "D"
@@ -118,7 +127,9 @@ class AdaptateurRS(Robot):
                     self.vehicule.servo_rotate(self.vehicule.angle_servo + 1)
             if keys[pygame.K_i] and self.camera_active:
                     self.vehicule.servo_rotate(self.vehicule.angle_servo - 1)
-
+        if keys[pygame.K_q]:
+            pygame.quit()
+            sys.exit()
    
     def avancer(self,valeur):
         self.vehicule.set_vrd(valeur)

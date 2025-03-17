@@ -16,8 +16,8 @@ global param2
 
 if len(sys.argv) == 3:
     try:
-        param1 = float(sys.argv[1])
-        param2 = float(sys.argv[2])
+        param1 = int(sys.argv[1])
+        param2 = int(sys.argv[2])
     except ValueError:
         print("Les paramètres doivent être des nombres.")
         sys.exit(1)
@@ -79,8 +79,7 @@ if k==3:
     
     aff3d.afficher()
 
-
-     
+   
 x=0
 while True :
     if k==1 :
@@ -112,15 +111,17 @@ while True :
             adapVS.v_roue_droite(param2)
             adapVR.v_roue_gauche(param1)
             adapVR.v_roue_droite(param2)
+            param1=None
+            param2=None
+
                                                                                                                                                                                                                 
         else :
             if param1 =="carre":
                 adapVS.faire_carre()
+                adapVR.faire_carre()
                 param1 = None
-                #adapVR.faire_carre()
                 
                 
-
         controleur.adapVS.gerer_evenements()
         controleur.executer_strategie()
 
