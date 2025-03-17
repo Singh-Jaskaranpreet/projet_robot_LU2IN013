@@ -145,13 +145,13 @@ class AdaptateurRS(Robot):
     def v_roue_droite(self,valeur):
         self.vehicule.set_vrd(valeur)
 
-    def distance_parcouru(self,vit,temps):
-        return abs(round(0.003*(abs((abs(vit)+abs(vit))/2)),3) * temps)
+    def distance_parcouru(self,vit):
+        return abs(round(0.003*(abs((abs(vit)+abs(vit))/2)),3) * self.get_temps())
     
     def get_distance(self):
         return self.vehicule.infrarouge.mesurer_distance_obstacle(self.vehicule)
 
-    def get_temps(self,vitesse):
+    def get_temps(self):
         return self.vehicule.environnement.temps.get_temps_ecoule()
 
     def get_essieux(self):
@@ -167,6 +167,12 @@ class AdaptateurRS(Robot):
         return self.vehicule.vit_Rd
 
     def reset(self):
+        pass
+
+    def v_angulaire():
+        return self.distance_parcouru() / ((self.get_vitesse_Rd + self.get_vitesse_Rg)/2)
+    
+    def get_angle(self):
         pass
     
     def faire_carre(self):

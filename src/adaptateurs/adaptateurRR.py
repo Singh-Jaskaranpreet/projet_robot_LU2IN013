@@ -22,7 +22,7 @@ class AdaptateurRR(Robot):
         self.vehicule.set_motor_dps(2, valeur)
         self.vitesse_RD = valeur
 
-    def distance_parcouru(self,vit,temps):
+    def distance_parcouru(self):
         position = self.vehicule.get_motor_position()
         distance_gauche = ( position[0] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
         distance_droite = ( position[1] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
@@ -36,8 +36,12 @@ class AdaptateurRR(Robot):
     def get_distance(self):
         return self.vehicule.get_distance() / 1000
 
-    def get_temps(self,vitesse):
-        return self.distance_parcouru(vitesse,0) / vitesse
+    def get_temps(self):
+        if get_vitesse_Rd() < 0.01:
+            return self.distance_parcouru() / self.get_vitesse_Rg()
+        if get_vitesse_Rg() < 0.01:
+            return self.distance_parcouru() / self.get_vitesse_Rd()
+        return self.distance_parcouru() / ((self.get_vitesse_Rd() + self.get_vitesse_Rg())/2)
 
     def get_essieux(self):
         return self.vehicule.WHEEL_BASE_WIDTH
@@ -50,6 +54,11 @@ class AdaptateurRR(Robot):
 
     def reset(self):
         self.vehicule.offset_motor_encode(3,self.read_encoders())
+
+    def v_angulaire():
+        return self.distance_parcouru() / ((self.get_vitesse_Rd + self.get_vitesse_Rg)/2)
+    def get_angle(self):
+        pass
     
     def faire_carre(self):
         self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)

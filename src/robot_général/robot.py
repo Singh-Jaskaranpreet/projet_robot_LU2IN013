@@ -18,7 +18,7 @@ class Robot(ABC):
         pass
     
     @abstractmethod
-    def distance_parcouru(self,vit,temps):
+    def distance_parcouru(self):
         pass
 
     @abstractmethod
@@ -53,5 +53,8 @@ class Robot(ABC):
     def faire_carre(self):
         pass
 
+    @abstractmethod
+    def v_angulaire(self):
+        pass
     
 
