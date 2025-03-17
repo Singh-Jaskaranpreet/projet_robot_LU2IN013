@@ -4,12 +4,20 @@ import sys
 from src.strategy import *
 import math
 from src.robot_général import Robot
+from pygame._sdl2 import Window, Renderer
+from src.robot_simulé.outils.camera import CameraView
+
 class AdaptateurRS(Robot):
-    def __init__(self, vehicule):
+    def __init__(self, vehicule, mode):
         self.vehicule = vehicule
         self.sequence = None
         self.last_t_press = 0  # Temps du dernier appui sur "T"
         self.debounce_delay = 0.5  # Délai minimal en secondes (0.5s ici)
+        self.mode = mode  # On stocke le mode (1, 2 ou 3)
+        self.camera_active = False  # Ajout d'une variable pour suivre l'état de la caméra
+        self.camera_window = None
+        self.camera_renderer = None
+        self.camera_view = None
 
     def gerer_evenements(self):
         for event in pygame.event.get():
@@ -75,9 +83,41 @@ class AdaptateurRS(Robot):
             print("Ligne effacée.")
 
         if keys[pygame.K_b]:
-            self.vehicule.environnement.asuivre_act = True
-            self.sequence = StrategieSequence([SuivreObjetStrategy()])
-            self.sequence.start(self.vehicule)
+            now = time.time()
+            if now - self.last_t_press >= self.debounce_delay:
+                self.vehicule.environnement.asuivre_act = not self.vehicule.environnement.asuivre_act
+                self.last_t_press = now
+                if self.vehicule.environnement.asuivre_act:
+                    print("📡 Activation du suivi de balise")
+                    self.sequence = SuivreObjetStrategy()  # Utilisation correcte de `self`
+                    self.sequence.start(self.vehicule)
+                else:
+                    print("🛑 Désactivation du suivi de balise")
+                    self.sequence = None  # Arrêt de la stratégie
+
+        # Activer la caméra en appuyant sur "D"
+        if self.mode == 2:
+            if keys[pygame.K_d] and not self.camera_active:
+                self.camera_active = True
+                self.camera_window = Window("Vue Caméra", size=(640, 480))
+                self.camera_renderer = Renderer(self.camera_window)
+                self.camera_view = CameraView(self.vehicule.environnement, self, 640, 480, renderer=self.camera_renderer)
+                print("                                                       ", end ="\r")
+                print("Caméra activée, Fshiou...", end ="\r")
+
+            if keys[pygame.K_p] and self.camera_active:
+                self.camera_active = False
+                self.camera_window.destroy()  # Fermer la fenêtre SDL2 proprement
+                self.camera_window = None
+                self.camera_renderer = None
+                self.camera_view = None
+                print("                                                       ", end ="\r")
+                print("Caméra désactivée, Pshiou...", end ="\r")
+        if self.mode == 3 or self.mode == 2:
+            if keys[pygame.K_o] and self.camera_active:
+                    self.vehicule.servo_rotate(self.vehicule.angle_servo + 1)
+            if keys[pygame.K_i] and self.camera_active:
+                    self.vehicule.servo_rotate(self.vehicule.angle_servo - 1)
 
    
     def avancer(self,valeur):

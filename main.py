@@ -7,6 +7,9 @@ from src.controleur import Controleur
 import time
 import random as r
 import threading
+from pygame._sdl2 import Window, Renderer  # Pour la deuxième fenêtre
+from src.robot_simulé.outils.camera import CameraView
+
 
 #On récupère les arguments passés en ligne de commande
 global param1
@@ -32,17 +35,8 @@ else:
 
 
 
-#Création de l'environnement et d'un véhicule et des adaptateurs
-robot = VehiculeR(0, 0, 0)
-environnement = Environnement()
-adapVS = AdaptateurRS(environnement.vehicule)
-adapVR = AdaptateurRR(robot)
-controleur = Controleur(adapVS,adapVR)
-
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
 
-# Démarrer l'horloge du véhicule une seule fois
-environnement.temps.demarrer()
 while True:
     try:
         k = int(input("Votre choix : "))
@@ -51,6 +45,16 @@ while True:
         print("Mode non implémenté, veuillez choisir 1 ou 2 ou 3")
     except ValueError:
         print("Entrée invalide, veuillez saisir un nombre.")
+
+#Création de l'environnement et d'un véhicule et des adaptateurs
+robot = VehiculeR(0, 0, 0)
+environnement = Environnement()
+adapVS = AdaptateurRS(environnement.vehicule, k)
+adapVR = AdaptateurRR(robot)
+controleur = Controleur(adapVS,adapVR)
+
+# Démarrer l'horloge du véhicule une seule fois
+environnement.temps.demarrer()
 
 if k==1 :
         # Initialiser last_print avant la boucle
@@ -124,6 +128,9 @@ while True :
         environnement.bouger()
         environnement.temps.demarrer()
         environnement.rester_dans_limites()
+
+        if adapVS.camera_active:
+            adapVS.camera_view.render()
 
         # Affichage
         affichage.afficher(environnement.objects, environnement)

@@ -51,6 +51,11 @@ class Vehicule:
         """
         self.vit_Rg = x
 
+
+    def servo_rotate(self,position):
+        self.angle_servo = max(-60, min(position, 60))
+        
+
     #Place les trois roues de la voiture
     def position_des_roues(self, point):
         """
