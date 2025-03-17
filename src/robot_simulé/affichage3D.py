@@ -3,21 +3,25 @@ from ursina import *
 
 
 class Affichage3D:
-    def __init__(self,voiture):
+    def __init__(self,environnement):
         self.app = Ursina() # Initialisation de Ursina
-        self.voiture = voiture
+        self.environnement = environnement
+        self.voiture = environnement.vehicule
         self.v_G = self.voiture.vit_Rg
         self.v_D = self.voiture.vit_Rd
 
-    def afficher(self, objects, environnement):
+        # Création du sol                    (x,   y,  z)
+        ground = Entity(model='plane', scale=(100, 1, 100), color=color.white, collider='box')
+        
+        # Création et recupération des obstacles 3D
+        self.objets_3d = []
+        self.generer_obstacles()
+        
+    def afficher(self):
         """
         Affiche l'environnement, y compris le véhicule, les objets (obstacles),
         et la vitesse du véhicule.
         """
-        
-        # Création du sol                    (x,   y,  z)
-        ground = Entity(model='plane', scale=(100, 1, 100), color=color.white, collider='box')
-
 
         # Créer la voiture et les roues
         # Création d'un robot en forme de triangles isocèles
@@ -49,3 +53,20 @@ class Affichage3D:
 
 
         self.app.run()
+
+    def generer_obstacles(self):
+        """Générer dynamiquement les obstacles 3D à partir de l'environnement."""
+        for obj in self.environnement.objects:
+            if len(obj) == 4:  # Obstacle rectangulaire
+                pos_x = (obj[0][0] + obj[2][0]) / 2
+                pos_y = 0.5
+                pos_z = (obj[0][1] + obj[2][1]) / 2
+                scale_x = abs(obj[0][0] - obj[2][0]) / 100
+                scale_z = abs(obj[0][1] - obj[2][1]) / 100
+                obstacle = Entity(model='cube', scale=(scale_x, 1, scale_z), position=(pos_x / 100, pos_y, pos_z / 100), color=color.gray, collider='box')
+                self.objets_3d.append(obstacle)
+            elif len(obj) == 2:  # Obstacle circulaire
+                pos_x, pos_z = obj[0]
+                rayon = obj[1] / 100
+                obstacle = Entity(model='sphere', scale=(rayon, rayon, rayon), position=(pos_x / 100, 0.5, pos_z / 100), color=color.blue, collider='sphere')
+                self.objets_3d.append(obstacle)

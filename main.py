@@ -7,7 +7,6 @@ from src.controleur import Controleur
 import time
 import random as r
 import threading
-from pygame._sdl2 import Window, Renderer  # Pour la deuxième fenêtre
 from src.robot_simulé.outils.camera import CameraView
 
 
@@ -76,9 +75,9 @@ if k==2:
 
 if k==3:
         
-    aff3d=Affichage3D(environnement.vehicule)
+    aff3d=Affichage3D(environnement)
     
-    aff3d.afficher(environnement.objects,environnement)
+    aff3d.afficher()
 
 
      
