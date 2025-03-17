@@ -30,10 +30,11 @@ elif len(sys.argv) == 2:
     assert isinstance(param1, str), "Le paramètre doit être une chaîne de caractères."
 
 else:
-    print("Usage : python3 main.py <number1> <number2> ou python3 main.py <string>")
-    sys.exit(1)
-
-
+    #print("Usage : python3 main.py <number1> <number2> ou python3 main.py <string>")
+    #sys.exit(1)
+    print("il est préférable de donné un argument au main")
+    param1 = None
+    param2 = None
 
 print("Comment voulez vous votre Simulation:\n1-Terminal\n2-Affichage 2D\n3-Affichage 3D\n")
 

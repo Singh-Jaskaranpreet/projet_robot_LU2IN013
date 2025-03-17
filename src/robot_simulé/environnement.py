@@ -70,6 +70,27 @@ class Environnement:
 
         return False
 
+    
+    def segment_cercle_collision(self, seg, centre, rayon):
+        """ Vérifie si un segment intersecte un cercle. """
+        A, B = seg
+        Cx, Cy = centre
+
+        # Vecteur du segment
+        ABx, ABy = B[0] - A[0], B[1] - A[1]
+        ACx, ACy = Cx - A[0], Cy - A[1]
+
+        # Projection du point sur le segment
+        t = max(0, min(1, (ACx * ABx + ACy * ABy) / (ABx**2 + ABy**2)))
+        Px, Py = A[0] + t * ABx, A[1] + t * ABy
+
+        # Distance entre le point projeté et le centre du cercle
+        distance = m.sqrt((Px - Cx)**2 + (Py - Cy)**2)
+        
+        return distance <= rayon
+
+    
+    
     def collision(self):
         """
         Vérifie si une collision se produira lors du prochain déplacement du véhicule.
@@ -85,6 +106,12 @@ class Environnement:
         # Indice du segment en collsion
         indice = 0
 
+        segments_vehicule = [
+        (points_triangle[0], points_triangle[1]),
+        (points_triangle[1], points_triangle[2]),
+        (points_triangle[2], points_triangle[0])
+        ]
+
         # Vérifier les collisions avec les objets
         for obj in self.objects:
             for point in points_triangle :
@@ -92,14 +119,13 @@ class Environnement:
                     if (obj[0][0] <= point[0] <= obj[2][0]) and (obj[0][1] <= point[1] <= obj[2][1]):
                         point_collision.add(indice)
                         break
-                if len(obj) == 2 :
-                    vx, vy = obj[0]
-                    rayon = obj[1]
-                    distance = m.sqrt((point[0] - vx)**2 + (point[1] - vy)**2)
-                    if distance <= rayon:
-                        return True
+                elif len(obj) == 2:  # 🔵 Cas d'un obstacle circulaire
+                    centre, rayon = obj
+                    for seg in segments_vehicule:
+                        if self.segment_cercle_collision(seg, centre, rayon):
+                            return True
+
                     return False
-                    break
                 indice = indice + 1
             if len(point_collision) > 0 :
                 break 
