@@ -27,6 +27,10 @@ class AdaptateurRR(Robot):
         distance_gauche = ( position[0] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
         distance_droite = ( position[1] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
         self.vehicule.offset_motor_encode(3,self.read_encoders())
+        if distance_droite < 0.01 :
+            return distance_gauche
+        elif distance_gauche < 0.01 :
+            return distance_droite    
         return (distance_droite + distance_gauche) / 2
     
     def get_distance(self):
