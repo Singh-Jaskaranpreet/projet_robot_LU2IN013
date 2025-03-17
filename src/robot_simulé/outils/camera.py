@@ -51,3 +51,31 @@ class CameraView:
                 return d
 
         return self.max_distance
+    
+    def render(self):
+        distances = self.cast_rays()
+        if self.renderer:
+            # Effacer l'écran avec une couleur blanche (inversion des couleurs)
+            self.renderer.draw_color = (255, 255, 255, 255)
+            self.renderer.clear()
+
+            # Dessiner chaque rayon comme une colonne de pixels
+            for i, distance in enumerate(distances):
+                column_height = int(5000 / (distance + 1))  # Hauteur relative à la distance
+                column_height = min(self.height, column_height)
+                color_intensity = max(0, int(distance / 4))
+
+                # Définition d'un rectangle pour représenter la colonne
+                rect = pygame.Rect(i, (self.height - column_height) // 2, 1, column_height)
+                
+                # Détection spéciale pour les cercles → on applique une distorsion pour créer une forme arrondie
+                if distance < self.max_distance and isinstance(distance, tuple):  # Si on a détecté un cercle
+                    center_distance = abs(i - self.width // 2)  # Distance par rapport au centre
+                    attenuation = max(0.5, 1 - center_distance / self.width)  # Effet d'arrondi
+                    color_intensity = int(color_intensity * attenuation)
+                
+
+                self.renderer.draw_color = (color_intensity, color_intensity, color_intensity, 255)
+                self.renderer.fill_rect(rect)
+                    # Mettre à jour l'affichage
+            self.renderer.present()
