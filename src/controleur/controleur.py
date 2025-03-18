@@ -69,7 +69,7 @@ class Controleur:
         Exécute la stratégie de contrôle.
         """
         if self.adaptateur.sequence:  # Si une séquence est définie
-            if self.adaptateur.vehicule.environnement.collision():  # Vérifier s'il y a une collision
+            if self.adaptateur.vehicule.get_distance() < 5:  # Vérifier s'il y a une collision
                 print("                                                            ", end = "\r")
                 print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
                 self.adapatateur.sequence = None  # Arrêter la stratégie

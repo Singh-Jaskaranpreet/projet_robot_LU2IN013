@@ -232,3 +232,23 @@ class SuivreObjetStrategy(StrategyAsync):
             vehicule.environnement.asuivre_act = False
             return True  
         return distance < 20
+    
+def faire_carre(strategy, vehicule):
+    """
+    Fait faire un carré au robot
+    :return None
+    """
+    strategy = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
+    strategy.start(vehicule)
+    return strategy
+
+def proche_mur(startegy, vehicule):
+    """
+    Se rapproche le plus possible d'un mur devant lui
+    :return: None
+    """
+    strategy = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
+    strategy.start(vehicule)
+    return strategy
+
+    

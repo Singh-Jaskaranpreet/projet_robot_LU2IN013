@@ -107,14 +107,6 @@ class AdaptateurRR(Robot):
         """
 
         self.vehicule.offset_motor_encode(3,self.read_encoders())
-    
-    def faire_carre(self):
-        """
-        Fait faire un carré au robot
-        :return None
-        """
-        self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
-        self.sequence.start(self.vehicule)
 
     def angle_parcourueRad(self,vitesse):
        """

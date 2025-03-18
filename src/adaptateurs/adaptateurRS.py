@@ -104,15 +104,6 @@ class AdaptateurRS(Robot):
         self.v_roue_gauche(0)
         self.v_roue_droite(0)
 
-    
-    def faire_carre(self):
-        """
-        Fait faire un carré au robot
-        :return None
-        """
-        self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
-        self.sequence.start(self.vehicule)
-
     def angle_parcourueRad(self,vitesse):
         """
         Retourne l'angle parcourue lors de la rotation

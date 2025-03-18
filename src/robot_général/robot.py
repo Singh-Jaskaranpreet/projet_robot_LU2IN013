@@ -79,13 +79,6 @@ class Robot(ABC):
         pass
 
     @abstractmethod
-    def faire_carre(self):
-        """
-        Fait un carré
-        """
-        pass
-
-    @abstractmethod
     def angle_parcourueRad(self,vitesse):
         """
         Retourne l'angle parcourue lors de la rotation

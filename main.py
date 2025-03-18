@@ -8,11 +8,12 @@ import time
 import random as r
 import threading
 from src.robot_simulé.outils.camera import CameraView
-
+from src.strategy import faire_carre, proche_mur
 
 #On récupère les arguments passés en ligne de commande
 global param1
 global param2
+strategy = None
 
 if len(sys.argv) == 3:
     try:
@@ -60,10 +61,12 @@ if s=='R':
 
     else:
         if param1 == "carre":
-            adapRR.faire_carre()
+            strategy = faire_carre(strategy)
+            controleur.executer_strategie()
 
         elif param1 == "mur":
-            pass
+            strategy = proche_mur(strategy)
+            controleur.executer_strategie()
 
 else :
     environnement = Environnement()
@@ -93,7 +96,7 @@ else :
 
     if k==2:
             affichage = Affichage(1200,800)
-            threading.Thread(target=controleur.lire_commandes, daemon=True).start()
+            #threading.Thread(target=controleur.lire_commandes, daemon=True).start()
 
     if k==3:
             
@@ -136,16 +139,18 @@ else :
                                                                                                                                                                                                                     
             else :
                 if param1 =="carre":
-                    adapRS.faire_carre()
+                    strategy = faire_carre(strategy, environnement.vehicule)
+                    controleur2D.executer_strategie(strategy)
                     param1 = None
 
                 elif param1 == "mur":
-                    pass
+                    strategy = proche_mur(strategy, environnement.vehicule)
+                    controleur2D.executer_strategie(strategy)
 
                     
                     
             controleur2D.gerer_evenements()
-            controleur2D.executer_strategie()
+            controleur2D.executer_strategie(strategy)
             controleur.executer_strategie()
 
             environnement.bouger()
