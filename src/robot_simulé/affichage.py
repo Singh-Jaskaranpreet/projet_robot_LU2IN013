@@ -23,6 +23,10 @@ class Affichage:
             """
             Affiche l'environnement, y compris le véhicule, les objets (obstacles),
             et la vitesse du véhicule.
+            :param objects: Liste des objets à afficher
+                type objects: list
+            :param environnement: Environnement de simulation
+                type environnement: Environnement
             """
             pygame.display.set_caption("Simulation de Véhicule")
 
@@ -90,6 +94,8 @@ class Affichage:
         """
         Affiche un petit rectangle sur le véhicule qui représente la caméra.
         Ce rectangle est tourné selon vehicule.angle_servo.
+        :param vehicule: Véhicule de simulation
+            type vehicule: Vehicule
         """
         # Dimensions du rectangle de la caméra
         camera_width = 10

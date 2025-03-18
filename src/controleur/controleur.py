@@ -66,6 +66,9 @@ class Controleur:
                     print("Commande inconnue.")
 
     def executer_strategie(self):
+        """
+        Exécute la stratégie de contrôle.
+        """
         if self.adapVS.sequence:  # Si une séquence est définie
             if self.adapVS.vehicule.environnement.collision():  # Vérifier s'il y a une collision
                 print("                                                            ", end = "\r")

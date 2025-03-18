@@ -8,6 +8,17 @@ class Environnement:
     def __init__(self):
         """
         Initialise l'environnement avec la largeur et la hauteur spécifiées.
+        :param largeur: Largeur de l'environnement
+        :param hauteur: Hauteur de l'environnement
+        :param vehicule: Véhicule à contrôler
+        :param objects: Liste des objets dans l'environnement
+        :param temps: Horloge pour mesurer le temps écoulé
+        :param traces: Liste des positions précédentes du véhicule
+        :param trace_active: Indique si le traçage est actif
+        :param asuivre: Liste des positions à suivre
+        :param direction_cible: Direction actuelle de la cible
+        :param speed_target: Vitesse de la cible
+        :param asuivre_act: Indique si la cible est active
         """
         self.largeur = 1200
         self.hauteur = 800
@@ -33,6 +44,10 @@ class Environnement:
             """
             Calcule l'orientation du triplet de points (p, q, r).
             Retourne 0 si colinéaire, 1 pour anti-horaire et -1 pour horaire.
+            :param p: Premier point
+            :param q: Deuxième point
+            :param r: Troisième point
+            :return: Orientation du triplet de points
             """
             val = (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1])
             if val == 0:
@@ -42,6 +57,10 @@ class Environnement:
         def on_segment(p, q, r):
             """
             Vérifie si le point q est sur le segment pr.
+            :param p: Premier point du segment
+            :param q: Point à vérifier
+            :param r: Deuxième point du segment
+            :return: True si q est sur le segment pr, sinon False
             """
             return (min(p[0], r[0]) <= q[0] <= max(p[0], r[0])) and (min(p[1], r[1]) <= q[1] <= max(p[1], r[1]))
 
@@ -72,7 +91,13 @@ class Environnement:
 
     
     def segment_cercle_collision(self, seg, centre, rayon):
-        """ Vérifie si un segment intersecte un cercle. """
+        """ 
+        Vérifie si un segment intersecte un cercle. 
+        :param seg: Segment à vérifier
+        :param centre: Centre du cercle
+        :param rayon: Rayon du cercle
+        :return: True si le segment intersecte le cercle, sinon False
+        """
         A, B = seg
         Cx, Cy = centre
 
@@ -150,7 +175,6 @@ class Environnement:
         """
         Corrige la position du véhicule.
         :param segment: côté du véhicule en collision
-        :param tourner: savoir si le véhicule a tourné  
         """
         angle = self.vehicule.angle
 
@@ -177,7 +201,9 @@ class Environnement:
         self.vehicule.p_centre = pos      
 
     def rester_dans_limites(self):
-        """ Empêche le véhicule de sortir de l'écran et arrête sa vitesse. """
+        """ 
+        Empêche le véhicule de sortir de l'écran et arrête sa vitesse. 
+        """
         for point in self.vehicule.position_des_roues(self.vehicule.p_centre):
             if point[0] < 0 or point[0] > self.largeur   or point[1] < 0 or point[1] > self.hauteur :
                 self.vehicule.vit_Rd = 0
@@ -188,15 +214,18 @@ class Environnement:
         return
 
     def add_objet(self,objet):
-        """Ajoute l'objet dans l'environnement
-            :param objet: l'objet a ajouter
-            :return: rien
+        """
+        Ajoute l'objet dans l'environnement
+        :param objet: l'objet a ajouter
         """
         self.objects.append(objet)
 
 
     def bouger(self):
-        """Déplace le véhicule selon le modèle cinématique différentiel pendant un pas de temps."""
+        """
+        Déplace le véhicule selon le modèle cinématique différentiel pendant un pas de temps.
+        :return: Les points en collision sinon False
+        """
         collision = self.collision()
         dt = self.temps.get_temps_ecoule()
         
@@ -235,7 +264,9 @@ class Environnement:
         self.vehicule.vit_Rg=0
 
     def tracer_ligne(self):
-        """Ajoute la position actuelle du véhicule à la liste des traces."""
+        """
+        Ajoute la position actuelle du véhicule à la liste des traces.
+        """
         if self.trace_active:
             self.traces.append(tuple(self.vehicule.p_centre))
 
@@ -244,11 +275,15 @@ class Environnement:
         self.traces = []
 
     def basculer_tracage(self):
-        """Active ou désactive le traçage."""
+        """
+        Active ou désactive le traçage.
+        """
         self.trace_active = not self.trace_active  # Bascule entre True et False
 
     def bouger_cible(self):
-        """Déplace la cible aléatoirement en changeant de direction parfois."""
+        """
+        Déplace la cible aléatoirement en changeant de direction parfois.
+        """
         if not self.asuivre:
             return
         dt = self.temps.get_temps_ecoule()

@@ -9,11 +9,16 @@ class CameraView:
         self.height = height
         self.fov = math.radians(120)  # Champ de vision de 60°
         self.num_rays = width        # Un rayon par colonne
-        self.max_distance = 1000     # Distance maximale
+        self.max_distance = 500    # Distance maximale
         self.renderer = renderer
 
 
     def cast_rays(self):
+        """
+        Lance un rayon pour chaque colonne de pixels de l'écran
+        et renvoie une liste de distances détectées
+        :return: Liste de distances détectées
+        """
         pos = self.environnement.vehicule.p_centre
         angle = math.radians(self.environnement.vehicule.angle + self.environnement.vehicule.angle_servo)
         start_angle = angle - self.fov / 2
@@ -29,6 +34,13 @@ class CameraView:
         return distances
     
     def cast_single_ray(self, pos, ray_angle):
+        """
+        Lance un rayon à partir d'une position et d'un angle donnés
+        et renvoie la distance à laquelle il a rencontré un obstacle
+        :param pos: Position de départ du rayon
+        :param ray_angle: Angle du rayon
+        :return: Distance à laquelle le rayon a rencontré un obstacle
+        """
         x, y = pos
         for d in range(0, self.max_distance, 5):
             test_x = x + d * math.cos(ray_angle)
@@ -53,6 +65,9 @@ class CameraView:
         return self.max_distance
     
     def render(self):
+        """
+        Affiche les rayons détectés sur l'écran
+        """
         distances = self.cast_rays()
         if self.environnement.asuivre_act:
                 d = self.afficher_balise()
@@ -97,6 +112,11 @@ class CameraView:
             self.renderer.present()
 
     def afficher_balise(self):
+        """
+        Lance un rayon pour chaque colonne de pixels de l'écran
+        et renvoie une liste de distances détectées
+        :return: Liste de distances détectées
+        """
         pos = self.environnement.vehicule.p_centre
         angle = math.radians(self.environnement.vehicule.angle + self.environnement.vehicule.angle_servo)
         start_angle = angle - self.fov / 2
@@ -112,6 +132,13 @@ class CameraView:
         return distances
 
     def cast_single_ray_b(self, pos, ray_angle):
+        """
+        Lance un rayon à partir d'une position et d'un angle donnés
+        et renvoie la distance à laquelle il a rencontré un obstacle
+        :param pos: Position de départ du rayon
+        :param ray_angle: Angle du rayon
+        :return: Distance à laquelle le rayon a rencontré un obstacle"
+        """
         x, y = pos
         for d in range(0, self.max_distance, 5):
             test_x = x + d * math.cos(ray_angle)

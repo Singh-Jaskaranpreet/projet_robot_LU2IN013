@@ -5,6 +5,23 @@ import math as m
 class Vehicule:
 
     def __init__(self, nom, p_centre,empattement,essieux,environnement,angle = 0):
+        """
+        Constructeur de la classe Vehicule
+        :param nom: Le nom de la voiture
+        :param angle: L'angle de la voiture
+        :param p_centre: Le point central de la voiture
+        :param empattement: La longueur de la voiture
+        :param essieux: La largeur de la voiture
+        :param environnement: L'environnement de la voiture (classe Environnement)
+        :param angle: L'angle de la voiture
+        :param vit_Rg: La vitesse de la roue gauche
+        :param vit_Rd: La vitesse de la roue droite
+        :param starting_point_x: Le point de départ en x
+        :param starting_point_y: Le point de départ en y
+        :param nb_roues: Le nombre de roues
+        :param infrarouge: Le capteur infrarouge
+        :param angle_servo: L'angle du servo
+        """
         self.nom = nom
         self.long=empattement
         self.essieux = essieux
@@ -21,6 +38,10 @@ class Vehicule:
 
     
     def freiner(self, val):
+        """
+        Freine la voiture
+        :param val: La valeur de freinage
+        """
         if self.vit_Rg > 0:
             self.vit_Rg = max(0,self.vit_Rg-val)
         elif self.vit_Rg < 0:
@@ -34,6 +55,7 @@ class Vehicule:
     def get_distance(self):
         """
         Renvoie la distance par rapport a un obstacle s'il existe.
+        :return: float
         """
         return self.infrarouge.mesurer_distance_obstacle(self)
     
@@ -53,6 +75,10 @@ class Vehicule:
 
 
     def servo_rotate(self,position):
+        """
+        Fait tourner le servo
+        :param position: La position du servo
+        """
         self.angle_servo = max(-60, min(position, 60))
         
 

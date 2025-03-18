@@ -11,6 +11,9 @@ class StrategyAsync:
         return True
 
 class AvancerDroitStrategy(StrategyAsync):
+    """
+    Stratégie pour avancer droit sur une distance donnée.
+    """
     def __init__(self, distance):
         self.distance = distance
         self.parcouru = 0
@@ -40,6 +43,9 @@ class AvancerDroitStrategy(StrategyAsync):
         return False
 
 class TournerAngleStrategy(StrategyAsync):
+    """
+    Stratégie pour tourner d'un angle donné.
+    """
     def __init__(self, angle):
         # angle cible en degrés (positif pour gauche, négatif pour droite)
         self.angle_cible = angle  
@@ -80,6 +86,9 @@ class TournerAngleStrategy(StrategyAsync):
         return False
     
 class StrategieSequence(StrategyAsync):
+    """
+    Stratégie pour exécuter une séquence de stratégies.
+    """
     def __init__(self, strategies):
         self.strategies = strategies
         self.index = 0
@@ -102,6 +111,9 @@ class StrategieSequence(StrategyAsync):
         return self.index >= len(self.strategies)
     
 class AccelererStrategy(StrategyAsync):
+    """
+    Stratégie pour accélérer jusqu'à être à une distance (100) d'un obstacle.
+    """
     def __init__(self):
         self.distance_obstacle = 0
         self.vitesse_max = 1000
@@ -124,6 +136,9 @@ class AccelererStrategy(StrategyAsync):
         return False
     
 class DoucementStrategy(StrategyAsync):
+    """
+    Stratégie pour avancer doucement jusqu'à être proche d'un obstacle.
+    """
     def __init__(self):
         self.vitesse_min = 20
 
@@ -144,6 +159,9 @@ class DoucementStrategy(StrategyAsync):
 
 #la startegy pour suivre un objet n'est pas encore fonctionelle une mise à jour est nécessaire
 class SuivreObjetStrategy(StrategyAsync):
+    """
+    Stratégie pour suivre un objet en mouvement.
+    """
     def __init__(self):
         print("la startegy pour suivre un objet n'est pas encore fonctionnelle merci de pateinter jusqu'à la prochaine mise à jour")
         return
