@@ -68,15 +68,15 @@ class Controleur2D:
 
         if keys[pygame.K_s] or param1 == 'carre':  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
-            self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
-            self.sequence.start(self.adaptateur.vehicule)
+            self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
+            self.adaptateur.sequence.start(self.adaptateur)
         #    print("                                                            ", end = "\r")
         #    print("Stratégie séquentielle activée")
 
         if keys[pygame.K_m] or param1 == 'mur':  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
-            self.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
-            self.sequence.start(self.adaptateur.vehicule)
+            self.adaptateur.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
+            self.adaptateur.sequence.start(self.adaptateur)
             print("                                                            ", end = "\r")
             print("Stratégie séquentielle activée")
 
@@ -145,10 +145,10 @@ class Controleur2D:
             if self.adaptateur.vehicule.environnement.collision():  # Vérifier s'il y a une collision
                 print("                                                            ", end = "\r")
                 print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
-                self.adapatateur.sequence = None  # Arrêter la stratégie
+                self.adaptateur.sequence = None  # Arrêter la stratégie
                 self.adaptateur.vehicule.vit_Rd = 0
-                self.adapatateur.vehicule.vit_Rg = 0
-            elif not self.adaptateur.sequence.stop(self.adapVS.vehicule):  # Si la séquence n'est pas terminée
-                self.adaptateur.sequence.step(self.adapVS)  # Passer à l'étape suivante
+                self.adaptateur.vehicule.vit_Rg = 0
+            elif not self.adaptateur.sequence.stop(self.adaptateur):  # Si la séquence n'est pas terminée
+                self.adaptateur.sequence.step(self.adaptateur)  # Passer à l'étape suivante
             else:  # Si la séquence est terminée
                 self.adaptateur.sequence = None  # Réinitialiser la séquence

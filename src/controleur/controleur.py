@@ -75,7 +75,7 @@ class Controleur:
                 self.adapatateur.sequence = None  # Arrêter la stratégie
                 self.adaptateur.vehicule.vit_Rd = 0
                 self.adapatateur.vehicule.vit_Rg = 0
-            elif not self.adaptateur.sequence.stop(self.adapVS.vehicule):  # Si la séquence n'est pas terminée
-                self.adaptateur.sequence.step(self.adapVS)  # Passer à l'étape suivante
+            elif not self.adaptateur.sequence.stop(self.adaptateur):  # Si la séquence n'est pas terminée
+                self.adaptateur.sequence.step(self.adaptateur)  # Passer à l'étape suivante
             else:  # Si la séquence est terminée
                 self.adaptateur.sequence = None  # Réinitialiser la séquence
