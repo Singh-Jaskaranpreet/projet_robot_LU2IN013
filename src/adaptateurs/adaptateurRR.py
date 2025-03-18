@@ -37,9 +37,9 @@ class AdaptateurRR(Robot):
         return self.vehicule.get_distance() / 1000
 
     def get_temps(self):
-        if get_vitesse_Rd() < 0.01:
+        if self.get_vitesse_Rd() < 0.01:
             return self.distance_parcouru() / self.get_vitesse_Rg()
-        if get_vitesse_Rg() < 0.01:
+        if self.get_vitesse_Rg() < 0.01:
             return self.distance_parcouru() / self.get_vitesse_Rd()
         return self.distance_parcouru() / ((self.get_vitesse_Rd() + self.get_vitesse_Rg())/2)
 
@@ -55,7 +55,7 @@ class AdaptateurRR(Robot):
     def reset(self):
         self.vehicule.offset_motor_encode(3,self.read_encoders())
 
-    def v_angulaire():
+    def v_angulaire(self):
         return self.distance_parcouru() / ((self.get_vitesse_Rd + self.get_vitesse_Rg)/2)
     def get_angle(self):
         pass

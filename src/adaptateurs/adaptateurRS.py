@@ -92,6 +92,9 @@ class AdaptateurRS(Robot):
             print("Ligne effacée.")
 
         if keys[pygame.K_b] or param1 == 'balise':
+            print("la startegy pour suivre un objet n'est pas encore fonctionnelle merci de pateinter jusqu'à la prochaine mise à jour")
+
+            return
             now = time.time()
             if now - self.last_t_press >= self.debounce_delay:
                 self.vehicule.environnement.asuivre_act = not self.vehicule.environnement.asuivre_act
@@ -167,9 +170,10 @@ class AdaptateurRS(Robot):
         return self.vehicule.vit_Rd
 
     def reset(self):
-        pass
+        self.v_roue_gauche(0)
+        self.v_roue_droite(0)
 
-    def v_angulaire():
+    def v_angulaire(self):
         return self.distance_parcouru() / ((self.get_vitesse_Rd + self.get_vitesse_Rg)/2)
     
     def get_angle(self):

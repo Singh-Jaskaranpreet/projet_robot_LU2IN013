@@ -18,9 +18,9 @@ class AvancerDroitStrategy(StrategyAsync):
         
     def start(self, vehicule):
         self.parcouru = 0
-        #vehicule.reset()
 
     def step(self, vehicule):
+        vehicule.reset()
         vehicule.avancer(self.vitesse)
         
         # Calculer le temps écoulé depuis la dernière itération
@@ -31,7 +31,13 @@ class AvancerDroitStrategy(StrategyAsync):
         #print(self.parcouru)
 
     def stop(self, vehicule):
-        return self.parcouru >= self.distance
+        if vehicule.get_distance() < 20:
+            vehicule.arreter()
+            return True
+        if self.parcouru >= self.distance:
+            vehicule.arreter()
+            return True
+        return False
 
 class TournerAngleStrategy(StrategyAsync):
     def __init__(self, angle):
@@ -68,7 +74,7 @@ class TournerAngleStrategy(StrategyAsync):
 
     def stop(self, vehicule):
         # Arrêter le virage lorsque l'angle accumulé atteint l'angle cible
-        if self.angle_parcouru >= abs(self.angle_cible) -1:
+        if self.angle_parcouru >= abs(self.angle_cible) -1 or vehicule.get_distance() < 20:
             vehicule.arreter()
             return True
         return False
@@ -102,7 +108,6 @@ class AccelererStrategy(StrategyAsync):
         self.vitesse_depart = 10
 
     def start(self, vehicule):
-        #vehicule.reset()
         self.distance_obstacle = vehicule.get_distance()
 
     def step(self, vehicule):
@@ -113,14 +118,16 @@ class AccelererStrategy(StrategyAsync):
         self.distance_obstacle = vehicule.get_distance()
 
     def stop(self,vehicule):
-        return self.distance_obstacle < 100
+        if self.distance_obstacle < 100:
+            vehicule.arreter()
+            return True
+        return False
     
 class DoucementStrategy(StrategyAsync):
     def __init__(self):
         self.vitesse_min = 20
 
     def start(self, vehicule):
-        #vehicule.reset()
         self.distance_obstacle = vehicule.get_distance()
     
     def step(self, vehicule):
@@ -130,18 +137,21 @@ class DoucementStrategy(StrategyAsync):
         self.distance_obstacle = vehicule.get_distance()
 
     def stop(self, vehicule):
-        if self.distance_obstacle < 50  :
+        if self.distance_obstacle < 20  :
             vehicule.arreter()
             return True
         return False
 
-
+#la startegy pour suivre un objet n'est pas encore fonctionelle une mise à jour est nécessaire
 class SuivreObjetStrategy(StrategyAsync):
     def __init__(self):
+        print("la startegy pour suivre un objet n'est pas encore fonctionnelle merci de pateinter jusqu'à la prochaine mise à jour")
+        return
         self.target = None
         self.current_strategy = None  # Stratégie en cours (tourner ou avancer)
 
     def start(self, vehicule):
+        return
         # On ne stocke plus une position statique, mais on mettra à jour dynamiquement
         if vehicule.environnement.asuivre:
             self.target = vehicule.environnement.asuivre  # Référence directe à la liste
@@ -150,6 +160,8 @@ class SuivreObjetStrategy(StrategyAsync):
         self.current_strategy = None
 
     def step(self, vehicule):
+        return
+
         dt = vehicule.environnement.temps.get_temps_ecoule()
 
         # Vérification si un obstacle est proche
@@ -199,6 +211,7 @@ class SuivreObjetStrategy(StrategyAsync):
                     self.current_strategy = None
 
     def stop(self, vehicule):
+        return True
         # Arrêter la stratégie si la cible est atteinte
         if not self.target or not self.target[0]:
             return True
