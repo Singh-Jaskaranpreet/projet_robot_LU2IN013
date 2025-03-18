@@ -85,7 +85,6 @@ class Robot(ABC):
         """
         pass
 
-    
     @abstractmethod
     def angle_parcourueRad(self,vitesse):
         """

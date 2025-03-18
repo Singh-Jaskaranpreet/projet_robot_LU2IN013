@@ -250,5 +250,7 @@ class AdaptateurRS(Robot):
         :return float
         """
         return super().angle_parcourueRad(vitesse)
+    
+
         
 

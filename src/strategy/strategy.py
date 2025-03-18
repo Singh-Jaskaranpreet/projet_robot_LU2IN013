@@ -65,6 +65,7 @@ class TournerAngleStrategy(StrategyAsync):
             vehicule.v_roue_gauche(self.vitesse_rotation)
             vehicule.v_roue_droite(0)
 
+
         # Calcul de l'incrément d'angle en degrés
         dtheta = m.degrees(vehicule.angle_parcourueRad(self.vitesse_rotation))
         self.angle_parcouru += abs(dtheta)  # On accumule en valeur absolue
@@ -114,15 +115,15 @@ class AccelererStrategy(StrategyAsync):
         self.distance_obstacle = vehicule.get_distance()
 
     def step(self, vehicule):
+        vehicule.reset()
         if 0 < vehicule.get_vitesse_Rg() < self.vitesse_max:
-            vehicule.avancer(vehicule.get_vitesse_Rg()+50)
+            vehicule.avancer(vehicule.get_vitesse_Rg()+20)
         elif vehicule.get_vitesse_Rg() == 0:
             vehicule.avancer(self.vitesse_depart)
         self.distance_obstacle = vehicule.get_distance()
 
     def stop(self,vehicule):
-        if self.distance_obstacle < 100:
-            vehicule.arreter()
+        if self.distance_obstacle < 50:
             return True
         return False
     
@@ -131,14 +132,14 @@ class DoucementStrategy(StrategyAsync):
     Stratégie pour avancer doucement jusqu'à être proche d'un obstacle.
     """
     def __init__(self):
-        self.vitesse_min = 20
+        self.vitesse_min = 10
 
     def start(self, vehicule):
         self.distance_obstacle = vehicule.get_distance()
     
     def step(self, vehicule):
-        
-        vehicule.avancer(self.vitesse_min)
+        if vehicule.get_vitesse_Rg() > self.vitesse_min:
+            vehicule.avancer(vehicule.get_vitesse_Rg()-5)
 
         self.distance_obstacle = vehicule.get_distance()
 
