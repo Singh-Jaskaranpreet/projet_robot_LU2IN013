@@ -5,9 +5,9 @@ app = Ursina()
 # Variable pour contrôler l'état de la simulation
 simulation_running = True
 
+rien = Entity()
 # Création du sol
 ground = Entity(model='plane', scale=(20, 1, 20), color=color.white, collider='box')
-
 # Création du prisme triangulaire avec collider ajusté
 prism = Entity(
     model=Mesh(vertices=[
@@ -23,6 +23,8 @@ prism = Entity(
     collider='box'  # Utilisation du collider pour correspondre à la forme
 )
 
+pivot_d = Entity(position = (0.5, 0.1, 2), parent = prism )
+pivot_g = Entity(position = (-0.5, 0.1, 2) , parnet = prism)
 # Roues de la voiture (en bas du prisme triangulaire)
 front_left_wheel = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent=prism, collider='sphere')
 front_right_wheel = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent=prism, collider='sphere')
@@ -74,14 +76,28 @@ def update():
         camera.position += camera.right * time.dt * 5  # Déplacement à droite
 
     if held_keys['up arrow']:
+        prism.world_parent = rien
+        pivot_d.world_parent = prism
+        pivot_g.world_parent = prism
         move_vehicle(forward=True)
     if held_keys['down arrow']:
+        prism.world_parent = rien
+        pivot_d.world_parent = prism
+        pivot_g.world_parent = prism
         move_vehicle(forward=False)
     if held_keys['left arrow']:
-        steering_angle = max(-max_steering, steering_angle - 40 * time.dt)  # Tourner à gauche
+        pivot_g.world_parent = rien
+        prism.world_parent = pivot_g
+        pivot_d.world_parent = prism
+        pivot_g.rotation_y -= time.dt * 10
+        #steering_angle = max(-max_steering, steering_angle - 40 * time.dt)  # Tourner à gauche
     elif held_keys['right arrow']:
-        steering_angle = min(max_steering, steering_angle + 40 * time.dt)  # Tourner à droite
-
+        pivot_d.world_parent = rien
+        prism.world_parent = pivot_d
+        pivot_g.world_parent = prism
+        pivot_d.rotation_y += time.dt * 10
+        #steering_angle = min(max_steering, steering_angle + 40 * time.dt)  # Tourner à droite
+    
     # Appliquer l'angle de braquage aux roues avant
     front_left_wheel.rotation_y = steering_angle
     front_right_wheel.rotation_y = steering_angle
@@ -100,19 +116,9 @@ def update():
 def move_vehicle(forward=True):
     speed = 5 * time.dt
     direction = 1 if forward else -1
-
-    if abs(steering_angle) > 0.1:  # Si les roues sont tournées
-        turn_radius = wheelbase / math.tan(math.radians(steering_angle))  # Rayon de courbure
-        angular_speed = speed / turn_radius  # Vitesse de rotation
-
-        # Rotation autour du centre du virage
-        prism.rotation_y += math.degrees(angular_speed) * direction
-        prism.x += speed * direction * math.sin(math.radians(prism.rotation_y))
-        prism.z += speed * direction * math.cos(math.radians(prism.rotation_y))
-    else:  # Aller tout droit
-        p = prism.forward
-        prism.x += speed * direction * p[0]
-        prism.z += speed * direction * p[2]
+    p = prism.forward
+    prism.x += speed * direction * p[0]
+    prism.z += speed * direction * p[2]
 
 
 # Position initiale de la caméra

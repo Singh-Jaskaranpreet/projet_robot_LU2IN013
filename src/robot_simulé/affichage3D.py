@@ -42,6 +42,9 @@ class Affichage3D:
         roue_D = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent= vehicule_3d)
         roue_Ar = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black,parent= vehicule_3d)
         
+        # Pivot de la voiture
+        pivot_D = Entity(position = (0.5, 0.1, 2), parent = vehicule_3d )
+        pivot_G = Entity(position = (-0.5, 0.1, 2) , parnet = vehicule_3d )
         return vehicule_3d
 
     def afficher(self):
