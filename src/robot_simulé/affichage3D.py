@@ -13,21 +13,16 @@ class Affichage3D:
         # Création du sol                    (x,   y,  z)
         ground = Entity(model='plane', scale=(100, 1, 100), color=color.white, collider='box')
         
+        #création du vehicule 3D
+        self.vehicule_3d = self.creer_vehicule3D()
+
         # Création et recupération des obstacles 3D
         self.objets_3d = []
         self.generer_obstacles()
         
-    def afficher(self):
-        """
-        Affiche l'environnement, y compris le véhicule, les objets (obstacles),
-        et la vitesse du véhicule.
-        """
-
-        # Créer la voiture et les roues
-        # Création d'un robot en forme de triangles isocèles
-       
-        robot = Entity(
-            model=Mesh(vertices=[
+    def creer_vehicule3D(self):
+        vehicule_3d = Entity(
+        model=Mesh(vertices=[
 
         # Base(triangle isocèle)
             Vec3(0, 0.1, -0.5), # Point 0 (roue arrière)
@@ -43,13 +38,24 @@ class Affichage3D:
         )
 
         # Roues de la voiture (en bas du prisme triangulaire)
-        roue_G = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent=robot)                                                                                                                                                                                                                                                   
-        roue_D = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent= robot)
-        roue_Ar = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black,parent= robot)
+        roue_G = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent= vehicule_3d)                                                                                                                                                                                                                                                   
+        roue_D = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent= vehicule_3d)
+        roue_Ar = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black,parent= vehicule_3d)
+        
+        return vehicule_3d
 
+    def afficher(self):
+        """
+        Affiche l'environnement, y compris le véhicule, les objets (obstacles),
+        et la vitesse du véhicule.
+        """
+
+        # Créer la voiture et les roues
+        # Création d'un robot en forme de triangles isocèles
+       
         # Position initiale de la caméra
         camera.position = (0, 5, -12)
-        camera.look_at(robot)  # Faire en sorte que la caméra regarde le robot
+        camera.look_at(self.vehicule_3d)  # Faire en sorte que la caméra regarde le robot
 
 
         self.app.run()
