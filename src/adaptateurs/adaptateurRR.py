@@ -8,6 +8,7 @@ class AdaptateurRR(Robot):
         :param vehicule: VehiculeR
         """
         self.vehicule=vehicule
+        self.choix = 1
         self.vitesse_RG = 0
         self.vitesse_RD = 0
         self.sequence = None

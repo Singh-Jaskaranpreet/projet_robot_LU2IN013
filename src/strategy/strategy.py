@@ -115,7 +115,6 @@ class AccelererStrategy(StrategyAsync):
         self.distance_obstacle = vehicule.get_distance()
 
     def step(self, vehicule):
-        vehicule.reset()
         if 0 < vehicule.get_vitesse_Rg() < self.vitesse_max:
             vehicule.avancer(vehicule.get_vitesse_Rg()+20)
         elif vehicule.get_vitesse_Rg() == 0:
@@ -139,8 +138,7 @@ class DoucementStrategy(StrategyAsync):
     
     def step(self, vehicule):
         if vehicule.get_vitesse_Rg() > self.vitesse_min:
-            vehicule.avancer(vehicule.get_vitesse_Rg()-5)
-
+            vehicule.avancer(vehicule.get_vitesse_Rg()-20)
         self.distance_obstacle = vehicule.get_distance()
 
     def stop(self, vehicule):

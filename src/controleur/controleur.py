@@ -5,9 +5,8 @@ import threading
 input_active = threading.Event()
 
 class Controleur:
-    def __init__(self,adapVS,adapVF):
-        self.adapVF = adapVF
-        self.adapVS = adapVS
+    def __init__(self,adaptateur):
+        self.adaptateur = adaptateur
         self.choix = True
 
     def lire_commandes(self):

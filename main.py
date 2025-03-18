@@ -49,9 +49,21 @@ while True:
 #Création de l'environnement et d'un véhicule et des adaptateurs
 robot = VehiculeR(0, 0, 0)
 environnement = Environnement()
-adapVS = AdaptateurRS(environnement.vehicule, k)
-adapVR = AdaptateurRR(robot)
-controleur = Controleur(adapVS,adapVR)
+adapRS = AdaptateurRS(environnement.vehicule, k)
+adapRR = AdaptateurRR(robot)
+controleur = Controleur(adapRS,adapRR)
+
+s=''
+while True:
+    try:
+        s = input("Votre choix : ")
+        if s in ['R', 'S']:
+            break #remplacer par la logique de choix
+        print("Version non reconnue")
+    except ValueError:
+        print("Merci de choisir entre R et S")
+
+
 
 # Démarrer l'horloge du véhicule une seule fois
 environnement.temps.demarrer()
