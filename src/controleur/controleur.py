@@ -68,14 +68,14 @@ class Controleur:
         """
         Exécute la stratégie de contrôle.
         """
-        if self.adapVS.sequence:  # Si une séquence est définie
-            if self.adapVS.vehicule.environnement.collision():  # Vérifier s'il y a une collision
+        if self.adaptateur.sequence:  # Si une séquence est définie
+            if self.adaptateur.vehicule.environnement.collision():  # Vérifier s'il y a une collision
                 print("                                                            ", end = "\r")
                 print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
-                self.adapVS.sequence = None  # Arrêter la stratégie
-                self.adapVS.vehicule.vit_Rd = 0
-                self.adapVS.vehicule.vit_Rg = 0
-            elif not self.adapVS.sequence.stop(self.adapVS.vehicule):  # Si la séquence n'est pas terminée
-                self.adapVS.sequence.step(self.adapVS)  # Passer à l'étape suivante
+                self.adapatateur.sequence = None  # Arrêter la stratégie
+                self.adaptateur.vehicule.vit_Rd = 0
+                self.adapatateur.vehicule.vit_Rg = 0
+            elif not self.adaptateur.sequence.stop(self.adapVS.vehicule):  # Si la séquence n'est pas terminée
+                self.adaptateur.sequence.step(self.adapVS)  # Passer à l'étape suivante
             else:  # Si la séquence est terminée
-                self.adapVS.sequence = None  # Réinitialiser la séquence
+                self.adaptateur.sequence = None  # Réinitialiser la séquence

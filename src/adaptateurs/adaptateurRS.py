@@ -3,7 +3,7 @@ from src.robot_général import Robot
 
 
 class AdaptateurRS(Robot):
-    def __init__(self, vehicule, mode):
+    def __init__(self, vehicule):
         """
         Constructeur de la classe AdaptateurRS
         :param vehicule: VehiculeSimule
@@ -12,13 +12,7 @@ class AdaptateurRS(Robot):
         self.vehicule = vehicule
         self.choix = 2
         self.sequence = None
-        self.last_t_press = 0  # Temps du dernier appui sur "T"
-        self.debounce_delay = 0.5  # Délai minimal en secondes (0.5s ici)
-        self.mode = mode  # On stocke le mode (1, 2 ou 3)
-        self.camera_active = False  # Ajout d'une variable pour suivre l'état de la caméra
-        self.camera_window = None
-        self.camera_renderer = None
-        self.camera_view = None
+
    
     def avancer(self,valeur):
         """
