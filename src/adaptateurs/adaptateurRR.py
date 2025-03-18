@@ -106,21 +106,18 @@ class AdaptateurRR(Robot):
         """
 
         self.vehicule.offset_motor_encode(3,self.read_encoders())
-
-    def v_angulaire(self):
-        """
-        Retourne la vitesse angulaire du robot
-        :return float
-        """
-        return self.distance_parcouru() / ((self.get_vitesse_Rd + self.get_vitesse_Rg)/2)
-    
-    def get_angle(self):
-        pass
     
     def faire_carre(self):
         """
         Fait faire un carré au robot
         :return None
         """
-        self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
+        self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
         self.sequence.start(self.vehicule)
+
+    def angle_parcourueRad(self,vitesse):
+       """
+       Retourne l'angle parcourue lors de la rotation"
+       :return float
+       """
+       return super().angle_parcourueRad(vitesse)

@@ -4,7 +4,7 @@ class StrategyAsync:
     def start(self, vehicule):
         pass
     
-    def step(self, vehicule):
+    def step(self, vehicule): 
         pass
     
     def stop(self, vehicule):
@@ -26,8 +26,6 @@ class AvancerDroitStrategy(StrategyAsync):
         vehicule.reset()
         vehicule.avancer(self.vitesse)
         
-        # Calculer le temps écoulé depuis la dernière itération
-        current_time = vehicule.get_temps()
        
         # Mettre à jour la distance parcourue
         self.parcouru += vehicule.distance_parcouru(self.vitesse)
@@ -62,20 +60,13 @@ class TournerAngleStrategy(StrategyAsync):
             # Virage à gauche
             vehicule.v_roue_gauche(0)
             vehicule.v_roue_droite(self.vitesse_rotation)
-            omega = self.vitesse_rotation /  vehicule.get_essieux()
         else:
             # Virage à droite
             vehicule.v_roue_gauche(self.vitesse_rotation)
             vehicule.v_roue_droite(0)
-            omega = self.vitesse_rotation /  vehicule.get_essieux()
-
-        dt = vehicule.get_temps()
-
-        # On prend la valeur absolue pour éviter les erreurs de direction
-        angle_cible_abs = abs(self.angle_cible)
 
         # Calcul de l'incrément d'angle en degrés
-        dtheta = m.degrees(omega * dt)
+        dtheta = m.degrees(vehicule.angle_parcourueRad(self.vitesse_rotation))
         self.angle_parcouru += abs(dtheta)  # On accumule en valeur absolue
 
     def stop(self, vehicule):

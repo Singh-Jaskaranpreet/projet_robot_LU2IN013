@@ -72,13 +72,6 @@ class Robot(ABC):
         pass
 
     @abstractmethod
-    def get_angle(self):
-        """
-        Retourne l'angle du robot
-        """
-        pass
-
-    @abstractmethod
     def reset(self):
         """
         Reset le robot
@@ -92,11 +85,13 @@ class Robot(ABC):
         """
         pass
 
+    
     @abstractmethod
-    def v_angulaire(self):
+    def angle_parcourueRad(self,vitesse):
         """
-        Donne une vitesse angulaire
+        Retourne l'angle parcourue lors de la rotation
         """
-        pass
+        omega = vitesse / self.get_essieux()
+        return omega*self.get_temps()
     
 

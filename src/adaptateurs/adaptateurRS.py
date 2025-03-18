@@ -77,7 +77,7 @@ class AdaptateurRS(Robot):
 
         if keys[pygame.K_s] or param1 == 'carre':  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
-            self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
+            self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
             self.sequence.start(self.vehicule)
         #    print("                                                            ", end = "\r")
         #    print("Stratégie séquentielle activée")
@@ -235,22 +235,20 @@ class AdaptateurRS(Robot):
         self.v_roue_gauche(0)
         self.v_roue_droite(0)
 
-    def v_angulaire(self):
-        """
-        Retourne la vitesse angulaire du robot
-        :return float
-        """
-        return self.distance_parcouru() / ((self.get_vitesse_Rd + self.get_vitesse_Rg)/2)
-    
-    def get_angle(self):
-        pass
     
     def faire_carre(self):
         """
         Fait faire un carré au robot
         :return None
         """
-        self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
+        self.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
         self.sequence.start(self.vehicule)
+
+    def angle_parcourueRad(self,vitesse):
+        """
+        Retourne l'angle parcourue lors de la rotation
+        :return float
+        """
+        return super().angle_parcourueRad(vitesse)
         
 
