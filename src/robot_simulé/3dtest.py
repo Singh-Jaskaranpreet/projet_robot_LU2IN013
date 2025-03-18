@@ -36,7 +36,7 @@ obstacle = Entity(model='cube', scale=(4, 2, 2), position=(0, 0, 5), color=color
 # Fonction de vérification des collisions
 def check_collisions():
     global simulation_running
-    if prism.intersects(obstacle):  # Vérifier si le prisme touche l'obstacle
+    if prism.intersects(obstacle) or front_left_wheel.intersects(obstacle) or front_right_wheel.intersects(obstacle) or back_wheel.intersects(obstacle):  # Vérifier si le prisme touche l'obstacle
         print("Collision détectée !")
         simulation_running = False  # Arrêter la simulation en cas de collision
 
@@ -56,6 +56,9 @@ def update():
         if held_keys['r']:  # On redémarre seulement quand R est pressé
             print("Redémarrage du véhicule")
             simulation_running = True
+            prism.world_parent = rien
+            pivot_d.world_parent = prism
+            pivot_g.world_parent = prism
             prism.position = (0, 0.1, -0.5)  # Réinitialisation de la position du prisme
             prism.rotation_y = 0  # Réinitialisation de la rotation du prisme
             camera.position = (0, 5, -12)  # Réinitialisation de la caméra
