@@ -23,9 +23,9 @@ class Environnement:
         self.largeur = 1200
         self.hauteur = 800
         self.vehicule = Vehicule("Robot",[200, 400] , 50, 40,self)
-        #self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
+        self.objects = [[(400,100),(600,100),(600,600),(400,600)]]  #Liste des objets
         #self.objects = [((400,600),60)] #pour pas avoir d'obstacle
-        self.objects = [] #pour pas avoir d'obstacle
+        #self.objects = [] #pour pas avoir d'obstacle
         self.temps = Horloge()
         self.traces = []
         self.trace_active = False

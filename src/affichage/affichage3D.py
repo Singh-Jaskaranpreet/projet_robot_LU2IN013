@@ -11,8 +11,8 @@ class Affichage3D:
         self.v_D = self.voiture.vit_Rd
 
         # Création du sol                    (x,   y,  z)
-        ground = Entity(model='plane', scale=(environnement.largeur, 1, environnement.hauteur), color=color.white, collider='box')
-        
+        ground = Entity(model='plane', scale=(environnement.largeur, 1, environnement.hauteur), color=color.white, collider='box',position=(environnement.largeur/2,0,environnement.hauteur/2))
+
         #création du vehicule 3D
         self.vehicule_3d = self.creer_vehicule3D()
 
@@ -36,7 +36,7 @@ class Affichage3D:
         color=color.red,  # Remplissage rouge
         position=(0, 0.1, 0)
         )
-
+        vehicule_3d.world_position = (self.voiture.p_centre[0],1,self.voiture.p_centre[1])
         # Roues de la voiture (en bas du prisme triangulaire)
         roue_G = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent= vehicule_3d)                                                                                                                                                                                                                                                   
         roue_D = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent= vehicule_3d)
@@ -55,12 +55,15 @@ class Affichage3D:
 
         # Créer la voiture et les roues
         # Création d'un robot en forme de triangles isocèles
-       
+        
         # Position initiale de la caméra
-        camera.position = (0, 5, -20)
+        camera.position = (self.voiture.p_centre[0], 5, self.voiture.p_centre[1]-20)
         camera.look_at(self.vehicule_3d)  # Faire en sorte que la caméra regarde le robot
         camera.world_parent = self.vehicule_3d
 
+        #
+        self.vehicule_3d.world_position = (self.voiture.p_centre[0],0,self.voiture.p_centre[1])
+        self.vehicule_3d.world_rotation_y = self.voiture.angle
         self.app.run()
 
     def generer_obstacles(self):
@@ -68,14 +71,14 @@ class Affichage3D:
         for obj in self.environnement.objects:
             if len(obj) == 4:  # Obstacle rectangulaire
                 pos_x = (obj[0][0] + obj[2][0]) / 2
-                pos_y = 0.5
+                pos_y = 0
                 pos_z = (obj[0][1] + obj[2][1]) / 2
-                scale_x = abs(obj[0][0] - obj[2][0]) / 100
-                scale_z = abs(obj[0][1] - obj[2][1]) / 100
-                obstacle = Entity(model='cube', scale=(scale_x, 1, scale_z), position=(pos_x / 100, pos_y, pos_z / 100), color=color.gray, collider='box')
+                scale_z = abs(obj[0][0] - obj[2][0])
+                scale_x = abs(obj[0][1] - obj[2][1])
+                obstacle = Entity(model='cube', scale=(scale_x, 2, scale_z), position=(pos_x, pos_y, pos_z), color=color.magenta, collider='box')
                 self.objets_3d.append(obstacle)
             elif len(obj) == 2:  # Obstacle circulaire
                 pos_x, pos_z = obj[0]
-                rayon = obj[1] / 100
-                obstacle = Entity(model='sphere', scale=(rayon, rayon, rayon), position=(pos_x / 100, 0.5, pos_z / 100), color=color.blue, collider='sphere')
+                rayon = obj[1]
+                obstacle = Entity(model='sphere', scale=(rayon, rayon, rayon), position=(pos_x, 0.5, pos_z), color=color.blue, collider='sphere')
                 self.objets_3d.append(obstacle)
