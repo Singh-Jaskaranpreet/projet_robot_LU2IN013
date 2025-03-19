@@ -1,0 +1,35 @@
+Se former sur le moteur de 3D (2h par personne) () ()
+
+faire une camera pour le robot simulé en 2d (pas compter les heures, parce que je devais pas l'implémenter) (Tache supplémentaire)  (approximativement +12h)
+
+Faire en sorte que le mouvement de la 3d fait le meme mouvement que le reel(1h) (1h) () (Tache suplémentaire)
+
+creation du vehicule en 3D(5min) (20min) ()
+
+Réorganisation les fichiers car trop morcelées (10 min)(10 min )(2 min)
+
+choix du moteur graphique3D (20min) (20min) ()
+
+Crée une hiérarchie comme celle expliquée dans le cours, par exemple : main -> robot -> adaptateur RS ou RR -> véhicule R ou véhicule S (10min) (10min) (5min)
+
+Améliorer strategy Doucement (1h) (35 min) (1min)
+
+faire tous les docstring (45 min) (50 min) (5min)
+
+Améliorer strategy Tourner(1h) (45min) (20 min)
+
+Améliorer strategy Accélerer (1h) (1h15) (15min)
+
+Redéfinir les adaptateurs (30min) (10min) (10min)
+
+Améliorer strategy AvanceDroit(1h) (10 min) (5 min)
+
+Adapter Les strategies par rapport au fonction de chacun des véhicules (1h) (20min) (15min)
+
+Faire le robot général (établir les fonctions que l'utilisateur peut utilisé pour intéragir avec le robot) (15min) (20min) (5min)
+
+Gérer les collisions avec les obstacles ronds (2h) (2h30) (20min)
+
+Implementer les obstacles en 3D (30min) (40min) (10min)
+
+Implementer la collision en 3D (20min) (1h) (10min)
