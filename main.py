@@ -37,6 +37,8 @@ else:
     param2 = None
 
 #On choisi quel robot faire bouger
+
+print("Choisir quel robot vous voulez utilisez vos choix sont:\n1- R pour le Robot Réel\n2- S pour le Robot Simulé\n")
 s=''
 while True:
     try:
