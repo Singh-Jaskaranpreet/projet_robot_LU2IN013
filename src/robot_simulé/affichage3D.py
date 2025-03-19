@@ -11,7 +11,7 @@ class Affichage3D:
         self.v_D = self.voiture.vit_Rd
 
         # Création du sol                    (x,   y,  z)
-        ground = Entity(model='plane', scale=(100, 1, 100), color=color.white, collider='box')
+        ground = Entity(model='plane', scale=(environnement.largeur, 1, environnement.hauteur), color=color.white, collider='box')
         
         #création du vehicule 3D
         self.vehicule_3d = self.creer_vehicule3D()
@@ -57,9 +57,9 @@ class Affichage3D:
         # Création d'un robot en forme de triangles isocèles
        
         # Position initiale de la caméra
-        camera.position = (0, 5, -12)
+        camera.position = (0, 5, -20)
         camera.look_at(self.vehicule_3d)  # Faire en sorte que la caméra regarde le robot
-
+        camera.world_parent = self.vehicule_3d
 
         self.app.run()
 
