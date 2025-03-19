@@ -10,7 +10,6 @@ class AdaptateurRS(Robot):
         :param mode: int
         """
         self.vehicule = vehicule
-        self.choix = 2
         self.sequence = None
 
    

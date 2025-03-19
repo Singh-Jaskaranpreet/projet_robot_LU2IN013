@@ -19,7 +19,7 @@ class Controleur:
             input_active.set()
             try:
                 if self.choix:
-                    cmd = input("\nCommande (accelerer, freiner, reculer, set_vRg, set_vRd, acr_Rg, acr_Rd, get_distance, quitter) : ").strip()
+                    cmd = input("\nCommande (set_vRgd, set_vRg, set_vRd, get_distance, quitter) : ").strip()
                 
             except EOFError:
                 continue  # ou break selon votre besoin
@@ -28,37 +28,35 @@ class Controleur:
             input_active.clear()
             if self.choix:
                 # Traitement de la commande (exemple simple)
-                if cmd.startswith("accelerer"):
+                if cmd.startswith("set_vRgd"):
                     try:
                         val = int(cmd.split()[1])
-                        self.adapVS.vehicule.set_vrg(self.adapVS.vehicule.vit_Rg + val)
-                        self.adapVS.vehicule.set_vrd(self.adapVS.vehicule.vit_Rd + val)
+                        self.adaptateur.avancer(val)
                         print(f"[COMMANDE] accelerer de {val}")
                         #bug actuellement à corriger
                     except (IndexError, ValueError):
                         print("Utilisation : accelerer <valeur>")
-                if cmd.startswith("freiner"):
+                elif cmd.startswith("set_vRg"):
                     try:
                         val = int(cmd.split()[1])
-                        self.adapVS.vehicule.freiner(val)
-                        print(f"[COMMANDE] freiner de {val}")
-                    except (IndexError, ValueError):
-                        print("Utilisation : freiner <valeur>")
-                if cmd.startswith("set_vRg"):
-                    try:
-                        val = int(cmd.split()[1])
-                        self.adapVS.vehicule.set_vrg(val)
+                        self.adaptateur.v_roue_gauche(val)
                         print(f"[COMMANDE] Vitesse roue gauche définie à {val}")
                     except (IndexError, ValueError):
                         print("Utilisation : set_vRg <valeur>")
-                if cmd.startswith("set_vRd"):
+                elif cmd.startswith("set_vRd"):
                     try:
                         val = int(cmd.split()[1])
-                        self.adapVS.vehicule.set_vrd(val)
+                        self.adaptateur.v_roue_droite(val)
                         print(f"[COMMANDE] Vitesse roue droite définie à {val}")
                     except (IndexError, ValueError):
                         print("Utilisation : set_vRd <valeur>")
-                if cmd == "quitter":
+                elif cmd.startswith("get_distance"):
+                    try:
+                        val = self.adaptateur.get_distance()
+                        print(f"[COMMANDE] Distance : {val}")
+                    except (IndexError, ValueError):
+                        print("Utilisation : set_vRg <valeur>")
+                elif cmd == "quitter":
                     print("[COMMANDE] Arrêt de la simulation.")
                     sys.exit(0)
                 else:
@@ -72,9 +70,9 @@ class Controleur:
             if self.adaptateur.vehicule.get_distance() < 5:  # Vérifier s'il y a une collision
                 print("                                                            ", end = "\r")
                 print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
-                self.adapatateur.sequence = None  # Arrêter la stratégie
+                self.adaptateur.sequence = None  # Arrêter la stratégie
                 self.adaptateur.vehicule.vit_Rd = 0
-                self.adapatateur.vehicule.vit_Rg = 0
+                self.adaptateur.vehicule.vit_Rg = 0
             elif not self.adaptateur.sequence.stop(self.adaptateur):  # Si la séquence n'est pas terminée
                 self.adaptateur.sequence.step(self.adaptateur)  # Passer à l'étape suivante
             else:  # Si la séquence est terminée
