@@ -62,12 +62,13 @@ if s=='R':
 
     else:
         if param1 == "carre":
+            print('test1\n')
             strategy = faire_carre(strategy, robot)
-            controleur.executer_strategie()
+            controleur.executer_strategie(strategy)
 
         elif param1 == "mur":
             strategy = proche_mur(strategy, robot)
-            controleur.executer_strategie()
+            controleur.executer_strategie(strategy)
 
 else :
     environnement = Environnement()

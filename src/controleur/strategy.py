@@ -32,7 +32,7 @@ class AvancerDroitStrategy(StrategyAsync):
         #print(self.parcouru)
 
     def stop(self, vehicule):
-        if vehicule.get.distance_to_obstacle() < 20:
+        if vehicule.get_distance_to_obstacle() < 20:
             vehicule.arreter()
             return True
         if self.parcouru >= self.distance:
@@ -72,7 +72,7 @@ class TournerAngleStrategy(StrategyAsync):
 
     def stop(self, vehicule):
         # Arrêter le virage lorsque l'angle accumulé atteint l'angle cible
-        if self.angle_parcouru >= abs(self.angle_cible) -1 or vehicule.get.distance_to_obstacle() < 20:
+        if self.angle_parcouru >= abs(self.angle_cible) -1 or vehicule.get_distance_to_obstacle() < 20:
             vehicule.arreter()
             return True
         return False
@@ -112,14 +112,14 @@ class AccelererStrategy(StrategyAsync):
         self.vitesse_depart = 10
 
     def start(self, vehicule):
-        self.distance_obstacle = vehicule.get.distance_to_obstacle()
+        self.distance_obstacle = vehicule.get_distance_to_obstacle()
 
     def step(self, vehicule):
         if 0 < vehicule.get_VrG() < self.vitesse_max:
             vehicule.avancer(vehicule.get_VrG()+20)
         elif vehicule.get_VrG() == 0:
             vehicule.avancer(self.vitesse_depart)
-        self.distance_obstacle = vehicule.get.distance_to_obstacle()
+        self.distance_obstacle = vehicule.get_distance_to_obstacle()
 
     def stop(self,vehicule):
         if self.distance_obstacle < 50:
@@ -134,12 +134,12 @@ class DoucementStrategy(StrategyAsync):
         self.vitesse_min = 10
 
     def start(self, vehicule):
-        self.distance_obstacle = vehicule.get.distance_to_obstacle()
+        self.distance_obstacle = vehicule.get_distance_to_obstacle()
     
     def step(self, vehicule):
         if vehicule.get_VrG() > self.vitesse_min:
             vehicule.avancer(vehicule.get_VrG()-20)
-        self.distance_obstacle = vehicule.get.distance_to_obstacle()
+        self.distance_obstacle = vehicule.get_distance_to_obstacle()
 
     def stop(self, vehicule):
         if self.distance_obstacle < 20  :
@@ -174,7 +174,7 @@ class SuivreObjetStrategy(StrategyAsync):
 
         # Vérification si un obstacle est proche
         obstacle_d = 50  # Distance seuil en pixels
-        if vehicule.get.distance_to_obstacle() < obstacle_d:
+        if vehicule.get_distance_to_obstacle() < obstacle_d:
             # Activer une stratégie d'évitement
             avoidance_angle = 30  # Tourner de 30° pour éviter l'obstacle
             if self.current_strategy is None or not isinstance(self.current_strategy, TournerAngleStrategy):
@@ -238,6 +238,7 @@ def faire_carre(strategy, vehicule):
     Fait faire un carré au robot
     :return None
     """
+    print('test2\n')
     strategy = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
     strategy.start(vehicule)
     return strategy

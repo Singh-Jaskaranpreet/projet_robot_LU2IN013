@@ -62,18 +62,18 @@ class Controleur:
                 else:
                     print("Commande inconnue.")
 
-    def executer_strategie(self):
+    def executer_strategie(self, seq):
         """
         Exécute la stratégie de contrôle.
         """
-        if self.adaptateur.sequence:  # Si une séquence est définie
+        if seq:  # Si une séquence est définie
             if self.adaptateur.vehicule.get_distance() < 5:  # Vérifier s'il y a une collision
                 print("                                                            ", end = "\r")
                 print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
-                self.adaptateur.sequence = None  # Arrêter la stratégie
+                seq = None  # Arrêter la stratégie
                 self.adaptateur.vehicule.vit_Rd = 0
                 self.adaptateur.vehicule.vit_Rg = 0
-            elif not self.adaptateur.sequence.stop(self.adaptateur):  # Si la séquence n'est pas terminée
-                self.adaptateur.sequence.step(self.adaptateur)  # Passer à l'étape suivante
+            elif not seq.stop(self.adaptateur):  # Si la séquence n'est pas terminée
+                seq.step(self.adaptateur)  # Passer à l'étape suivante
             else:  # Si la séquence est terminée
-                self.adaptateur.sequence = None  # Réinitialiser la séquence
+                seq = None  # Réinitialiser la séquence
