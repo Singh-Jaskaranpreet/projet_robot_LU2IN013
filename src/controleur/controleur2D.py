@@ -68,7 +68,7 @@ class Controleur2D:
 
         if keys[pygame.K_s] or param1 == 'carre':  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
-            self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
+            self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
             self.adaptateur.sequence.start(self.adaptateur)
         #    print("                                                            ", end = "\r")
         #    print("Stratégie séquentielle activée")

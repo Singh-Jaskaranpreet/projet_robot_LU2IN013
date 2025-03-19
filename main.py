@@ -140,18 +140,17 @@ else :
             else :
                 if param1 =="carre":
                     strategy = faire_carre(strategy, environnement.vehicule)
-                    controleur2D.executer_strategie(strategy)
+                    controleur.executer_strategie(strategy)
                     param1 = None
 
                 elif param1 == "mur":
                     strategy = proche_mur(strategy, environnement.vehicule)
-                    controleur2D.executer_strategie(strategy)
+                    controleur.executer_strategie(strategy)
 
                     
                     
             controleur2D.gerer_evenements()
-            controleur2D.executer_strategie(strategy)
-            controleur.executer_strategie()
+            controleur2D.executer_strategie()
 
             environnement.bouger()
             environnement.temps.demarrer()

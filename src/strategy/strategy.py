@@ -238,7 +238,7 @@ def faire_carre(strategy, vehicule):
     Fait faire un carré au robot
     :return None
     """
-    strategy = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(-90)] * 4)
+    strategy = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
     strategy.start(vehicule)
     return strategy
 
