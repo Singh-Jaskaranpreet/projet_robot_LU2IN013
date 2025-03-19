@@ -1,5 +1,5 @@
 import pygame
-from src.simulation import Environnement
+from src.simulation.environnement import Environnement
 import math as m
 #LARGEUR, HAUTEUR = 1200, 800
 

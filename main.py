@@ -1,8 +1,8 @@
 import sys
-from src.simulation import Environnement
+from src.simulation.environnement import Environnement
 from src.affichage import Affichage3D,Affichage2D
 from src.modele import AdaptateurRR,AdaptateurRS,VehiculeR
-from src.controleur import Controleur2D,Controleur
+from src.controleur import Controleur3D,Controleur2D,Controleur
 from src.controleur.strategy import *
 import time
 import random as r
@@ -162,6 +162,37 @@ else :
 
             # Affichage
             affichage.afficher(environnement.objects, environnement)
+        
+        if k == 3 :
+            environnement.temps.set_time_scale(1)
+            
+            # Gestion des contrôles par l'utilisateur
+            if param2 is not None:
+                adapRS.v_roue_gauche(param1)
+                adapRS.v_roue_droite(param2)
+                param1=None
+                param2=None
+
+                                                                                                                                                                                                                    
+            else :
+                if param1 =="carre":
+                    strategy = faire_carre(strategy, environnement.vehicule)
+                    controleur.executer_strategie(strategy)
+                    param1 = None
+
+                elif param1 == "mur":
+                    strategy = proche_mur(strategy, environnement.vehicule)
+                    controleur.executer_strategie(strategy)
+
+                    
+                    
+            controleur3D.gerer_evenements()
+            controleur3D.executer_strategie()
+
+            environnement.bouger()
+            environnement.temps.demarrer()
+            environnement.rester_dans_limites()
+
 
         
             
