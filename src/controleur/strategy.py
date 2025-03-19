@@ -30,12 +30,17 @@ class AvancerDroitStrategy(StrategyAsync):
         # Mettre à jour la distance parcourue
         self.parcouru += vehicule.get_distance_parcouru(self.vitesse)
         #print(self.parcouru)
+        print(f'j ai parcourue au totale {self.parcouru}')
 
     def stop(self, vehicule):
+        print(f'la distance ciblé est de {self.distance}')
         if vehicule.get_distance_to_obstacle() < 20:
+            print("Obstacle détecté, arrêt de la stratégie.")
             vehicule.arreter()
             return True
+        print(f'la condition d arrete vaut {self.parcouru >= self.distance}')
         if self.parcouru >= self.distance:
+            print("Distance cible atteinte, arrêt de la stratégie.")
             vehicule.arreter()
             return True
         return False
@@ -71,6 +76,7 @@ class TournerAngleStrategy(StrategyAsync):
         self.angle_parcouru += abs(dtheta)  # On accumule en valeur absolue
 
     def stop(self, vehicule):
+        print(f'on a parcourue {self.angle_parcouru}')
         # Arrêter le virage lorsque l'angle accumulé atteint l'angle cible
         if self.angle_parcouru >= abs(self.angle_cible) -1 or vehicule.get_distance_to_obstacle() < 20:
             vehicule.arreter()
@@ -91,14 +97,16 @@ class StrategieSequence(StrategyAsync):
     
     def step(self, vehicule):
         if self.index < len(self.strategies):
+            print(f"Exécution de la stratégie {self.index + 1}/{len(self.strategies)}")
             strategie = self.strategies[self.index]
             if not strategie.stop(vehicule):
                 strategie.step(vehicule)
             else:
+                print(f"Stratégie {self.index + 1} terminée.")
                 self.index += 1
                 if self.index < len(self.strategies):
                     self.strategies[self.index].start(vehicule)
-    
+
     def stop(self, vehicule):
         return self.index >= len(self.strategies)
     
@@ -238,7 +246,6 @@ def faire_carre(strategy, vehicule):
     Fait faire un carré au robot
     :return None
     """
-    print('test2\n')
     strategy = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
     strategy.start(vehicule)
     return strategy

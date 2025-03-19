@@ -108,7 +108,7 @@ class AdaptateurRS(Robot):
         Retourne l'angle parcourue lors de la rotation
         :return float
         """
-        return super().angle_parcourueRad(vitesse)
+        return super().get_angle_parcourueRad(vitesse)
     
 
         

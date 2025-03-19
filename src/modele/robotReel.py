@@ -76,11 +76,11 @@ class VehiculeR:
         :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
         :dps: la vitesse cible en nombre de degres par seconde
         """
-        if port == "gauche":
+        if port == 1:
             print(f"On donne une vitesse de {dps} à la roue gauche")
-        if port == "droite":
+        if port == 2:
             print(f"On donne une vitesse de {dps} à la roue gauche")
-        if port =="gauche_droite":
+        if port == 3:
             print(f"On donne une vitesse de {dps} à la roue gauche et à la roue droite")
 
     def get_motor_position(self):
@@ -104,7 +104,7 @@ class VehiculeR:
         """
         self._gpg.offset_motor_encoder(port,offset)
         """
-        pass
+        print(f"le port {port} à été mis à {offset}")
 
     def get_distance(self):
         """
@@ -113,7 +113,7 @@ class VehiculeR:
             1. L'intervalle est de **5-8,000** millimeters.
             2. Lorsque la valeur est en dehors de l'intervalle, le retour est **8190**.
         """
-        print("La distance renvoyée par le capteur")
+        print("La distance renvoyée par le capteur est de ...")
         return 1000
 
     def servo_rotate(self,position):

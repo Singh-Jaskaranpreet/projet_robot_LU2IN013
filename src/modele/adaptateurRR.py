@@ -45,19 +45,20 @@ class AdaptateurRR(Robot):
         self.vehicule.set_motor_dps(2, valeur)
         self.vitesse_RD = valeur
 
-    def get_distance_parcouru(self):
+    def get_distance_parcouru(self, vit=0):
         """
         Retourne la distance parcourue par le robot
         :return float
         """
+        print("on renvoie la ditance parcouru")
         position = self.vehicule.get_motor_position()
-        distance_gauche = ( position[0] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
-        distance_droite = ( position[1] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE / 1000 )
+        distance_gauche = ( position[0] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE )#/ 1000 ) je les ai enlever pour le test sinon c'etais beaucoup trop long
+        distance_droite = ( position[1] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE )#/ 1000 )
         self.reset()
         if distance_droite < 0.01 :
             return distance_gauche
         elif distance_gauche < 0.01 :
-            return distance_droite    
+            return distance_droite   
         return (distance_droite + distance_gauche) / 2
     
     def get_distance_to_obstacle(self):
@@ -65,18 +66,21 @@ class AdaptateurRR(Robot):
         Retourne la distance par rapport à un obstacle devant lui
         :return float
         """
-        return self.vehicule.get_distance() / 1000
+        return 50 #self.vehicule.get_distance() / 1000 comme on a return 1000 est qu eon divise par 1000 on a 1 se qui arrete les execution des stratégy
 
     def get_temps(self):
         """
         Retourne le temps écoulé 
         :return float
         """
+        if self.get_VrD() < 0.01:
+            print(f'il sest écoulé{self.get_distance_parcouru() / self.get_VrG()}')
+            return self.get_distance_parcouru() / self.get_VrG()
         if self.get_VrG() < 0.01:
-            return self.distance_parcouru() / self.get_VrG()
-        if self.get_VrG() < 0.01:
-            return self.distance_parcouru() / self.get_VrD()
-        return self.distance_parcouru() / ((self.get_VrD() + self.get_VrG())/2)
+            print(f'il sest écoulé{self.get_distance_parcouru() / self.get_VrD()}')
+            return self.get_distance_parcouru() / self.get_VrD()
+        print(f'il sest écoulé{self.get_distance_parcouru() / ((self.get_VrD() + self.get_VrG())/2)}')
+        return self.get_distance_parcouru() / ((self.get_VrD() + self.get_VrG())/2)
 
     def get_essieux(self):
         """
@@ -104,13 +108,12 @@ class AdaptateurRR(Robot):
         Réinitialise les encodeurs
         :return None
         """
-
-        self.vehicule.offset_motor_encode(3,self.read_encoders())
+        self.vehicule.offset_motor_encoder(3, 0)#self.vehicule.read_encoders()[0]) #ne fonctionne pas avec self.vehicule.read_encoders[0]
 
     def get_angle_parcourueRad(self,vitesse):
        """
        Retourne l'angle parcourue lors de la rotation"
        :return float
        """
-       return super().angle_parcourueRad(vitesse)
+       return super().get_angle_parcourueRad(vitesse)
     

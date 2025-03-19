@@ -49,26 +49,35 @@ while True:
         print("Merci de choisir entre R et S")
 
 if s=='R':
-    robot = VehiculeR(0, 0, 0)
+    robot = VehiculeR()
     adapRR = AdaptateurRR(robot)
     controleur = Controleur(adapRR)
 
     if param2 is not None:
-        adapRR.v_roue_gauche(param1)
-        adapRR.v_roue_droite(param2)
-        param1=None
-        param2=None
+            adapRR.v_roue_gauche(param1)
+            adapRR.v_roue_droite(param2)
+            param1=None
+            param2=None
 
 
     else:
         if param1 == "carre":
-            print('test1\n')
             strategy = faire_carre(strategy, robot)
             controleur.executer_strategie(strategy)
+            param1 = None
+            while not strategy.stop(robot):
+                controleur.executer_strategie(strategy)
+                time.sleep(0.1)
+            print ('on a fait un jolie carré')
 
         elif param1 == "mur":
             strategy = proche_mur(strategy, robot)
             controleur.executer_strategie(strategy)
+            param1 = None
+            while not strategy.stop(robot):
+                controleur.executer_strategie(strategy)
+                time.sleep(0.1)
+            print('on s est rapproché du mur')
 
 else :
     environnement = Environnement()
