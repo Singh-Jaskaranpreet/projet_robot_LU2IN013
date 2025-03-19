@@ -16,28 +16,28 @@ class Robot(ABC):
         pass
     
     @abstractmethod
-    def v_roue_gauche(self,valeur):
+    def set_VrG(self,valeur):
         """
         Donne une vitesse à la roues gauche
         """
         pass
     
     @abstractmethod
-    def v_roue_droite(self,valeur):
+    def set_VrD(self,valeur):
         """
         Donne une vitesse à la roues droite
         """
         pass
     
     @abstractmethod
-    def distance_parcouru(self):
+    def get_distance_parcouru(self):
         """
         Donne la distance parcouru par le robot
         """
         pass
 
     @abstractmethod
-    def get_distance(self):
+    def get_distance_to_obstacle(self):
         """
         Retourne la distance par rapport à un obstacle devant lui
         """
@@ -58,14 +58,14 @@ class Robot(ABC):
         pass
     
     @abstractmethod
-    def get_vitesse_Rg(self):
+    def get_VrG(self):
         """
         Retourne la vitesse de la roue gauche
         """
         pass
 
     @abstractmethod
-    def get_vitesse_Rd(self):
+    def get_VrD(self):
         """
         Retourne la vitesse de la roue droite
         """
@@ -79,7 +79,7 @@ class Robot(ABC):
         pass
 
     @abstractmethod
-    def angle_parcourueRad(self,vitesse):
+    def get_angle_parcourueRad(self,vitesse):
         """
         Retourne l'angle parcourue lors de la rotation
         """

@@ -30,7 +30,7 @@ class AdaptateurRS(Robot):
         self.vehicule.set_vrd(0)
         self.vehicule.set_vrg(0)
 
-    def v_roue_gauche(self,valeur):
+    def set_VrG(self,valeur):
         """
         Donne une vitesse à la roues gauche
         :param valeur: float
@@ -38,7 +38,7 @@ class AdaptateurRS(Robot):
         """
         self.vehicule.set_vrg(valeur)
 
-    def v_roue_droite(self,valeur):
+    def set_VrD(self,valeur):
         """
         Donne une vitesse à la roues droite
         :param valeur: float
@@ -46,14 +46,14 @@ class AdaptateurRS(Robot):
         """
         self.vehicule.set_vrd(valeur)
 
-    def distance_parcouru(self,vit):
+    def get_distance_parcouru(self,vit):
         """
         Retourne la distance parcourue par le robot
         :return float
         """
         return abs(round(0.003*(abs((abs(vit)+abs(vit))/2)),3) * self.get_temps())
     
-    def get_distance(self):
+    def get_distance_to_obstacle(self):
         """
         Retourne la distance par rapport à un obstacle devant lui
         :return float
@@ -81,14 +81,14 @@ class AdaptateurRS(Robot):
         """
         return self.vehicule.p_centre
 
-    def get_vitesse_Rg(self):
+    def get_VrD(self):
         """
         Retourne la vitesse de la roue gauche
         :return float
         """
         return self.vehicule.vit_Rg
 
-    def get_vitesse_Rd(self):
+    def get_VrD(self):
         """
         Retourne la vitesse de la roue droite
         :return float
@@ -100,10 +100,10 @@ class AdaptateurRS(Robot):
         Réinitialise les encodeurs
         :return None
         """
-        self.v_roue_gauche(0)
-        self.v_roue_droite(0)
+        self.set_VrG(0)
+        self.set_VrD(0)
 
-    def angle_parcourueRad(self,vitesse):
+    def get_angle_parcourueRad(self,vitesse):
         """
         Retourne l'angle parcourue lors de la rotation
         :return float
