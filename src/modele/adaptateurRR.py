@@ -1,5 +1,5 @@
-from src.robot_général import Robot
-from src.strategy import *
+from .robotGeneral import Robot
+
 
 class AdaptateurRR(Robot):
     def __init__(self,vehicule):

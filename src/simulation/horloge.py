@@ -1,6 +1,6 @@
 import time
 from datetime import timedelta
-import threading
+
 
 class Horloge:
     def __init__(self):

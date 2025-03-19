@@ -1,5 +1,5 @@
-from src.strategy import *
-from src.robot_général import Robot
+from src.controleur.strategy import *
+from .robotGeneral import Robot
 
 
 class AdaptateurRS(Robot):

@@ -1,4 +1,4 @@
-from .outils import Infrarouge
+from src.simulation.outils import Infrarouge
 import math as m
 
 # Classe Véhicule

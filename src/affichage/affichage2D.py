@@ -1,5 +1,5 @@
 import pygame
-from .environnement import Environnement
+from src.simulation import Environnement
 import math as m
 #LARGEUR, HAUTEUR = 1200, 800
 
@@ -9,7 +9,7 @@ pygame.init()
 def echelle(x):
      return  round(0.003*x,3)
 
-class Affichage:
+class Affichage2D:
     # Dimensions de la fenêtre
     def __init__(self,largeur,hauteur):
          self.largeur=largeur

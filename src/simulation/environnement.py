@@ -1,5 +1,5 @@
 import math as m
-from .vehicule import Vehicule
+from src.modele import Vehicule
 from .horloge import Horloge
 from random import randint, uniform, random
 

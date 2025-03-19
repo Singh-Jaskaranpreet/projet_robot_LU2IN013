@@ -1,9 +1,9 @@
-from src.strategy import *
+from src.controleur import *
 import pygame
 import time
 import sys
 from pygame._sdl2 import Window, Renderer
-from src.robot_simulé.outils.camera import CameraView
+from src.simulation.outils.camera import CameraView
 class Controleur2D:
     def __init__(self,Adaptateur,mode):
         self.adaptateur = Adaptateur

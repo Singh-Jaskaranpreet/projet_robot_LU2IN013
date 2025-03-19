@@ -1,14 +1,13 @@
-from src.robot_réel import VehiculeR
 import sys
-from src.robot_simulé import *
-from src.robot_simulé.affichage3D import Affichage3D
-from src.adaptateurs import AdaptateurRR,AdaptateurRS
-from src.controleur import Controleur,Controleur2D
+from src.simulation import Environnement
+from src.affichage import Affichage3D,Affichage2D
+from src.modele import AdaptateurRR,AdaptateurRS,VehiculeR
+from src.controleur import Controleur2D,Controleur
+from src.controleur.strategy import *
 import time
 import random as r
 import threading
-from src.robot_simulé.outils.camera import CameraView
-from src.strategy import faire_carre, proche_mur
+
 
 #On récupère les arguments passés en ligne de commande
 global param1
@@ -97,7 +96,7 @@ else :
             threading.Thread(target=controleur.lire_commandes, daemon=True).start()
 
     if k==2:
-            affichage = Affichage(1200,800)
+            affichage = Affichage2D(1200,800)
             #threading.Thread(target=controleur.lire_commandes, daemon=True).start()
 
     if k==3:
