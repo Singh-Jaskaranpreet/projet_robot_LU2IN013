@@ -108,7 +108,7 @@ class AccelererStrategy(StrategyAsync):
     """
     def __init__(self):
         self.distance_obstacle = 0
-        self.vitesse_max = 1000
+        self.vitesse_max = 300
         self.vitesse_depart = 10
 
     def start(self, vehicule):
