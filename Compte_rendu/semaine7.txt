@@ -1,0 +1,13 @@
+Coder un adaptateur/traducteur pour le robot simule (30 min) (30min) ()
+
+correction de la stratégie tourner qui se décalait (5 min) (5 min) (5 min)
+
+faire en sorte que le main continue meme si on choisie autre chose que l'option 1 ou 2 (15 min) (10 min) (5 min)
+
+récupérer la position du véhicule pour tracer une ligne dans environnement (15 min) (15 min) (10 min)
+
+activer ou désactiver ou supprimer le tracé dans environnement (15 min) (15 min) (5 min)
+
+activer ou désactiver ou supprimer le tracé dans environnement (15 min) (15 min) (5 min)
+
+Classe de Faux_Robot réel qui ne fait rien et remplace toutes les méthodes par des print (les print affiche par exemple : j'avance, j'avance ...) (15min) (15min) (1min)
