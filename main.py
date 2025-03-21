@@ -199,7 +199,7 @@ else :
                     
                     
             controleur3D.gerer_evenements()
-            controleur3D.executer_strategie()
+            controleur2D.executer_strategie()
 
             environnement.bouger()
             environnement.temps.demarrer()

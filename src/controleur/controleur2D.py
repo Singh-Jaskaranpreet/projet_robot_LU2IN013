@@ -1,4 +1,4 @@
-from src.controleur import *
+from src.controleur.strategy import *
 import pygame
 import time
 import sys
@@ -15,11 +15,9 @@ class Controleur2D:
         self.camera_renderer = None
         self.camera_view = None
 
-    def gerer_evenements(self, param1 = None, param2 = None):
+    def gerer_evenements(self):
         """
         Gère les événements clavier pour contrôler le robot.
-        :param param1: Permet de déclencher une action sans appuyer sur une touche.
-        :param param2: Permet de passer un paramètre à l'action déclenchée.
         :return None
         """
         for event in pygame.event.get():
@@ -27,11 +25,8 @@ class Controleur2D:
                 pygame.quit()
                 sys.exit()
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_RIGHT] or param1 == 'vrd':  # Augmenter la vitesse de la roue droite
-            if param2 != None:
-                self.adaptateur.vehicule.set_vrd(param2)
-            else:
-                self.adaptateur.vehicule.set_vrd(self.adaptateur.vehicule.vit_Rd +1)
+        if keys[pygame.K_RIGHT]:  # Augmenter la vitesse de la roue droite
+            self.adaptateur.vehicule.set_vrd(self.adaptateur.vehicule.vit_Rd +1)
         #    print("                                                       ", end ="\r")
         #    print("on accelere la roues droite, vroum vroum", end ="\r")
 
@@ -40,11 +35,8 @@ class Controleur2D:
         #    print("                                                       ", end ="\r")
         #    print("on ralentie la roues droite, tic... tic...", end ="\r")
 
-        if keys[pygame.K_LEFT] or param1 == 'vrg':  # Augmenter la vitesse de la roue gauche
-            if param2 != None:
-                self.adaptateur.vehicule.set_vrg(param2)
-            else:
-                self.adaptateur.vehicule.set_vrg(self.adaptateur.vehicule.vit_Rg +1)
+        if keys[pygame.K_LEFT]:  # Augmenter la vitesse de la roue gauche
+            self.adaptateur.vehicule.set_vrg(self.adaptateur.vehicule.vit_Rg +1)
         #    print("                                                       ", end ="\r")
         #    print("on accelere la roues gauche, vroum vroum", end ="\r")
 
@@ -53,32 +45,29 @@ class Controleur2D:
         #    print("                                                       ", end ="\r")
         #    print("on ralentie la roues gauche, tic... tic...", end ="\r")
             
-        elif keys[pygame.K_f] or param1 == 'freiner':
-            if param2 != None:
-                self.adaptateur.vehicule.freiner(param2)
-            else:
-                self.adaptateur.vehicule.freiner(0.5)
+        elif keys[pygame.K_f]:
+            self.adaptateur.vehicule.freiner(0.5)
         #    print("                                                       ", end ="\r")
         #    print("le vehicule freine, Pschhh", end ="\r")
 
-        if keys[pygame.K_r] or param1 == 'restart':
+        if keys[pygame.K_r]:
             self.adaptateur.vehicule.environnement.restart()
         #    print("                                                       ", end ="\r")
         #    print("oh la la on retourne à zero", end ="\r")
 
-        if keys[pygame.K_s] or param1 == 'carre':  # Définir une séquence de stratégies
+        if keys[pygame.K_s]:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
             self.adaptateur.sequence.start(self.adaptateur)
         #    print("                                                            ", end = "\r")
         #    print("Stratégie séquentielle activée")
 
-        if keys[pygame.K_m] or param1 == 'mur':  # Définir une séquence de stratégies
+        if keys[pygame.K_m]:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.adaptateur.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
             self.adaptateur.sequence.start(self.adaptateur)
-            print("                                                            ", end = "\r")
-            print("Stratégie séquentielle activée")
+        # print("                                                            ", end = "\r")
+        #   print("Stratégie séquentielle activée")
 
         if keys[pygame.K_t]:
                 now = time.time()
@@ -93,7 +82,7 @@ class Controleur2D:
             print("                                                            ", end = "\r")
             print("Ligne effacée.")
 
-        if keys[pygame.K_b] or param1 == 'balise':
+        if keys[pygame.K_b]:
             print("la startegy pour suivre un objet n'est pas encore fonctionnelle merci de pateinter jusqu'à la prochaine mise à jour")
 
             return

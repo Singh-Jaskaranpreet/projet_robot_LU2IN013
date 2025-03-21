@@ -8,19 +8,14 @@ class Controleur3D:
         self.last_t_press = 0  # Temps du dernier appui sur "T"
         self.debounce_delay = 0.5  # Délai minimal en secondes (0.5s ici)
 
-    def gerer_evenements(self, param1 = None, param2 = None):
+    def gerer_evenements(self):
         """
         Gère les événements clavier pour contrôler le robot.
-        :param param1: Permet de déclencher une action sans appuyer sur une touche.
-        :param param2: Permet de passer un paramètre à l'action déclenchée.
         :return None
         """
 
-        if held_keys ['right arrow'] or param1 == 'vrd':  # Augmenter la vitesse de la roue droite
-            if param2 != None:
-                self.adaptateur.vehicule.set_vrd(param2)
-            else:
-                self.adaptateur.vehicule.set_vrd(self.adaptateur.vehicule.vit_Rd +1)
+        if held_keys['right arrow']:  # Augmenter la vitesse de la roue droite
+            self.adaptateur.vehicule.set_vrd(self.adaptateur.vehicule.vit_Rd +1)
         #    print("                                                       ", end ="\r")
         #    print("on accelere la roues droite, vroum vroum", end ="\r")
 
@@ -29,11 +24,8 @@ class Controleur3D:
         #    print("                                                       ", end ="\r")
         #    print("on ralentie la roues droite, tic... tic...", end ="\r")
 
-        if held_keys ['left arrow'] or param1 == 'vrg':  # Augmenter la vitesse de la roue gauche
-            if param2 != None:
-                self.adaptateur.vehicule.set_vrg(param2)
-            else:
-                self.adaptateur.vehicule.set_vrg(self.adaptateur.vehicule.vit_Rg +1)
+        if held_keys ['left arrow']:  # Augmenter la vitesse de la roue gauche
+            self.adaptateur.vehicule.set_vrg(self.adaptateur.vehicule.vit_Rg +1)
         #    print("                                                       ", end ="\r")
         #    print("on accelere la roues gauche, vroum vroum", end ="\r")
 
@@ -42,29 +34,26 @@ class Controleur3D:
         #    print("                                                       ", end ="\r")
         #    print("on ralentie la roues gauche, tic... tic...", end ="\r")
             
-        elif held_keys ['f'] or param1 == 'freiner':
-            if param2 != None:
-                self.adaptateur.vehicule.freiner(param2)
-            else:
-                self.adaptateur.vehicule.freiner(0.5)
+        #elif held_keys ['f']:
+        #    self.adaptateur.vehicule.freiner(0.5)
         #    print("                                                       ", end ="\r")
         #    print("le vehicule freine, Pschhh", end ="\r")
 
-        if held_keys ['r'] or param1 == 'restart':
+        if held_keys ['r']:
             self.adaptateur.vehicule.environnement.restart()
             camera.world_position = (self.adaptateur.vehicule.p_centre[0], 5, self.adaptateur.vehicule.p_centre[1]-20)
             camera.world_rotation_y = 0
         #    print("                                                       ", end ="\r")
         #    print("oh la la on retourne à zero", end ="\r")
 
-        if held_keys ['s'] or param1 == 'carre':  # Définir une séquence de stratégies
+        if held_keys ['s']:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
             self.adaptateur.sequence.start(self.adaptateur)
         #    print("                                                            ", end = "\r")
         #    print("Stratégie séquentielle activée")
 
-        if held_keys ['m'] or param1 == 'mur':  # Définir une séquence de stratégies
+        if held_keys ['m']:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.adaptateur.sequence = StrategieSequence([AccelererStrategy(), DoucementStrategy()])
             self.adaptateur.sequence.start(self.adaptateur)
