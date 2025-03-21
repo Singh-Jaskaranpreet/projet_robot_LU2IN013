@@ -81,7 +81,7 @@ class AdaptateurRS(Robot):
         """
         return self.vehicule.p_centre
 
-    def get_VrD(self):
+    def get_VrG(self):
         """
         Retourne la vitesse de la roue gauche
         :return float

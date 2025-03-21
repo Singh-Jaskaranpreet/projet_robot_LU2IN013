@@ -92,6 +92,8 @@ else :
             print("Entrée invalide, veuillez saisir un nombre.")
     adapRS = AdaptateurRS(environnement.vehicule)
     controleur2D = Controleur2D(adapRS,k)
+    controleur3D = Controleur3D(adapRS)
+
     #Création du controleur
     controleur = Controleur(adapRS)
 
