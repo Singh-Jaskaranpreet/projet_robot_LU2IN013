@@ -2,14 +2,14 @@ from ursina import *
 
 
 
-class Affichage3D:
-    def __init__(self,environnement):
+class Affichage3D():
+    def __init__(self,environnement,controleur):
         self.app = Ursina() # Initialisation de Ursina
         self.environnement = environnement
         self.voiture = environnement.vehicule
         self.v_G = self.voiture.vit_Rg
         self.v_D = self.voiture.vit_Rd
-
+        self.controleur = controleur
         # Création du sol                    (x,   y,  z)
         ground = Entity(model='plane', scale=(environnement.largeur, 1, environnement.hauteur), color=color.white, collider='box',position=(environnement.largeur/2,0,environnement.hauteur/2))
 
@@ -19,15 +19,19 @@ class Affichage3D:
         # Création et recupération des obstacles 3D
         self.objets_3d = []
         self.generer_obstacles()
+
+        # Position initiale de la caméra
+        camera.position = (self.voiture.p_centre[0], 50, self.voiture.p_centre[1]-200)
+        camera.look_at(self.vehicule_3d)  # Faire en sorte que la caméra regarde le robot
         
     def creer_vehicule3D(self):
         vehicule_3d = Entity(
         model=Mesh(vertices=[
 
         # Base(triangle isocèle)
-            Vec3(0, 0.1, -0.5), # Point 0 (roue arrière)
-            Vec3(-0.5, 0.1, 2),  # Point 1 (roue gauche)
-            Vec3(0.5, 0.1, 2),   # Point 2 (roue droite)
+            Vec3(0, 0.1, -self.voiture.essieux/2), # Point 0 (roue arrière)
+            Vec3(-self.voiture.essieux/2, 0.1, self.voiture.essieux/2),  # Point 1 (roue gauche)
+            Vec3(self.voiture.essieux/2, 0.1, self.voiture.essieux/2),   # Point 2 (roue droite)
             
             ], 
         # Base inférieure(permet de relier les 3 points)
@@ -38,33 +42,23 @@ class Affichage3D:
         )
         vehicule_3d.world_position = (self.voiture.p_centre[0],1,self.voiture.p_centre[1])
         # Roues de la voiture (en bas du prisme triangulaire)
-        roue_G = Entity(model='sphere', scale=0.2, position=(-0.5, 0.1, 2), color=color.black , parent= vehicule_3d)                                                                                                                                                                                                                                                   
-        roue_D = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), color=color.black , parent= vehicule_3d)
-        roue_Ar = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black,parent= vehicule_3d)
-        
-        # Pivot de la voiture
-        pivot_D = Entity(position = (0.5, 0.1, 2), parent = vehicule_3d )
-        pivot_G = Entity(position = (-0.5, 0.1, 2) , parnet = vehicule_3d )
+        roue_G = Entity(model='sphere', scale=2, position=(-self.voiture.essieux/2, 0.1, self.voiture.essieux/2), color=color.black , parent= vehicule_3d)                                                                                                                                                                                                                                                   
+        roue_D = Entity(model='sphere', scale=2, position=(self.voiture.essieux/2, 0.1, self.voiture.essieux/2), color=color.black , parent= vehicule_3d)
+        roue_Ar = Entity(model='sphere', scale=2, position=(0, 0.1, -self.voiture.essieux/2), color=color.black,parent= vehicule_3d)
+
         return vehicule_3d
 
-    def afficher(self):
+    def update(self):
         """
         Affiche l'environnement, y compris le véhicule, les objets (obstacles),
         et la vitesse du véhicule.
         """
 
-        # Créer la voiture et les roues
-        # Création d'un robot en forme de triangles isocèles
-        
-        # Position initiale de la caméra
-        camera.position = (self.voiture.p_centre[0], 5, self.voiture.p_centre[1]-20)
-        camera.look_at(self.vehicule_3d)  # Faire en sorte que la caméra regarde le robot
-        camera.world_parent = self.vehicule_3d
-
-        #
-        self.vehicule_3d.world_position = (self.voiture.p_centre[0],0,self.voiture.p_centre[1])
-        self.vehicule_3d.world_rotation_y = self.voiture.angle
-        self.app.run()
+        self.controleur.gerer_evenements()
+        self.environnement.bouger()
+        self.environnement.rester_dans_limites()
+        self.vehicule_3d.position = (self.voiture.p_centre[0],0,self.voiture.p_centre[1])
+        self.vehicule_3d.rotation_y = self.voiture.angle
 
     def generer_obstacles(self):
         """Générer dynamiquement les obstacles 3D à partir de l'environnement."""

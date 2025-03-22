@@ -113,8 +113,7 @@ else :
 
     if k==3:
             
-        aff3d=Affichage3D(environnement)
-        aff3d.afficher()
+        aff3d=Affichage3D(environnement,controleur3D)
 
     
     x=0
@@ -198,12 +197,8 @@ else :
 
                     
                     
-            controleur3D.gerer_evenements()
-            controleur2D.executer_strategie()
-
-            environnement.bouger()
-            environnement.temps.demarrer()
-            environnement.rester_dans_limites()
+            update = aff3d.update
+            aff3d.app.run()
 
 
         

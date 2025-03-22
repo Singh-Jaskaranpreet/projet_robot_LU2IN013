@@ -41,7 +41,7 @@ class Controleur3D:
 
         if held_keys ['r']:
             self.adaptateur.vehicule.environnement.restart()
-            camera.world_position = (self.adaptateur.vehicule.p_centre[0], 5, self.adaptateur.vehicule.p_centre[1]-20)
+            camera.world_position = (self.adaptateur.vehicule.p_centre[0], 50, self.adaptateur.vehicule.p_centre[1]-200)
             camera.world_rotation_y = 0
         #    print("                                                       ", end ="\r")
         #    print("oh la la on retourne à zero", end ="\r")
