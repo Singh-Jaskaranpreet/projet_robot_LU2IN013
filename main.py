@@ -54,8 +54,8 @@ if s=='R':
     controleur = Controleur(adapRR)
 
     if param2 is not None:
-            adapRR.v_roue_gauche(param1)
-            adapRR.v_roue_droite(param2)
+            adapRR.set_VrG(param1)
+            adapRR.set_VrD(param2)
             param1=None
             param2=None
 

@@ -15,7 +15,7 @@ class Affichage3D():
         ground = Entity(
             model='plane', 
             scale=(self.environnement.largeur, 1, self.environnement.hauteur),
-            color=config.COULEURS['sol'],  # Utilisation de la couleur du sol
+            color=config.COULEURS_3D['sol'],  # Utilisation de la couleur du sol
             collider='box',
             position=(self.environnement.largeur / 2, 0, self.environnement.hauteur / 2)
         )
@@ -43,7 +43,7 @@ class Affichage3D():
             # Base inférieure (permet de relier les 3 points)
             triangles=[(2, 1, 0)]),
             
-            color=config.COULEURS['vehicule'],  # Utiliser la couleur du véhicule
+            color=config.COULEURS_3D['vehicule'],  # Utiliser la couleur du véhicule
             position=(0, 0.1, 0)
         )
 
@@ -54,21 +54,21 @@ class Affichage3D():
             model='sphere', 
             scale=config.TAILLE_ROUE, 
             position=(-config.ESSIEUX / 2, 0.1, config.ESSIEUX / 2), 
-            color=config.COULEURS['roue'], 
+            color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
         roue_D = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
             position=(config.ESSIEUX / 2, 0.1, config.ESSIEUX / 2), 
-            color=config.COULEURS['roue'], 
+            color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
         roue_Ar = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
             position=(0, 0.1, -config.ESSIEUX / 2), 
-            color=config.COULEURS['roue'], 
+            color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
 
@@ -98,7 +98,7 @@ class Affichage3D():
                     model='cube', 
                     scale=(scale_x, 2, scale_z), 
                     position=(pos_x, pos_y, pos_z), 
-                    color=config.COULEURS['obstacle_rect'], 
+                    color=config.COULEURS_3D['obstacle_rect'], 
                     collider='box'
                 )
                 self.objets_3d.append(obstacle)
@@ -109,7 +109,7 @@ class Affichage3D():
                     model='sphere', 
                     scale=(rayon, rayon, rayon), 
                     position=(pos_x, 0.5, pos_z), 
-                    color=config.COULEURS['obstacle_circulaire'], 
+                    color=config.COULEURS_3D['obstacle_circulaire'], 
                     collider='sphere'
                 )
                 self.objets_3d.append(obstacle)

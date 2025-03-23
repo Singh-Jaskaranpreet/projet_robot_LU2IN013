@@ -1,24 +1,28 @@
 from ursina import color  # Importer color depuis ursina
 
-# Affichae 2D
+# Affichage 2D
 # Dimensions de la fenêtre
 LARGEUR = 1200
 HAUTEUR = 800
 
 # Couleurs (Blanc, Noir, Rouge, Vert)
-COULEURS = [(255, 255, 255), (0, 0, 0), (255, 0, 0), (0, 255, 0)]
+COULEURS_2D = [(255, 255, 255), (0, 0, 0), (255, 0, 0), (0, 255, 0)]
 
 # Paramètres pour les roues
-LARGEUR_ROUE = 100  # Largeur de l'ellipse pour les roues
+LARGEUR_ROUE = 10  # Largeur de l'ellipse pour les roues
 HAUTEUR_ROUE = 5   # Hauteur de l'ellipse pour les roues
 
 # Autres paramètres
 VITESSE_ECHELLE = 0.003
 
+#Fonctions pour mettre l'echelle
+def echelle(x):
+    return round(VITESSE_ECHELLE * x, 3)
 
-# Affichae 3D
+
+# Affichage 3D
 # Couleurs utilisées
-COULEURS = {'sol': color.white,'vehicule': color.red,'roue': color.black,'obstacle_rect': color.magenta,'obstacle_circulaire': color.blue}
+COULEURS_3D = {'sol': color.white,'vehicule': color.red,'roue': color.black,'obstacle_rect': color.magenta,'obstacle_circulaire': color.blue}
 
 # Paramètres du véhicule
 ESSIEUX = 10  # Distance entre les roues avant et arrière

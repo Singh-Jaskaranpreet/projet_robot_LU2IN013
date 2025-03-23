@@ -5,8 +5,6 @@ import config
 # Initialisation de Pygame
 pygame.init()
 
-def echelle(x):
-    return round(config.VITESSE_ECHELLE * x, 3)
 
 class Affichage2D:
     # Dimensions de la fenêtre
@@ -14,12 +12,13 @@ class Affichage2D:
         self.largeur = largeur
         self.hauteur = hauteur
         self.screen = pygame.display.set_mode((largeur, hauteur))
-        self.couleurs = config.COULEURS  # Utilisation des couleurs définies dans config
+        self.couleurs = config.COULEURS_2D  # Utilisation des couleurs définies dans config
+        
 
     def afficher(self, objects, environnement):
         pygame.display.set_caption("Simulation de Véhicule")
         self.screen.fill(self.couleurs[0])  # Remplir l'écran en blanc
-
+ 
         # Afficher le véhicule sous forme de triangle
         points_triangle = environnement.vehicule.position_des_roues(environnement.vehicule.p_centre)
         pygame.draw.polygon(self.screen, self.couleurs[2], points_triangle)
@@ -62,11 +61,11 @@ class Affichage2D:
 
         # Afficher la vitesse du véhicule à l'écran
         font = pygame.font.SysFont(None, 36)
-        vitesse_text = font.render(f"Vitesse: {echelle(abs((abs(environnement.vehicule.vit_Rd) + abs(environnement.vehicule.vit_Rg)) / 2))} m/s", True, self.couleurs[1])
+        vitesse_text = font.render(f"Vitesse: {config.echelle(abs((abs(environnement.vehicule.vit_Rd) + abs(environnement.vehicule.vit_Rg)) / 2))} m/s", True, self.couleurs[1])
         self.screen.blit(vitesse_text, (10, 10))
-        distance = font.render(f"Distance:{echelle(environnement.vehicule.get_distance())} m", True, self.couleurs[1])
+        distance = font.render(f"Distance:{config.echelle(environnement.vehicule.get_distance())} m", True, self.couleurs[1])
         self.screen.blit(distance, (10, 40))
-        vitesse = font.render(f"vitesse droite = {echelle(environnement.vehicule.vit_Rd)}, vitesse gauche {echelle(environnement.vehicule.vit_Rg)}", True, self.couleurs[1])
+        vitesse = font.render(f"vitesse droite = {config.echelle(environnement.vehicule.vit_Rd)}, vitesse gauche {config.echelle(environnement.vehicule.vit_Rg)}", True, self.couleurs[1])
         self.screen.blit(vitesse, (10, 770))
         pygame.display.flip()  # Met à jour l'écran
 
