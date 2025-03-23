@@ -1,4 +1,5 @@
 import math as m
+import config
 
 class StrategyAsync:
     def start(self, vehicule):
@@ -16,8 +17,8 @@ class AvancerDroitStrategy(StrategyAsync):
     """
     def __init__(self, distance):
         self.distance = distance
-        self.parcouru = 0
-        self.vitesse = 50
+        self.parcouru = config.PARCOURUE
+        self.vitesse = config.VITESSE
         
     def start(self, vehicule):
         self.parcouru = 0
@@ -25,7 +26,6 @@ class AvancerDroitStrategy(StrategyAsync):
     def step(self, vehicule):
         vehicule.reset()
         vehicule.avancer(self.vitesse)
-        
        
         # Mettre à jour la distance parcourue
         self.parcouru += vehicule.get_distance_parcouru(self.vitesse)
@@ -52,8 +52,8 @@ class TournerAngleStrategy(StrategyAsync):
     def __init__(self, angle):
         # angle cible en degrés (positif pour gauche, négatif pour droite)
         self.angle_cible = angle  
-        self.angle_parcouru = 0  
-        self.vitesse_rotation = 30  # vitesse utilisée pour la roue active durant le virage
+        self.angle_parcouru = config.ANGLE_PARCOURU 
+        self.vitesse_rotation = config.VITESSE_ROTATION  # vitesse utilisée pour la roue active durant le virage
 
     def start(self, vehicule):
         self.angle_parcouru = 0
@@ -115,9 +115,9 @@ class AccelererStrategy(StrategyAsync):
     Stratégie pour accélérer jusqu'à être à une distance (100) d'un obstacle.
     """
     def __init__(self):
-        self.distance_obstacle = 0
-        self.vitesse_max = 300
-        self.vitesse_depart = 10
+        self.distance_obstacle = config.DISTANCE_OBSTACLE
+        self.vitesse_max = config.VITESSE_MAX
+        self.vitesse_depart = config.VITESSE_DEPART
 
     def start(self, vehicule):
         self.distance_obstacle = vehicule.get_distance_to_obstacle()
@@ -139,7 +139,7 @@ class DoucementStrategy(StrategyAsync):
     Stratégie pour avancer doucement jusqu'à être proche d'un obstacle.
     """
     def __init__(self):
-        self.vitesse_min = 10
+        self.vitesse_min = config.VITESSE_MIN
 
     def start(self, vehicule):
         self.distance_obstacle = vehicule.get_distance_to_obstacle()

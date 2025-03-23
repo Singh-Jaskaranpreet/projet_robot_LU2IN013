@@ -1,5 +1,9 @@
 from ursina import color  # Importer color depuis ursina
 
+
+
+#-------------------------------------------------------------------------------------------------------#
+
 # Affichage 2D
 # Dimensions de la fenêtre
 LARGEUR = 1200
@@ -19,6 +23,7 @@ VITESSE_ECHELLE = 0.003
 def echelle(x):
     return round(VITESSE_ECHELLE * x, 3)
 
+#-------------------------------------------------------------------------------------------------------#
 
 # Affichage 3D
 # Couleurs utilisées
@@ -30,3 +35,25 @@ TAILLE_ROUE = 2  # Taille des roues (rayon de la sphère)
 
 # Paramètres de la caméra
 CAMERA_POSITION = (0, 50, -200)  # Position initiale de la caméra
+
+#-------------------------------------------------------------------------------------------------------#
+
+# Stratégie
+#AvancerDroitStrategy(StrategyAsync)
+PARCOURUE = 0
+VITESSE = 50
+
+#TournerAngleStrategy(StrategyAsync)
+ANGLE_PARCOURU = 0
+VITESSE_ROTATION = 30
+
+#AccelererStrategy
+DISTANCE_OBSTACLE = 0
+VITESSE_MAX = 300
+VITESSE_DEPART = 10
+
+#class DoucementStrategy(StrategyAsync)
+VITESSE_MIN = 10
+
+#-------------------------------------------------------------------------------------------------------#
+
