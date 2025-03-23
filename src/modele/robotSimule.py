@@ -1,5 +1,6 @@
 from src.simulation.outils import Infrarouge
 import math as m
+import config
 
 # Classe Véhicule
 class Vehicule:
@@ -27,14 +28,14 @@ class Vehicule:
         self.essieux = essieux
         self.angle = angle %360
         self.p_centre = p_centre
-        self.vit_Rg = 0
-        self.vit_Rd = 0
+        self.vit_Rg = config.VITESSE_RG
+        self.vit_Rd = config.VITESSE_RD
         self.starting_point_x=p_centre[0]
         self.starting_point_y=p_centre[1]
-        self.nb_roues = 3
+        self.nb_roues = config.NB_ROUES
         self.environnement = environnement
         self.infrarouge = Infrarouge()
-        self.angle_servo = 0
+        self.angle_servo = config.ANGLE_SERVO
 
     
     def freiner(self, val):
