@@ -1,5 +1,5 @@
 from .robotGeneral import Robot
-
+import config
 
 class AdaptateurRR(Robot):
     def __init__(self,vehicule):
@@ -8,9 +8,9 @@ class AdaptateurRR(Robot):
         :param vehicule: VehiculeR
         """
         self.vehicule=vehicule
-        self.vitesse_RG = 0
-        self.vitesse_RD = 0
-        self.sequence = None
+        self.vitesse_RG = config.VITESSE_RG
+        self.vitesse_RD = config.VITESSE_RD
+        self.sequence = config.SEQUENCE
 
     def avancer(self,valeur):
         """
