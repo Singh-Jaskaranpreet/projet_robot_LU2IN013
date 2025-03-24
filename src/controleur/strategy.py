@@ -78,7 +78,7 @@ class TournerAngleStrategy(StrategyAsync):
     def stop(self, vehicule):
         print(f'on a parcourue {self.angle_parcouru}')
         # Arrêter le virage lorsque l'angle accumulé atteint l'angle cible
-        if self.angle_parcouru >= abs(self.angle_cible) -1 or vehicule.get_distance_to_obstacle() < 20:
+        if self.angle_parcouru >= abs(self.angle_cible) -1 or vehicule.get_distance_to_obstacle() < config.echelle(20):
             vehicule.arreter()
             return True
         return False

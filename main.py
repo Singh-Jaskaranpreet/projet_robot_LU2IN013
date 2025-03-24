@@ -159,10 +159,12 @@ else :
                     strategy = proche_mur(strategy, environnement.vehicule)
                     controleur.executer_strategie(strategy)
 
-                    
+            if strategy != None:
+                if strategy.stop(environnement.vehicule):
+                    strategy = None       
                     
             controleur2D.gerer_evenements()
-            controleur2D.executer_strategie()
+            controleur2D.executer_strategie(strategy)
 
             environnement.bouger()
             environnement.temps.demarrer()
