@@ -58,7 +58,7 @@ class AdaptateurRS(Robot):
         Retourne la distance par rapport à un obstacle devant lui
         :return float
         """
-        return self.vehicule.infrarouge.mesurer_distance_obstacle(self.vehicule)
+        return abs(round(0.003*self.vehicule.infrarouge.mesurer_distance_obstacle(self.vehicule),3))
 
     def get_temps(self):
         """

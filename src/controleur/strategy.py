@@ -34,7 +34,7 @@ class AvancerDroitStrategy(StrategyAsync):
 
     def stop(self, vehicule):
         print(f'la distance ciblé est de {self.distance}')
-        if vehicule.get_distance_to_obstacle() < 20:
+        if vehicule.get_distance_to_obstacle() < config.echelle(20):
             print("Obstacle détecté, arrêt de la stratégie.")
             vehicule.arreter()
             return True
@@ -130,7 +130,7 @@ class AccelererStrategy(StrategyAsync):
         self.distance_obstacle = vehicule.get_distance_to_obstacle()
 
     def stop(self,vehicule):
-        if self.distance_obstacle < 50:
+        if self.distance_obstacle < config.echelle(50):
             return True
         return False
     
@@ -150,7 +150,7 @@ class DoucementStrategy(StrategyAsync):
         self.distance_obstacle = vehicule.get_distance_to_obstacle()
 
     def stop(self, vehicule):
-        if self.distance_obstacle < 20  :
+        if self.distance_obstacle < config.echelle(20)  :
             vehicule.arreter()
             return True
         return False

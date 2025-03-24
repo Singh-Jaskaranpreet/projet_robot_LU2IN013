@@ -52,9 +52,8 @@ class AdaptateurRR(Robot):
         """
         print("on renvoie la ditance parcouru")
         position = self.vehicule.get_motor_position()
-        print(position)
-        distance_gauche = ( position[0] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE )#/ 1000 ) je les ai enlever pour le test sinon c'etais beaucoup trop long
-        distance_droite = ( position[1] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE )#/ 1000 )
+        distance_gauche = ( position[0] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE)/1000
+        distance_droite = ( position[1] / 360 ) * ( self.vehicule.WHEEL_CIRCUMFERENCE)/1000
         self.reset()
         if distance_droite < 0.01 :
             return distance_gauche

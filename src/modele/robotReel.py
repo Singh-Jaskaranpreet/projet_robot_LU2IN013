@@ -88,7 +88,7 @@ class VehiculeR:
         :return: couple du  degre de rotation des moteurs
         """
         print("On retourne l'etat des moteurs ")
-        return (500,500)
+        return (10,10)
    
     def offset_motor_encoder(self, port, offset):
         """
