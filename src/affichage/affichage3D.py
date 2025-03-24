@@ -36,9 +36,9 @@ class Affichage3D():
             model=Mesh(vertices=[
 
                 # Base (triangle isocèle)
-                Vec3(0, 0.1, -config.ESSIEUX / 2),  # Point 0 (roue arrière)
-                Vec3(-config.ESSIEUX / 2, 0.1, config.ESSIEUX / 2),  # Point 1 (roue gauche)
-                Vec3(config.ESSIEUX / 2, 0.1, config.ESSIEUX / 2),  # Point 2 (roue droite)
+                Vec3(0, 0.1, -self.voiture.long),  # Point 0 (roue arrière)
+                Vec3(-self.voiture.essieux // 2, 0.1, 0),  # Point 1 (roue gauche)
+                Vec3(self.voiture.essieux // 2, 0.1, 0),  # Point 2 (roue droite)
             ],
             # Base inférieure (permet de relier les 3 points)
             triangles=[(2, 1, 0)]),
@@ -47,30 +47,30 @@ class Affichage3D():
             position=(0, 0.1, 0)
         )
 
-        vehicule_3d.world_position = (self.voiture.p_centre[0], 1, self.voiture.p_centre[1])
-
         # Roues du véhicule (en bas du prisme triangulaire)
         roue_G = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
-            position=(-config.ESSIEUX / 2, 0.1, config.ESSIEUX / 2), 
+            position=(-self.voiture.essieux // 2, 0.1, 0), 
             color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
         roue_D = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
-            position=(config.ESSIEUX / 2, 0.1, config.ESSIEUX / 2), 
+            position=(self.voiture.essieux // 2, 0.1, 0), 
             color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
         roue_Ar = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
-            position=(0, 0.1, -config.ESSIEUX / 2), 
+            position=(0, 0.8, -self.voiture.long), 
             color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
+
+        vehicule_3d.world_position = (self.voiture.p_centre[1], 1, self.voiture.p_centre[0])
 
         return vehicule_3d
 
@@ -81,10 +81,11 @@ class Affichage3D():
         """
         self.controleur.gerer_evenements()
         self.environnement.bouger()
+        self.environnement.temps.demarrer()
         self.environnement.rester_dans_limites()
-        self.vehicule_3d.position = (self.voiture.p_centre[0], 0, self.voiture.p_centre[1])
+        self.vehicule_3d.position = (self.voiture.p_centre[1], 1, self.voiture.p_centre[0])
         self.vehicule_3d.rotation_y = self.voiture.angle
-
+        print(self.vehicule_3d.position)
     def generer_obstacles(self):
         """Générer dynamiquement les obstacles 3D à partir de l'environnement."""
         for obj in self.environnement.objects:

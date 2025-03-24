@@ -6,7 +6,7 @@ class Controleur3D:
     def __init__(self,Adaptateur):
         self.adaptateur = Adaptateur
         self.last_t_press = 0  # Temps du dernier appui sur "T"
-        self.debounce_delay = 0.5  # Délai minimal en secondes (0.5s ici)
+        self.debounce_delay = 0.1  # Délai minimal en secondes (0.5s ici)
 
     def gerer_evenements(self):
         """
@@ -41,7 +41,7 @@ class Controleur3D:
 
         if held_keys ['r']:
             self.adaptateur.vehicule.environnement.restart()
-            camera.world_position = (self.adaptateur.vehicule.p_centre[0], 50, self.adaptateur.vehicule.p_centre[1]-200)
+            camera.world_position = (self.adaptateur.vehicule.p_centre[1], 50, 0)
             camera.world_rotation_y = 0
         #    print("                                                       ", end ="\r")
         #    print("oh la la on retourne à zero", end ="\r")
@@ -60,3 +60,15 @@ class Controleur3D:
             print("                                                            ", end = "\r")
             print("Stratégie séquentielle activée")
 
+        if held_keys ['w']:
+            camera.z += 1
+        elif held_keys ['s']:
+            camera.z -= 1
+        if held_keys ['a']:
+            camera.x -= 1
+        elif held_keys ['d']:
+            camera.x += 1
+        if held_keys ['q']:
+            camera.rotation_y -= 1
+        elif held_keys ['e']:
+            camera.rotation_y += 1

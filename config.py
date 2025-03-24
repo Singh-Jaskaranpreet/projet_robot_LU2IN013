@@ -21,6 +21,10 @@ VITESSE_ECHELLE = 0.003
 
 #Fonctions pour mettre l'echelle
 def echelle(x):
+    """
+    Converti l'echelle en metre.
+    :param x: valeur converti  
+    """
     return round(VITESSE_ECHELLE * x, 3)
 
 #-------------------------------------------------------------------------------------------------------#
@@ -34,7 +38,7 @@ ESSIEUX = 40  # Distance entre les roues avant et arrière
 TAILLE_ROUE = 2  # Taille des roues (rayon de la sphère)
 
 # Paramètres de la caméra
-CAMERA_POSITION = (0, 50, -200)  # Position initiale de la caméra
+CAMERA_POSITION = (400, 50, 0)  # Position initiale de la caméra
 
 #-------------------------------------------------------------------------------------------------------#
 
