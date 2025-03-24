@@ -1,5 +1,4 @@
-import config
-
+import math
 class VehiculeR:
     """ 
     Classe d'encapsulation du robot et des senseurs.
@@ -10,10 +9,10 @@ class VehiculeR:
 
     """
     
-    wheel_base_width = config.WHEEL_BASE_WIDTH  # distance (mm) de la roue gauche a la roue droite.
-    wheel_diameter = config.WHEEL_DIAMETER #  diametre de la roue (mm)
-    wheel_base_circumferense = config.WHEEL_BASE_CIRCUMFERENCE # perimetre du cercle de rotation (mm)
-    wheel_circumference  = config.WHEEL_CIRCUMFERENCE  #perimetre de la roue (mm)
+    WHEEL_BASE_WIDTH = 117  # distance (mm) de la roue gauche a la roue droite.
+    WHEEL_DIAMETER = 66.5 #  diametre de la roue (mm)
+    WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
+    WHEEL_CIRCUMFERENCE  = WHEEL_DIAMETER   * math.pi # perimetre de la roue (mm)
     
     
     def __init__(self,nb_img=10,fps=25,resolution=None,servoPort = "SERVO1",motionPort="AD1"):
