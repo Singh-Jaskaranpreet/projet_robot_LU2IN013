@@ -14,7 +14,7 @@ class Affichage3D():
         # Création du sol
         ground = Entity(
             model='plane', 
-            scale=(self.environnement.largeur, 1, self.environnement.hauteur),
+            scale=(self.environnement.hauteur, 1, self.environnement.largeur),
             color=config.COULEURS_3D['sol'],  # Utilisation de la couleur du sol
             collider='box',
             position=(self.environnement.largeur / 2, 0, self.environnement.hauteur / 2)
@@ -65,12 +65,12 @@ class Affichage3D():
         roue_Ar = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
-            position=(0, 0.8, -self.voiture.long), 
+            position=(0, 0.1, -self.voiture.long), 
             color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
 
-        vehicule_3d.world_position = (self.voiture.p_centre[1], 1, self.voiture.p_centre[0])
+        vehicule_3d.world_position = (self.voiture.p_centre[1], 0.1, self.voiture.p_centre[0])
 
         return vehicule_3d
 
@@ -80,6 +80,7 @@ class Affichage3D():
         et la vitesse du véhicule.
         """
         self.controleur.gerer_evenements()
+        self.controleur.executer_strategie()
         self.environnement.bouger()
         self.environnement.temps.demarrer()
         self.environnement.rester_dans_limites()

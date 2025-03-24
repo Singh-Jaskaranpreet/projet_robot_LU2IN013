@@ -72,3 +72,39 @@ class Controleur3D:
             camera.rotation_y -= 1
         elif held_keys ['e']:
             camera.rotation_y += 1
+
+        if held_keys ['c']:  # Définir une séquence de stratégies
+            # Créer une séquence de stratégies et la démarrer
+            self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
+            self.adaptateur.sequence.start(self.adaptateur)
+        #    print("                                                            ", end = "\r")
+        #    print("Stratégie séquentielle activée")
+
+    def executer_strategie(self, seq = None):
+        """
+        Exécute la stratégie de contrôle.
+        """
+        if seq  == None:
+            if self.adaptateur.sequence:  # Si une séquence est définie
+                if self.adaptateur.vehicule.environnement.collision():  # Vérifier s'il y a une collision
+                    print("                                                            ", end = "\r")
+                    print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
+                    self.adaptateur.sequence = None  # Arrêter la stratégie
+                    self.adaptateur.vehicule.vit_Rd = 0
+                    self.adaptateur.vehicule.vit_Rg = 0
+                elif not self.adaptateur.sequence.stop(self.adaptateur):  # Si la séquence n'est pas terminée
+                    self.adaptateur.sequence.step(self.adaptateur)  # Passer à l'étape suivante
+                else:  # Si la séquence est terminée
+                    self.adaptateur.sequence = None  # Réinitialiser la séquence
+        else:
+            if seq:  # Si une séquence est définie
+                if self.adaptateur.vehicule.environnement.collision():  # Vérifier s'il y a une collision
+                    print("                                                            ", end = "\r")
+                    print("Collision détectée ! Arrêt de la stratégie.", end = "\r")
+                    seq = None  # Arrêter la stratégie
+                    self.adaptateur.vehicule.vit_Rd = 0
+                    self.adaptateur.vehicule.vit_Rg = 0
+                elif not seq.stop(self.adaptateur):  # Si la séquence n'est pas terminée
+                    seq.step(self.adaptateur)  # Passer à l'étape suivante
+                else:  # Si la séquence est terminée
+                    seq = None  # Réinitialiser la séquence
