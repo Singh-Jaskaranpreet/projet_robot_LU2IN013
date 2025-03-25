@@ -121,7 +121,10 @@ else :
         if k==1 :
             # Exécuter la stratégie en cours (si applicable)
             controleur.executer_strategie()
-
+            if x > 100:
+                print(f"""\nposition du vehicule :  {environnement.vehicule.p_centre}\nvitesse du vehicule : {environnement.vehicule.vit_Rg}, {environnement.vehicule.vit_Rd}\ndistance d'un obstacle : {environnement.vehicule.get_distance()}""", end = "\r")
+                x=0
+            x+=1
             # Mettre à jour la simulation
             environnement.bouger()
             environnement.rester_dans_limites()

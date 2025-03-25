@@ -39,20 +39,20 @@ class Controleur:
                 elif cmd.startswith("set_vRg"):
                     try:
                         val = int(cmd.split()[1])
-                        self.adaptateur.v_roue_gauche(val)
+                        self.adaptateur.set_VrG(val)
                         print(f"[COMMANDE] Vitesse roue gauche définie à {val}")
                     except (IndexError, ValueError):
                         print("Utilisation : set_vRg <valeur>")
                 elif cmd.startswith("set_vRd"):
                     try:
                         val = int(cmd.split()[1])
-                        self.adaptateur.v_roue_droite(val)
+                        self.adaptateur.set_VrD(val)
                         print(f"[COMMANDE] Vitesse roue droite définie à {val}")
                     except (IndexError, ValueError):
                         print("Utilisation : set_vRd <valeur>")
                 elif cmd.startswith("get_distance"):
                     try:
-                        val = self.adaptateur.get_distance()
+                        val = self.adaptateur.get_distance_to_obstacle()
                         print(f"[COMMANDE] Distance : {val}")
                     except (IndexError, ValueError):
                         print("Utilisation : set_vRg <valeur>")
@@ -62,7 +62,7 @@ class Controleur:
                 else:
                     print("Commande inconnue.")
 
-    def executer_strategie(self, seq):
+    def executer_strategie(self, seq = None):
         if seq:
             print(f"Distance à l'obstacle : {self.adaptateur.vehicule.get_distance()}")
             if self.adaptateur.vehicule.get_distance() < 5:
@@ -76,5 +76,3 @@ class Controleur:
             else:
                 print("Stratégie terminée.")
                 seq = None
-        else:
-            print("Aucune stratégie en cours.")
