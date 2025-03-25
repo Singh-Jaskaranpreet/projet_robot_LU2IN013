@@ -20,8 +20,12 @@ prism = Entity(
         (2, 1, 0),  # Base inférieure
     ]),
     color=color.green,  # Remplissage vert
-    collider='box'  # Utilisation du collider pour correspondre à la forme
+    collider='box',
+    position=(0,0.1,2)# Utilisation du collider pour correspondre à la forme
 )
+
+trace = []
+trace_trait = Entity(model=Mesh(vertices=[],mode='line'),color=color.black)
 
 pivot_d = Entity(position = (0.5, 0.1, 2), parent = prism )
 pivot_g = Entity(position = (-0.5, 0.1, 2) , parnet = prism)
@@ -31,14 +35,14 @@ front_right_wheel = Entity(model='sphere', scale=0.2, position=(0.5, 0.1, 2), co
 back_wheel = Entity(model='sphere', scale=0.2, position=(0, 0.1, -0.5), color=color.black, parent=prism, collider='sphere')
 
 # Obstacle avec collider
-obstacle = Entity(model='cube', scale=(4, 2, 2), position=(0, 0, 5), color=color.black, collider='box')
+#obstacle = Entity(model='cube', scale=(4, 2, 2), position=(0, 0, 5), color=color.black, collider='box')
 
 # Fonction de vérification des collisions
-def check_collisions():
-    global simulation_running
-    if prism.intersects(obstacle) or front_left_wheel.intersects(obstacle) or front_right_wheel.intersects(obstacle) or back_wheel.intersects(obstacle):  # Vérifier si le prisme touche l'obstacle
-        print("Collision détectée !")
-        simulation_running = False  # Arrêter la simulation en cas de collision
+#def check_collisions():
+#    global simulation_running
+#    if prism.intersects(obstacle) or front_left_wheel.intersects(obstacle) or front_right_wheel.intersects(obstacle) or back_wheel.intersects(obstacle):  # Vérifier si le prisme touche l'obstacle
+#        print("Collision détectée !")
+#        simulation_running = False  # Arrêter la simulation en cas de collision
 
 # Variables de direction
 steering_angle = 0  # Angle de braquage des roues avant
@@ -113,7 +117,18 @@ def update():
         camera.rotation_y += 50 * time.dt  # Rotation à droite
 
     # Vérification des collisions à chaque mise à jour
-    check_collisions()
+    #check_collisions()
+
+    # Ajouter la position à la trace si le mouvement est suffisant
+    # Ajouter la position à la trace si le mouvement est suffisant
+    if len(trace) == 0 or (trace[-1] - prism.position).length() > 0.5:  # Si le mouvement est assez grand
+        trace.append(prism.position + (0, 0.1, 0))  # Ajouter la position au tracé
+
+    # Mettre à jour le Mesh de la trace seulement si la trace contient plus d'un point
+    if len(trace) > 1:
+        trace_trait.model.vertices = trace  # Affecter la nouvelle liste de vertices
+        trace_trait.model.generate()  # Générer la trace
+
 
 # Fonction pour déplacer le véhicule en fonction de la rotation des roues avant
 def move_vehicle(forward=True):

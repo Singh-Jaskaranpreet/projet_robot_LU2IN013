@@ -9,6 +9,8 @@ class Affichage3D():
         self.voiture = environnement.vehicule
         self.v_G = self.voiture.vit_Rg
         self.v_D = self.voiture.vit_Rd
+        self.trace = []
+        self.ActiveTrace = False
 
         # Création du sol
         ground = Entity(
@@ -51,6 +53,8 @@ class Affichage3D():
             world_position=(self.environnement.hauteur / 2, 0, 0)        
         )
 
+        
+
         # Création du véhicule 3D
         self.vehicule_3d = self.creer_vehicule3D()
 
@@ -75,7 +79,6 @@ class Affichage3D():
             triangles=[(2, 1, 0)]),
             
             color=config.COULEURS_3D['vehicule'],  # Utiliser la couleur du véhicule
-            position=(0, 0.1, 0)
         )
 
         # Roues du véhicule (en bas du prisme triangulaire)
@@ -101,7 +104,15 @@ class Affichage3D():
             parent=vehicule_3d
         )
 
-        vehicule_3d.world_position = (self.voiture.p_centre[1], 0.1, self.voiture.p_centre[0])
+        vehicule_3d.position = (self.voiture.p_centre[1], 0.1, self.voiture.p_centre[0])
+        
+        #Creation du Trait
+        new_trace_point = Entity(
+                model='cube',
+                scale=(0.5, 0.01, 0.5),  # Cube plat
+                position=vehicule_3d.position + (0, 0.01, 0),  # Position ajustée
+                color=color.black
+            )
 
         return vehicule_3d
 
