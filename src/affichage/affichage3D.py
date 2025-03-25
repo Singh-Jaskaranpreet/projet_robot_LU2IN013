@@ -71,9 +71,9 @@ class Affichage3D():
             model=Mesh(vertices=[
 
                 # Base (triangle isocèle)
-                Vec3(0, 0.1, -self.voiture.long),  # Point 0 (roue arrière)
-                Vec3(-self.voiture.essieux // 2, 0.1, 0),  # Point 1 (roue gauche)
-                Vec3(self.voiture.essieux // 2, 0.1, 0),  # Point 2 (roue droite)
+                Vec3(0, 1, -self.voiture.long),  # Point 0 (roue arrière)
+                Vec3(-self.voiture.essieux // 2, 1, 0),  # Point 1 (roue gauche)
+                Vec3(self.voiture.essieux // 2, 1, 0),  # Point 2 (roue droite)
             ],
             # Base inférieure (permet de relier les 3 points)
             triangles=[(2, 1, 0)]),
@@ -85,36 +85,37 @@ class Affichage3D():
         roue_G = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
-            position=(-self.voiture.essieux // 2, 0.1, 0), 
+            position=(-self.voiture.essieux // 2, 1, 0), 
             color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
         roue_D = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
-            position=(self.voiture.essieux // 2, 0.1, 0), 
+            position=(self.voiture.essieux // 2, 1, 0), 
             color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
         roue_Ar = Entity(
             model='sphere', 
             scale=config.TAILLE_ROUE, 
-            position=(0, 0.1, -self.voiture.long), 
+            position=(0, 1, -self.voiture.long), 
             color=config.COULEURS_3D['roue'], 
             parent=vehicule_3d
         )
 
-        vehicule_3d.position = (self.voiture.p_centre[1], 0.1, self.voiture.p_centre[0])
-        
+        vehicule_3d.position = (self.voiture.p_centre[1], 1, self.voiture.p_centre[0])
+    
+        return vehicule_3d
+    def Tracer(self,position):
+        """Permet de Creer l'entiter qui va être considérer comme un trait"""
         #Creation du Trait
         new_trace_point = Entity(
                 model='cube',
-                scale=(0.5, 0.01, 0.5),  # Cube plat
-                position=vehicule_3d.position + (0, 0.01, 0),  # Position ajustée
+                scale=(0.5, 1, 0.5),  # Cube plat
+                position=position,  # Position ajustée
                 color=color.black
             )
-
-        return vehicule_3d
 
     def generer_obstacles(self):
         """Générer dynamiquement les obstacles 3D à partir de l'environnement."""
