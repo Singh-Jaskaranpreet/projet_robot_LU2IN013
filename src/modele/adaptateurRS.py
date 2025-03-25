@@ -100,8 +100,7 @@ class AdaptateurRS(Robot):
         Réinitialise les encodeurs
         :return None
         """
-        self.set_VrG(0)
-        self.set_VrD(0)
+        return
 
     def get_angle_parcourueRad(self,vitesse):
         """
