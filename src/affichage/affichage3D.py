@@ -17,7 +17,7 @@ class Affichage3D():
             scale=(self.environnement.hauteur, 1, self.environnement.largeur),
             color=config.COULEURS_3D['sol'],  # Utilisation de la couleur du sol
             collider='box',
-            position=(self.environnement.largeur / 2, 0, self.environnement.hauteur / 2)
+            position=(self.environnement.hauteur / 2, 0, self.environnement.largeur / 2)
         )
 
         # Création du véhicule 3D
