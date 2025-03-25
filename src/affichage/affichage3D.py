@@ -86,7 +86,7 @@ class Affichage3D():
         self.environnement.rester_dans_limites()
         self.vehicule_3d.position = (self.voiture.p_centre[1], 1, self.voiture.p_centre[0])
         self.vehicule_3d.rotation_y = self.voiture.angle
-        print(self.vehicule_3d.position)
+
     def generer_obstacles(self):
         """Générer dynamiquement les obstacles 3D à partir de l'environnement."""
         for obj in self.environnement.objects:
@@ -98,8 +98,8 @@ class Affichage3D():
                 scale_x = abs(obj[0][1] - obj[2][1])
                 obstacle = Entity(
                     model='cube', 
-                    scale=(scale_x, 2, scale_z), 
-                    position=(pos_x, pos_y, pos_z), 
+                    scale=(scale_x, 10, scale_z), 
+                    position=(pos_z, pos_y, pos_x), 
                     color=config.COULEURS_3D['obstacle_rect'], 
                     collider='box'
                 )
