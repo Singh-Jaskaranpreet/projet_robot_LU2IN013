@@ -118,12 +118,28 @@ else :
     x=0
     while True :
         if k==1 :
+            
+            # Gestion des contrôles par l'utilisateur
+            if param2 is not None:
+                adapRS.v_roue_gauche(param1)
+                adapRS.v_roue_droite(param2)
+                param1=None
+                param2=None
+
+                                                                                                                                                                                                                    
+            else :
+                if param1 =="carre":
+                    strategy = faire_carre(strategy, environnement.vehicule)
+                    controleur.executer_strategie(strategy)
+                    param1 = None
+
+                elif param1 == "mur":
+                    strategy = proche_mur(strategy, environnement.vehicule)
+                    controleur.executer_strategie(strategy)
+
             # Exécuter la stratégie en cours (si applicable)
-            controleur.executer_strategie()
-            if x > 100:
-                print(f"""\nposition du vehicule :  {environnement.vehicule.p_centre}\nvitesse du vehicule : {environnement.vehicule.vit_Rg}, {environnement.vehicule.vit_Rd}\ndistance d'un obstacle : {environnement.vehicule.get_distance()}""", end = "\r")
-                x=0
-            x+=1
+            controleur.executer_strategie(strategy)
+
             # Mettre à jour la simulation
             environnement.bouger()
             environnement.rester_dans_limites()
@@ -131,6 +147,8 @@ else :
             # Affichage des infos de simulation toutes les 1 seconde
             # seulement si l'utilisateur n'est pas en train de taper une commande
             if  time.time() - last_print > 2:
+                print(f"""\nposition du vehicule :  {environnement.vehicule.p_centre}\nvitesse du vehicule : {environnement.vehicule.vit_Rg}, {environnement.vehicule.vit_Rd}\ndistance d'un obstacle : {environnement.vehicule.get_distance()}""", end = "\r")
+
                 last_print = time.time()
                 
 

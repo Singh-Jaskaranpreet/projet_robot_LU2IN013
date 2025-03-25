@@ -64,7 +64,6 @@ class Controleur:
 
     def executer_strategie(self, seq = None):
         if seq:
-            print(f"Distance à l'obstacle : {self.adaptateur.vehicule.get_distance()}")
             if self.adaptateur.vehicule.get_distance() < 5:
                 print("Collision détectée ! Arrêt de la stratégie.")
                 seq = None
@@ -74,5 +73,5 @@ class Controleur:
                 print("Exécution de l'étape suivante de la stratégie.")
                 seq.step(self.adaptateur)
             else:
-                print("Stratégie terminée.")
                 seq = None
+
