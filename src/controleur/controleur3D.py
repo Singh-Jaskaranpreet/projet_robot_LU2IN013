@@ -46,7 +46,7 @@ class Controleur3D:
         #    print("                                                       ", end ="\r")
         #    print("oh la la on retourne à zero", end ="\r")
 
-        if held_keys ['s']:  # Définir une séquence de stratégies
+        if held_keys ['c']:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
             self.adaptateur.sequence.start(self.adaptateur)
@@ -60,6 +60,7 @@ class Controleur3D:
             print("                                                            ", end = "\r")
             print("Stratégie séquentielle activée")
 
+        # Controle pour bouger la camera
         if held_keys ['w']:
             camera.x += camera.forward[0]
             camera.z += camera.forward[2]
@@ -78,13 +79,6 @@ class Controleur3D:
             camera.rotation_y -= 1
         elif held_keys ['e']:
             camera.rotation_y += 1
-
-        if held_keys ['c']:  # Définir une séquence de stratégies
-            # Créer une séquence de stratégies et la démarrer
-            self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
-            self.adaptateur.sequence.start(self.adaptateur)
-        #    print("                                                            ", end = "\r")
-        #    print("Stratégie séquentielle activée")
 
     def executer_strategie(self, seq = None):
         """

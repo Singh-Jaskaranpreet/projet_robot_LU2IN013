@@ -55,7 +55,7 @@ class Controleur2D:
         #    print("                                                       ", end ="\r")
         #    print("oh la la on retourne à zero", end ="\r")
 
-        if keys[pygame.K_s]:  # Définir une séquence de stratégies
+        if keys[pygame.K_c]:  # Définir une séquence de stratégies
             # Créer une séquence de stratégies et la démarrer
             self.adaptateur.sequence = StrategieSequence([AvancerDroitStrategy(0.75), TournerAngleStrategy(90)] * 4)
             self.adaptateur.sequence.start(self.adaptateur)
