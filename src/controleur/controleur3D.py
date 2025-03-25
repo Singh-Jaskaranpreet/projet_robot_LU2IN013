@@ -106,7 +106,7 @@ class Controleur3D:
         # Ajoute un nouveau cube à la trace si la distance entre les points est suffisante
             if len(self.affichage.trace) == 0 or (self.affichage.trace[-1] is not None and (self.affichage.trace[-1].position - self.affichage.vehicule_3d.position).length() > 0.5):
         # Crée un cube plat pour la trace
-                new_cube = self.affichage.Tracer(self.affichage.vehicule_3d.position + (0, 0.5, 0))
+                new_cube = self.affichage.Tracer(self.affichage.vehicule_3d.position + (0, 0.1, 0))
                 if new_cube is not None:
                     self.affichage.trace.append(new_cube)  # Ajoute le cube à la liste de trace
 
