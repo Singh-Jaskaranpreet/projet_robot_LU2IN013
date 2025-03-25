@@ -92,7 +92,6 @@ else :
             print("Entrée invalide, veuillez saisir un nombre.")
     adapRS = AdaptateurRS(environnement.vehicule)
     controleur2D = Controleur2D(adapRS,k)
-    controleur3D = Controleur3D(adapRS)
 
     #Création du controleur
     controleur = Controleur(adapRS)
@@ -113,8 +112,8 @@ else :
 
     if k==3:
             
-        aff3d=Affichage3D(environnement,controleur3D)
-
+        aff3d=Affichage3D(environnement)
+        controleur3D = Controleur3D(adapRS,aff3d)
     
     x=0
     while True :
@@ -200,7 +199,7 @@ else :
 
                     
                     
-            update = aff3d.update
+            update = controleur3D.update
             aff3d.app.run()
 
 

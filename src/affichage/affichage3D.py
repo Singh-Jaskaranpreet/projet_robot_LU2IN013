@@ -3,13 +3,12 @@ import config
 
 
 class Affichage3D():
-    def __init__(self, environnement, controleur):
+    def __init__(self, environnement):
         self.app = Ursina()  # Initialisation de Ursina
         self.environnement = environnement
         self.voiture = environnement.vehicule
         self.v_G = self.voiture.vit_Rg
         self.v_D = self.voiture.vit_Rd
-        self.controleur = controleur
 
         # Création du sol
         ground = Entity(
@@ -105,19 +104,6 @@ class Affichage3D():
         vehicule_3d.world_position = (self.voiture.p_centre[1], 0.1, self.voiture.p_centre[0])
 
         return vehicule_3d
-
-    def update(self):
-        """
-        Affiche l'environnement, y compris le véhicule, les objets (obstacles),
-        et la vitesse du véhicule.
-        """
-        self.controleur.gerer_evenements()
-        self.controleur.executer_strategie()
-        self.environnement.bouger()
-        self.environnement.temps.demarrer()
-        self.environnement.rester_dans_limites()
-        self.vehicule_3d.position = (self.voiture.p_centre[1], 0.1, self.voiture.p_centre[0])
-        self.vehicule_3d.rotation_y = self.voiture.angle
 
     def generer_obstacles(self):
         """Générer dynamiquement les obstacles 3D à partir de l'environnement."""

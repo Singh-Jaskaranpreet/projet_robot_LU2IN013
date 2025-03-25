@@ -3,10 +3,11 @@ from ursina import *
 
 
 class Controleur3D:
-    def __init__(self,Adaptateur):
+    def __init__(self,Adaptateur,affichage):
         self.adaptateur = Adaptateur
         self.last_t_press = 0  # Temps du dernier appui sur "T"
         self.debounce_delay = 0.1  # Délai minimal en secondes (0.5s ici)
+        self.affichage = affichage
 
     def gerer_evenements(self):
         """
@@ -79,6 +80,19 @@ class Controleur3D:
             camera.rotation_y -= 1
         elif held_keys ['e']:
             camera.rotation_y += 1
+
+    def update(self):
+        """
+        Affiche l'environnement, y compris le véhicule, les objets (obstacles),
+        et la vitesse du véhicule.
+        """
+        self.gerer_evenements()
+        self.executer_strategie()
+        self.affichage.environnement.bouger()
+        self.affichage.environnement.temps.demarrer()
+        self.affichage.environnement.rester_dans_limites()
+        self.affichage.vehicule_3d.position = (self.affichage.voiture.p_centre[1], 0.1, self.affichage.voiture.p_centre[0])
+        self.affichage.vehicule_3d.rotation_y = self.affichage.voiture.angle
 
     def executer_strategie(self, seq = None):
         """
