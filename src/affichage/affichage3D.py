@@ -17,7 +17,39 @@ class Affichage3D():
             scale=(self.environnement.hauteur, 1, self.environnement.largeur),
             color=config.COULEURS_3D['sol'],  # Utilisation de la couleur du sol
             collider='box',
-            position=(self.environnement.hauteur / 2, 0, self.environnement.largeur / 2)
+            position=(self.environnement.hauteur / 2, 0, self.environnement.largeur / 2),
+        )
+
+        mur_face = Entity(
+            model='cube',
+            scale=(self.environnement.hauteur, 100, 0),
+            color=config.COULEURS_3D['mur'],
+            collider='box',
+            world_position=(self.environnement.hauteur / 2, 0, self.environnement.largeur)
+        )
+
+        mur_gauche = Entity(
+            model='cube',
+            scale=(0, 100, self.environnement.largeur),
+            color=config.COULEURS_3D['mur'],
+            collider='box',
+            world_position=(self.environnement.hauteur, 0, self.environnement.largeur/2)
+        )
+
+        mur_droite = Entity(
+            model='cube',
+            scale=(0, 100, self.environnement.largeur),
+            color=config.COULEURS_3D['mur'],
+            collider='box',
+            world_position=(0, 0, self.environnement.largeur/2)            
+        )
+
+        mur_der = Entity(
+            model='cube',
+            scale=(self.environnement.hauteur, 100, 0),
+            color=config.COULEURS_3D['mur'],
+            collider='box',
+            world_position=(self.environnement.hauteur / 2, 0, 0)        
         )
 
         # Création du véhicule 3D
@@ -84,7 +116,7 @@ class Affichage3D():
         self.environnement.bouger()
         self.environnement.temps.demarrer()
         self.environnement.rester_dans_limites()
-        self.vehicule_3d.position = (self.voiture.p_centre[1], 1, self.voiture.p_centre[0])
+        self.vehicule_3d.position = (self.voiture.p_centre[1], 0.1, self.voiture.p_centre[0])
         self.vehicule_3d.rotation_y = self.voiture.angle
 
     def generer_obstacles(self):

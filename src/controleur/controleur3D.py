@@ -61,13 +61,19 @@ class Controleur3D:
             print("Stratégie séquentielle activée")
 
         if held_keys ['w']:
-            camera.z += 1
+            camera.x += camera.forward[0]
+            camera.z += camera.forward[2]
         elif held_keys ['s']:
-            camera.z -= 1
+            camera.x -= camera.forward[0]
+            camera.z -= camera.forward[2]
+        if held_keys ['z']:
+            camera.position += camera.forward
+        elif held_keys ['x']:
+            camera.position -= camera.forward
         if held_keys ['a']:
-            camera.x -= 1
+            camera.position -= camera.right
         elif held_keys ['d']:
-            camera.x += 1
+            camera.position += camera.right
         if held_keys ['q']:
             camera.rotation_y -= 1
         elif held_keys ['e']:

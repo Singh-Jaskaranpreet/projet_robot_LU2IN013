@@ -31,7 +31,7 @@ def echelle(x):
 
 # Affichage 3D
 # Couleurs utilisées
-COULEURS_3D = {'sol': color.white,'vehicule': color.red,'roue': color.black,'obstacle_rect': color.magenta,'obstacle_circulaire': color.blue}
+COULEURS_3D = {'sol': color.white,'vehicule': color.red,'roue': color.black,'obstacle_rect': color.magenta,'obstacle_circulaire': color.blue, 'mur': color.black}
 
 # Paramètres du véhicule
 ESSIEUX = 40  # Distance entre les roues avant et arrière
