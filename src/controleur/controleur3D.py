@@ -80,9 +80,9 @@ class Controleur3D:
         elif held_keys ['s']:
             camera.x -= camera.forward[0]
             camera.z -= camera.forward[2]
-        if held_keys ['z']:
+        if held_keys ['+']:
             camera.position += camera.forward
-        elif held_keys ['x']:
+        elif held_keys ['-']:
             camera.position -= camera.forward
         if held_keys ['a']:
             camera.position -= camera.right
