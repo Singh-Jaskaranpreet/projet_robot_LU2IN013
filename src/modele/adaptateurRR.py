@@ -66,7 +66,7 @@ class AdaptateurRR(Robot):
         Retourne la distance par rapport à un obstacle devant lui
         :return float
         """
-        return 50 #self.vehicule.get_distance() / 1000 comme on a return 1000 est qu eon divise par 1000 on a 1 se qui arrete les execution des stratégy
+        return self.vehicule.get_distance() / 1000 #comme on a return 1000 est qu eon divise par 1000 on a 1 se qui arrete les execution des stratégy
 
     def get_temps(self):
         """
@@ -108,7 +108,9 @@ class AdaptateurRR(Robot):
         Réinitialise les encodeurs
         :return None
         """
-        self.vehicule.offset_motor_encoder(3, 0)#self.vehicule.read_encoders()[0]) #ne fonctionne pas avec self.vehicule.read_encoders[0]
+        self.vehicule.offset_motor_encode(self.MOTOR_LEFT,self.read_encoders()[0])
+        self.vehicule.offset_motor_encode(self.MOTOR_RIGHT,self.read_encoders()[0])
+        #ne fonctionne pas avec self.vehicule.read_encoders[0]
 
     def get_angle_parcourueRad(self,vitesse):
        """
