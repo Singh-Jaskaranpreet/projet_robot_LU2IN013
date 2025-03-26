@@ -1,4 +1,5 @@
 from src.controleur.strategy import *
+import time
 from ursina import *
 
 
@@ -6,7 +7,7 @@ class Controleur3D:
     def __init__(self,Adaptateur,affichage):
         self.adaptateur = Adaptateur
         self.last_t_press = 0  # Temps du dernier appui sur "T"
-        self.debounce_delay = 0.1  # Délai minimal en secondes (0.5s ici)
+        self.debounce_delay = 0.5  # Délai minimal en secondes (0.5s ici)
         self.affichage = affichage
 
     def gerer_evenements(self):
@@ -63,7 +64,10 @@ class Controleur3D:
 
 
         if held_keys ['t']: #Activer le tracé
-            self.affichage.ActiveTrace = not self.affichage.ActiveTrace
+            now=time.time()
+            if now - self.last_t_press >= self.debounce_delay:
+                self.affichage.ActiveTrace = not self.affichage.ActiveTrace
+                self.last_t_press = now
 
         if held_keys['y']:
             self.trace = []
@@ -101,7 +105,7 @@ class Controleur3D:
         self.affichage.environnement.rester_dans_limites()
         self.affichage.vehicule_3d.position = (self.affichage.voiture.p_centre[1], 0.1, self.affichage.voiture.p_centre[0])
         self.affichage.vehicule_3d.rotation_y = self.affichage.voiture.angle
-
+        
         if self.affichage.ActiveTrace:
         # Ajoute un nouveau cube à la trace si la distance entre les points est suffisante
             if len(self.affichage.trace) == 0 or (self.affichage.trace[-1] is not None and (self.affichage.trace[-1].position - self.affichage.vehicule_3d.position).length() > 0.5):

@@ -23,7 +23,7 @@ class Affichage3D():
 
         mur_face = Entity(
             model='cube',
-            scale=(self.environnement.hauteur, 100, 0),
+            scale=(self.environnement.hauteur, config.TAILLE_MUR, 0),
             color=config.COULEURS_3D['mur'],
             collider='box',
             world_position=(self.environnement.hauteur / 2, 0, self.environnement.largeur)
@@ -31,7 +31,7 @@ class Affichage3D():
 
         mur_gauche = Entity(
             model='cube',
-            scale=(0, 100, self.environnement.largeur),
+            scale=(0, config.TAILLE_MUR, self.environnement.largeur),
             color=config.COULEURS_3D['mur'],
             collider='box',
             world_position=(self.environnement.hauteur, 0, self.environnement.largeur/2)
@@ -39,7 +39,7 @@ class Affichage3D():
 
         mur_droite = Entity(
             model='cube',
-            scale=(0, 100, self.environnement.largeur),
+            scale=(0, config.TAILLE_MUR, self.environnement.largeur),
             color=config.COULEURS_3D['mur'],
             collider='box',
             world_position=(0, 0, self.environnement.largeur/2)            
@@ -47,7 +47,7 @@ class Affichage3D():
 
         mur_der = Entity(
             model='cube',
-            scale=(self.environnement.hauteur, 100, 0),
+            scale=(self.environnement.hauteur, config.TAILLE_MUR, 0),
             color=config.COULEURS_3D['mur'],
             collider='box',
             world_position=(self.environnement.hauteur / 2, 0, 0)        
@@ -65,6 +65,7 @@ class Affichage3D():
         # Position initiale de la caméra
         camera.position = config.CAMERA_POSITION  # Utiliser la position définie dans config.py
         camera.look_at(self.vehicule_3d)  # Faire en sorte que la caméra regarde le véhicule
+        #camera.parent = self.vehicule_3d
 
     def creer_vehicule3D(self):
         vehicule_3d = Entity(
@@ -112,7 +113,7 @@ class Affichage3D():
         #Creation du Trait
         new_trace_point = Entity(
                 model='cube',
-                scale=(0.5, 1, 0.5),  # Cube plat
+                scale=(0.8, 0.8, 0.8),  # Cube plat
                 position=position,  # Position ajustée
                 color=color.black
             )

@@ -38,7 +38,10 @@ ESSIEUX = 40  # Distance entre les roues avant et arrière
 TAILLE_ROUE = 2  # Taille des roues (rayon de la sphère)
 
 # Paramètres de la caméra
-CAMERA_POSITION = (400, 50, 0)  # Position initiale de la caméra
+CAMERA_POSITION = (400, 159, -274)  # Position initiale de la caméra
+
+#Taille des murs
+TAILLE_MUR = 100
 
 #-------------------------------------------------------------------------------------------------------#
 
